@@ -1,0 +1,14 @@
+# NPM modules
+node_modules
+
+# TS compiled code
+dist/**/*
+
+# Python code
+**/*.py
+
+# Environments
+.env
+.env.local
+.env.development
+.env.production
