@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import logger from '../logger';
+import HealthController from '../controllers/HealthController';
 
 
 
@@ -8,10 +9,18 @@ const router = Router();
 
 
 // ROUTES
-router.get('/health', (req, res, next) => {
-    logger.debug(`Heath check: OK`);
+router.get('/health', HealthController);
 
-    res.sendStatus(200);
+router.put(`/subscribe`, (req, res, next) => {
+
+});
+
+router.delete(`/unsubscribe`, (req, res, next) => {
+
+});
+
+router.post(`/publish`, (req, res, next) => {
+
 });
 
 

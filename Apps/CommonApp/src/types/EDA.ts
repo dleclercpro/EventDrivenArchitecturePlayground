@@ -1,5 +1,6 @@
-export type Event<Data> = {
+export type Event<Data = any> = {
     id: string,
+    name: string,
     data?: Data,
 }
 
