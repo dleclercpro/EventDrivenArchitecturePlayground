@@ -2,8 +2,10 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import router from './routes';
-import { ENV, HOST, PORT, PROTOCOL, ROOT } from './config';
+import { ENV, PORT, ROOT, SERVICES } from './config';
 import logger from './logger';
+import { Service } from '../../CommonApp/src/types/EDA';
+import { SERVICE_NAME } from './constants';
 
 
 
@@ -35,15 +37,13 @@ const execute = async () => {
 
     // Then start listening on given port
     server.listen(PORT, () => {
-        logger.info(`Server listening in ${ENV} mode at: ${ROOT}`);
+        logger.info(`${SERVICE_NAME} service listening in ${ENV} mode at: ${ROOT}`);
 
         // Execute health check on all services
-        [3001, 3002, 3003].forEach(async (port: number) => {
-            const service = `${PROTOCOL}://${HOST}:${port}`;
+        SERVICES.forEach(async ({ uri }: Service) => {
+            const res = await fetch(`${uri}/health`);
 
-            const res = await fetch(`${service}/health`);
-
-            logger.info(`HTTP health check [${service}]: ${res.status}`);
+            logger.info(`HTTP health check [${uri}]: ${res.status}`);
         });
     });
 }

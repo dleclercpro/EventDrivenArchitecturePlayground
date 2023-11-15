@@ -1,8 +1,8 @@
 import pino, { TransportTargetOptions } from 'pino';
 import pretty from 'pino-pretty';
-import { Environment } from './types';
-import { PACKAGE_VERSION } from './constants';
 import { ENV } from './config';
+import { PACKAGE_VERSION } from '../../CommonApp/src/constants';
+import { Environment } from '../../CommonApp/src/types';
 
 const getBindings = (bindings: pino.Bindings) => {
     return {

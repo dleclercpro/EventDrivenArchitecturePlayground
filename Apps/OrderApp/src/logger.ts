@@ -1,6 +1,6 @@
 import pino, { TransportTargetOptions } from 'pino';
 import pretty from 'pino-pretty';
-import { Environment } from './types';
+import { Environment } from '../../CommonApp/src/types';
 import { PACKAGE_VERSION } from './constants';
 import { ENV } from './config';
 

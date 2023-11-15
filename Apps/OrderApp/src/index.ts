@@ -4,6 +4,7 @@ import compression from 'compression';
 import router from './routes';
 import { ENV, PORT, ROOT } from './config';
 import logger from './logger';
+import { SERVICE_NAME } from './constants';
 
 
 
@@ -35,7 +36,7 @@ const execute = async () => {
 
     // Then start listening on given port
     server.listen(PORT, () => {
-        logger.info(`Server listening in ${ENV} mode at: ${ROOT}`);
+        logger.info(`${SERVICE_NAME} service listening in ${ENV} mode at: ${ROOT}`);
     });
 }
 
