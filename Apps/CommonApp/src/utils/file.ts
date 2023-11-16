@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import logger from '../logger';
 import { promisify } from 'util';
 
 const fsRm = promisify(fs.rm);
@@ -20,8 +19,6 @@ export const deleteFile = async (filepath: string) => {
 
 export const readFile = async (filepath: string, encoding: BufferEncoding = 'utf-8') => {
     const data = await fsReadFile(filepath, { encoding });
-    
-    logger.trace(`Read ${data.length} bytes from file: ${filepath}`);
 
     return data;
 }

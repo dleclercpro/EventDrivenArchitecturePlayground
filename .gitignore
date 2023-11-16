@@ -1,11 +1,8 @@
 # NPM modules
 node_modules
 
-# TS compiled code
-dist/**/*
-
-# Python code
-**/*.py
+# Compiled code
+dist
 
 # Environments
 .env
