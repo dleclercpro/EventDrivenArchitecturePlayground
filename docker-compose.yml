@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  broker:
+    container_name: broker-app
+    image: eda-playground/broker
+    build:
+      context: ./Apps
+      dockerfile: BrokerApp.Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - app
+    depends_on:
+      - order
+      - payment
+      - delivery
+    environment:
+      NODE_ENV: production
+
+  order:
+    container_name: order-app
+    image: eda-playground/order
+    build:
+      context: ./Apps
+      dockerfile: OrderApp.Dockerfile
+    ports:
+      - 3001:3001
+    networks:
+      - app
+    environment:
+      NODE_ENV: production
+
+  payment:
+    container_name: payment-app
+    image: eda-playground/payment
+    build:
+      context: ./Apps
+      dockerfile: PaymentApp.Dockerfile
+    ports:
+      - 3002:3002
+    networks:
+      - app
+    environment:
+      NODE_ENV: production
+
+  delivery:
+    container_name: delivery-app
+    image: eda-playground/delivery
+    build:
+      context: ./Apps
+      dockerfile: DeliveryApp.Dockerfile
+    ports:
+      - 3003:3003
+    networks:
+      - app
+    environment:
+      NODE_ENV: production
+
+networks:
+  app:
+    driver: bridge
