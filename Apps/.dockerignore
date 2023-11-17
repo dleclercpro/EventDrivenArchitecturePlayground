@@ -1,0 +1,9 @@
+# NPM packages
+node_modules
+
+# Git files
+.git
+.gitignore
+
+# Environment variables
+.env.example

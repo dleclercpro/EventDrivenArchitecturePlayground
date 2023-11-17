@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run start:dev",
     "start:dev": "cross-env ENV=development nodemon ./src/index.ts",
-    "start:prod": "cross-env ENV=production nodemon ./dist/Apps/Services/OrderApp/src/index.js",
+    "start:prod": "ENV=production node ./src/index.js",
     "build": "npm run delete && npm run compile",
     "compile": "tsc -p ./tsconfig.json",
     "delete": "rimraf ./dist",
