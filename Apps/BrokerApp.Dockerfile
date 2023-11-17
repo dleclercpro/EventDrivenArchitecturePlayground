@@ -6,7 +6,7 @@ WORKDIR /apps
 
 # Copy all necessary files
 COPY ./CommonApp ./CommonApp
-COPY ./Services/BrokerApp ./Services/BrokerApp
+COPY ./BrokerApp ./BrokerApp
 
 # Install common app
 WORKDIR /apps/CommonApp
@@ -15,7 +15,7 @@ WORKDIR /apps/CommonApp
 RUN npm i --only-prod
 
 # Install service
-WORKDIR /apps/Services/BrokerApp
+WORKDIR /apps/BrokerApp
 
 # Only install production-related packages
 RUN npm i --only-prod
@@ -32,7 +32,7 @@ FROM node:lts-alpine as run-stage
 WORKDIR /apps
 
 # Only copy compiled files to build runnable service
-COPY --from=build-stage ./apps/Services/BrokerApp/dist ./
+COPY --from=build-stage ./apps/BrokerApp/dist ./
 
 # Install common app
 WORKDIR /apps/CommonApp
@@ -41,13 +41,13 @@ WORKDIR /apps/CommonApp
 RUN npm i --only-prod
 
 # Install service
-WORKDIR /apps/Services/BrokerApp
+WORKDIR /apps/BrokerApp
 
 # Only install production-related packages
 RUN npm i --only-prod
 
 # Copy environment variables file inside service
-COPY ./Services/BrokerApp/.env.production ./.env.production
+COPY ./BrokerApp/.env.production ./.env.production
 
 # Expose necessary port to talk with service
 EXPOSE 3000
