@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import HealthController from '../controllers/HealthController';
+import SubscribeController from '../controllers/SubscribeController';
+import UnsubscribeController from '../controllers/UnsubscribeController';
+import PublishController from '../controllers/PublishController';
 
 
 
@@ -9,18 +12,9 @@ const router = Router();
 
 // ROUTES
 router.get('/health', HealthController);
-
-router.put(`/subscribe`, (req, res, next) => {
-
-});
-
-router.delete(`/unsubscribe`, (req, res, next) => {
-
-});
-
-router.post(`/publish`, (req, res, next) => {
-
-});
+router.put(`/subscribe`, SubscribeController);
+router.delete(`/unsubscribe`, UnsubscribeController);
+router.post(`/publish`, PublishController);
 
 
 

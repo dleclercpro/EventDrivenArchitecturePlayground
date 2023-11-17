@@ -9,5 +9,7 @@ export const NEW_LINE = '\n';
 
 export const RELEASE_ZERO = new Release(0, 0, 0);
 
+export const APP_NAME = 'Common';
+
 export const PACKAGE_NAME = name;
 export const PACKAGE_VERSION = version;
