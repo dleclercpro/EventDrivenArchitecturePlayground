@@ -4,6 +4,7 @@ import { prettifyJSON } from '../../../CommonApp/src/utils/string';
 import logger from '../logger';
 import { ServiceName, HealthCheck, Service } from '../../../CommonApp/src/types/EDA';
 import { SERVICES } from '../config';
+import { EPOCH_TIME_INIT } from '../constants';
 
 const HealthController: RequestHandler = async (req, res) => {
     try {
@@ -11,21 +12,39 @@ const HealthController: RequestHandler = async (req, res) => {
 
         // Execute health check on all services
         const check: HealthCheck = {
-            [ServiceName.Broker]: -1,
-            [ServiceName.Order]: -1,
-            [ServiceName.Payment]: -1,
-            [ServiceName.Delivery]: -1,
+            [ServiceName.Broker]: {
+                timestamp: EPOCH_TIME_INIT,
+                result: -1,
+            },
+            [ServiceName.Order]: {
+                timestamp: EPOCH_TIME_INIT,
+                result: -1,
+            },
+            [ServiceName.Payment]: {
+                timestamp: EPOCH_TIME_INIT,
+                result: -1,
+            },
+            [ServiceName.Delivery]: {
+                timestamp: EPOCH_TIME_INIT,
+                result: -1,
+            },
         };
 
         // Broker should be fine
-        check[ServiceName.Broker] = HttpStatusCode.OK;
+        check[ServiceName.Broker] = {
+            timestamp: new Date(),
+            result: HttpStatusCode.OK,
+        };
 
         await Promise.all(SERVICES.map(async (service: Service) => {
             const { name, uri } = service;
 
             const res = await fetch(`${uri}/health`);
 
-            check[name] = res.status;
+            check[name] = {
+                timestamp: new Date(),
+                result: res.status,
+            };
         }));
         
         logger.debug(`Health check results ${prettifyJSON(check)}`);
