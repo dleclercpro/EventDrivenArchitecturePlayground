@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import logger from '../logger';
 import HealthController from '../controllers/HealthController';
 
 
