@@ -1,38 +1,17 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
 import router from './routes';
-import { APP_PORT, APP_URI, BROKER_SERVICE, ENV } from './config';
+import { ENV, APP_PORT, APP_URI, BROKER_SERVICE } from './config';
 import logger from './logger';
 import { APP_NAME } from './constants';
-import { EventName } from '../../CommonApp/src/constants/events';
+import { generateBasicServer } from '../../CommonApp/src/utils/server';
+import { EventName } from '../../CommonApp/src/constants/events'
 
 
 
-/* -------------------------------------------------- INSTANCES -------------------------------------------------- */
-// Server
-const server = express();
+const server = generateBasicServer(router);
 
+const url = `${BROKER_SERVICE.uri}/subscribe`;
+const events = [EventName.PaymentUnsuccessful, EventName.OrderCompleted];
 
-
-/* -------------------------------------------------- MIDDLEWARE -------------------------------------------------- */
-
-// Cookies
-server.use(cookieParser());
-
-// JSON
-server.use(express.urlencoded({ extended: true }));
-server.use(express.json());
-
-// GZIP
-server.use(compression());
-
-// API
-server.use('/', router);
-
-
-
-/* -------------------------------------------------- MAIN -------------------------------------------------- */
 const execute = async () => {
 
     // Then start listening on given port
@@ -40,9 +19,6 @@ const execute = async () => {
         logger.info(`'${APP_NAME}' app listening in ${ENV} mode at: ${APP_URI}`);
 
         // Subscribe to relevant events via broker
-        const url = `${BROKER_SERVICE.uri}/subscribe`;
-        const events = [EventName.PaymentUnsuccessful, EventName.OrderCompleted];
-
         await Promise.all(events.map(async (event: EventName) => {
             const data = { event };
 
@@ -59,7 +35,6 @@ const execute = async () => {
 
 
 
-// Run
 execute()
     .catch((err) => {
         logger.fatal(err, `Uncaught error:`);

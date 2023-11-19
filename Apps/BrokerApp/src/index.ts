@@ -1,37 +1,13 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
 import router from './routes';
 import { ENV, APP_PORT, APP_URI } from './config';
 import logger from './logger';
 import { APP_NAME } from './constants';
+import { generateBasicServer } from '../../CommonApp/src/utils/server';
 
 
 
-/* -------------------------------------------------- INSTANCES -------------------------------------------------- */
-// Server
-const server = express();
+const server = generateBasicServer(router);
 
-
-
-/* -------------------------------------------------- MIDDLEWARE -------------------------------------------------- */
-
-// Cookies
-server.use(cookieParser());
-
-// JSON
-server.use(express.urlencoded({ extended: true }));
-server.use(express.json());
-
-// GZIP
-server.use(compression());
-
-// API
-server.use('/', router);
-
-
-
-/* -------------------------------------------------- MAIN -------------------------------------------------- */
 const execute = async () => {
 
     // Then start listening on given port
@@ -42,7 +18,6 @@ const execute = async () => {
 
 
 
-// Run
 execute()
     .catch((err) => {
         logger.fatal(err, `Uncaught error:`);
