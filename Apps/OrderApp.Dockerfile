@@ -11,14 +11,14 @@ COPY ./OrderApp ./OrderApp
 # Install common app
 WORKDIR /apps/CommonApp
 
-# Only install production-related packages
-RUN npm install --production
+# Install packages
+RUN npm install
 
 # Install service
 WORKDIR /apps/OrderApp
 
-# Only install production-related packages
-RUN npm install --production
+# Install packages
+RUN npm install
 
 # Build the app
 RUN npm run build
@@ -38,13 +38,13 @@ COPY --from=build-stage ./apps/OrderApp/dist ./
 WORKDIR /apps/CommonApp
 
 # Only install production-related packages
-RUN npm install --production
+RUN npm install --omit=dev
 
 # Install service
 WORKDIR /apps/OrderApp
 
 # Only install production-related packages
-RUN npm install --production
+RUN npm install --omit=dev
 
 # Copy environment variables file inside service
 COPY ./OrderApp/.env.production ./.env.production
