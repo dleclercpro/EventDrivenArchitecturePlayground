@@ -12,13 +12,13 @@ COPY ./PaymentApp ./PaymentApp
 WORKDIR /apps/CommonApp
 
 # Only install production-related packages
-RUN npm i --only-prod
+RUN npm install --production
 
 # Install service
 WORKDIR /apps/PaymentApp
 
 # Only install production-related packages
-RUN npm i --only-prod
+RUN npm install --production
 
 # Build the app
 RUN npm run build
@@ -38,13 +38,13 @@ COPY --from=build-stage ./apps/PaymentApp/dist ./
 WORKDIR /apps/CommonApp
 
 # Only install production-related packages
-RUN npm i --only-prod
+RUN npm install --production
 
 # Install service
 WORKDIR /apps/PaymentApp
 
 # Only install production-related packages
-RUN npm i --only-prod
+RUN npm install --production
 
 # Copy environment variables file inside service
 COPY ./PaymentApp/.env.production ./.env.production
