@@ -1,15 +1,5 @@
-export type Event<Data = any> = {
-    id: string,
-    name: string,
-    data?: Data,
-};
-
-export enum ServiceName {
-    Broker = 'Broker',
-    Order = 'Order',
-    Payment = 'Payment',
-    Delivery = 'Delivery',
-};
+import { ServiceName } from '../constants/services';
+import { HttpStatusCode } from './HTTPTypes';
 
 export type Service = {
     name: ServiceName,
@@ -18,7 +8,7 @@ export type Service = {
 
 export type ServiceHealthCheck = {
     timestamp: Date,
-    result: number, // HTTP status code
+    result: HttpStatusCode | -1, // HTTP status code
 };
 
 export type HealthCheck = {

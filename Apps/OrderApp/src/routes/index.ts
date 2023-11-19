@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import logger from '../logger';
-import { Event } from '../../../CommonApp/src/types/EDA'
+import { Event } from '../../../CommonApp/src/types'
 import HealthController from '../controllers/HealthController';
 
 

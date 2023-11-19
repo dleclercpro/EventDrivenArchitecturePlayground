@@ -2,7 +2,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import router from './routes';
-import { ENV, PORT, ROOT } from './config';
+import { APP_PORT, APP_URI, ENV } from './config';
 import logger from './logger';
 import { APP_NAME } from './constants';
 
@@ -35,8 +35,8 @@ server.use('/', router);
 const execute = async () => {
 
     // Then start listening on given port
-    server.listen(PORT, () => {
-        logger.info(`'${APP_NAME}' app listening in ${ENV} mode at: ${ROOT}`);
+    server.listen(APP_PORT, () => {
+        logger.info(`'${APP_NAME}' app listening in ${ENV} mode at: ${APP_URI}`);
     });
 }
 

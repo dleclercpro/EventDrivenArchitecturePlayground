@@ -2,9 +2,10 @@ import { RequestHandler } from 'express';
 import { HttpStatusCode, HttpStatusMessage } from '../../../CommonApp/src/types/HTTPTypes';
 import { prettifyJSON } from '../../../CommonApp/src/utils/string';
 import logger from '../logger';
-import { ServiceName, HealthCheck, Service } from '../../../CommonApp/src/types/EDA';
+import { HealthCheck, Service } from '../../../CommonApp/src/types/ServiceTypes';
 import { SERVICES } from '../config';
 import { EPOCH_TIME_INIT } from '../constants';
+import { ServiceName } from '../../../CommonApp/src/constants/services';
 
 const HealthController: RequestHandler = async (req, res) => {
     try {
@@ -30,7 +31,7 @@ const HealthController: RequestHandler = async (req, res) => {
             },
         };
 
-        // Broker should be fine
+        // Broker should be fine (it is the one querying the others)
         check[ServiceName.Broker] = {
             timestamp: new Date(),
             result: HttpStatusCode.OK,

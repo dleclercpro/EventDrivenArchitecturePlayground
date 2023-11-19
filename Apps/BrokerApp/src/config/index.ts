@@ -1,4 +1,5 @@
-import { ServiceName, Service } from '../../../CommonApp/src/types/EDA';
+import { ServiceName } from '../../../CommonApp/src/constants/services';
+import { Service } from '../../../CommonApp/src/types/ServiceTypes';
 import { loadEnvironment } from '../../../CommonApp/src/utils/env';
 
 export const ENV = loadEnvironment();

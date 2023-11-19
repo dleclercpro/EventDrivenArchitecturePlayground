@@ -33,3 +33,27 @@ export interface Comparable {
     greaterThanOrEquals(other: Comparable): boolean;
     greaterThan(other: Comparable): boolean;
 }
+
+export type Event<Data = any> = {
+    id: string,
+    name: string,
+    data?: Data,
+};
+
+export type User = {
+    email: string,
+}
+
+export type Order = {
+    id: string,
+    productId: string,
+    timestamp: Date,
+}
+
+export type Delivery = {
+    id: string,
+    workerId: string,
+    start: Date,
+    abort?: Date,
+    end?: Date,
+}
