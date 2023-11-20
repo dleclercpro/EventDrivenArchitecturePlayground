@@ -15,12 +15,16 @@ const PublishController: RequestHandler = async (req, res) => {
         await NotificationsManager.notify(event);
         
         // Success
-        return res.sendStatus(HttpStatusCode.OK);
+        return res.json({
+            code: HttpStatusCode.OK,
+        });
 
     } catch (err: any) {
 
         // Unknown error
-        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
+        return res.json({
+            code: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        });
     }
 }
 

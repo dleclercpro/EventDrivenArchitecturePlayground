@@ -1,6 +1,7 @@
 import { Event } from '../../../CommonApp/src/types';
 import logger from '../logger';
 import SubscriptionsManager from './SubscriptionsManager';
+import CallNotify from '../../../CommonApp/src/calls/CallNotify';
 
 class NotificationsManager {
     private static instance?: NotificationsManager;
@@ -24,16 +25,7 @@ class NotificationsManager {
         await Promise.all(subscribers.map(async (service) => {
             logger.debug(`Notifying '${service.name}' service of '${event.name}' event...`);
 
-            const url = `${service.uri}/notify`;
-            const data = event;
-
-            const options = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            };
-    
-            await fetch(url, options);
+            await new CallNotify(service).execute({ event });
         }));
     }
 }

@@ -16,12 +16,16 @@ const HealthController: RequestHandler = async (req, res) => {
         }
 
         // Success
-        return res.sendStatus(status);
+        return res.json({
+            code: status,
+        });
 
     } catch (err: any) {
 
         // Unknown error
-        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
+        return res.json({
+            code: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        });
     }
 }
 

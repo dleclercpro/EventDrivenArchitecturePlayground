@@ -1,8 +1,12 @@
+import { HttpStatusCode } from '../types/HTTPTypes';
+
 export type CallMethod = 'GET' | 'PUT' | 'POST' | 'DELETE';
+export type CallResponse<Data> = {
+    code: HttpStatusCode,
+    data: Data,
+};
 
-
-
-abstract class Call<Data = void, ResponseData = void> {
+abstract class Call<RequestData = void, ResponseData = void> {
     protected abstract method: CallMethod;
     protected url: string;
 
@@ -10,7 +14,7 @@ abstract class Call<Data = void, ResponseData = void> {
         this.url = url;
     }
 
-    public async execute(data?: Data) {
+    public async execute(data?: RequestData) {
         const options = {
             method: this.method,
             headers: { 'Content-Type': 'application/json' },
@@ -18,7 +22,7 @@ abstract class Call<Data = void, ResponseData = void> {
         };
 
         const res = await fetch(this.url, options);
-        const json = await res.json() as ResponseData;
+        const json = await res.json() as CallResponse<ResponseData>;
 
         return json;
     }

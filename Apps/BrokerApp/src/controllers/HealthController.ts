@@ -60,7 +60,9 @@ const HealthController: RequestHandler = async (req, res) => {
     } catch (err: any) {
 
         // Unknown error
-        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
+        return res.json({
+            code: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        });
     }
 }
 
