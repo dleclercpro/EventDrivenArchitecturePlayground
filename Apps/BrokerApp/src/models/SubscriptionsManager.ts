@@ -28,14 +28,18 @@ class SubscriptionsManager {
         return SubscriptionsManager.instance;
     }
 
+    public getSubscribers(event: EventName) {
+        return this.subscriptions[event];
+    }
+
     public has(event: EventName, service: Service) {
-        const subscribers = this.subscriptions[event];
+        const subscribers = this.getSubscribers(event);
 
         return subscribers.findIndex(({ name }) => service.name === name) !== -1;
     }
 
     public add(event: EventName, service: Service) {
-        const subscribers = this.subscriptions[event];
+        const subscribers = this.getSubscribers(event);
 
         if (this.has(event, service)) {
             logger.debug(`Service '${service.name}' is already a subscriber of event '${event}': no need to add them.`);
@@ -49,7 +53,7 @@ class SubscriptionsManager {
     }
 
     public remove(event: EventName, service: Service) {
-        const subscribers = this.subscriptions[event];
+        const subscribers = this.getSubscribers(event);
 
         if (!this.has(event, service)) {
             logger.debug(`Service '${service.name}' is not a subscriber of event '${event}': cannot remove them.`);

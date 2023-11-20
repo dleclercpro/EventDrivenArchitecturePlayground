@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express';
 import { HttpStatusCode, HttpStatusMessage } from '../../../CommonApp/src/types/HTTPTypes';
-import SubscriptionsManager from '../models/SubscriptionsManager';
-import { SubscribeData } from '../../../CommonApp/src/types/APITypes';
+import logger from '../logger';
+import { NotifyData } from '../../../CommonApp/src/types/APITypes';
 
-const SubscribeController: RequestHandler = async (req, res) => {
+const NotifyController: RequestHandler = async (req, res) => {
     try {
-        const { service, event } = req.body as SubscribeData;
+        const { event } = req.body as NotifyData;
 
-        SubscriptionsManager.add(event, service);
+        logger.debug(`Event notification: ${event.name} [ID=$${event.id}]`);
 
         // Success
         return res.sendStatus(HttpStatusCode.OK);
@@ -21,4 +21,4 @@ const SubscribeController: RequestHandler = async (req, res) => {
     }
 }
 
-export default SubscribeController;
+export default NotifyController;

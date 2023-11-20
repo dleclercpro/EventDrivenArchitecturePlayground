@@ -4,7 +4,7 @@ import logger from './logger';
 import { APP_NAME } from './constants';
 import { generateBasicServer } from '../../CommonApp/src/utils/server';
 import { EventName } from '../../CommonApp/src/constants/events';
-import { SubscriptionData } from '../../CommonApp/src/types/APITypes';
+import { SubscribeData } from '../../CommonApp/src/types/APITypes';
 
 
 
@@ -24,7 +24,7 @@ const execute = async () => {
             const data = {
                 service: SELF_SERVICE,
                 event,
-            } as SubscriptionData;
+            } as SubscribeData;
 
             const options = {
                 method: 'PUT',

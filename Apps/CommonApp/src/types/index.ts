@@ -1,3 +1,5 @@
+import { EventName } from '../constants/events';
+
 export enum Environment {
     Development = 'development',
     Test = 'test',
@@ -36,7 +38,7 @@ export interface Comparable {
 
 export type Event<Data = any> = {
     id: string,
-    name: string,
+    name: EventName,
     data?: Data,
 };
 
