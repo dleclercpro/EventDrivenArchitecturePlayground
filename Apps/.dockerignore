@@ -5,5 +5,9 @@ node_modules
 .git
 .gitignore
 
-# Environment variables
+# Environment variables file that aren't meant for production
+.env
 .env.example
+.env.development
+.env.local
+.env.test

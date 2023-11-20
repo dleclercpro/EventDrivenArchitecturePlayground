@@ -3,9 +3,3 @@ node_modules
 
 # Compiled code
 dist
-
-# Environments
-.env
-.env.local
-.env.development
-.env.production
