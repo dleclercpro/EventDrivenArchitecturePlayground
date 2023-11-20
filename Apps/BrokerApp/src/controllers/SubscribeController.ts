@@ -4,7 +4,9 @@ import logger from '../logger';
 
 const SubscribeController: RequestHandler = async (req, res) => {
     try {
-        logger.debug(`Subscribing service to event...`);
+        const { service, event } = req.body;
+
+        logger.debug(`Subscribing '${service}' service to event '${event}'...`);
 
         // Success
         return res.sendStatus(HttpStatusCode.OK);

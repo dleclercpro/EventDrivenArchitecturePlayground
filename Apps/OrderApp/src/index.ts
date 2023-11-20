@@ -10,7 +10,7 @@ import { EventName } from '../../CommonApp/src/constants/events'
 const server = generateBasicServer(router);
 
 const url = `${BROKER_SERVICE.uri}/subscribe`;
-const events = [EventName.PaymentUnsuccessful, EventName.OrderCompleted];
+const events = [EventName.PaymentUnsuccessful, EventName.DeliveryAborted, EventName.DeliveryCompleted];
 
 const execute = async () => {
 
@@ -20,7 +20,10 @@ const execute = async () => {
 
         // Subscribe to relevant events via broker
         await Promise.all(events.map(async (event: EventName) => {
-            const data = { event };
+            const data = {
+                service: APP_NAME,
+                event,
+            };
 
             const options = {
                 method: 'PUT',
