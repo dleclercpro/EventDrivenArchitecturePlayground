@@ -3,6 +3,9 @@ import { HttpStatusCode } from './HTTPTypes';
 
 export type Service = {
     name: ServiceName,
+    protocol: 'http' | 'https',
+    host: string,
+    port: number,
     uri: string,
 };
 

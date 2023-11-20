@@ -3,9 +3,13 @@ import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import { prettifyJSON } from '../../../CommonApp/src/utils/string';
 import logger from '../logger';
 import { HealthCheck, Service } from '../../../CommonApp/src/types/ServiceTypes';
-import { SERVICES } from '../config';
 import { EPOCH_TIME_INIT } from '../constants';
 import { ServiceName } from '../../../CommonApp/src/constants/services';
+import { DELIVERY_SERVICE, ORDER_SERVICE, PAYMENT_SERVICE } from '../config';
+
+const SERVICES = [ORDER_SERVICE, PAYMENT_SERVICE, DELIVERY_SERVICE];
+
+
 
 const HealthController: RequestHandler = async (req, res) => {
     try {
