@@ -5,9 +5,15 @@ import { subscriber } from '..';
 
 const HealthController: RequestHandler = async (req, res) => {
     try {
-        logger.debug(`Health check: OK`);
+        let status;
 
-        const status = subscriber.hasSubscribed() ? HttpStatusCode.OK : HttpStatusCode.SERVICE_UNAVAILABLE;
+        if (subscriber.hasSubscribed()) {
+            logger.debug(`Health check: ${HttpStatusCode}`);
+            status = HttpStatusCode.OK;
+        } else {
+            logger.warn(`Health check: ${HttpStatusCode}`);
+            status = HttpStatusCode.SERVICE_UNAVAILABLE;
+        }
 
         // Success
         return res.sendStatus(status);
