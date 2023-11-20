@@ -41,8 +41,8 @@ class EventGenerator {
         return this.generateEvent(EventName.OrderCreated, data);
     }
 
-    public generateOrderCanceledEvent(data: any) {
-        return this.generateEvent(EventName.OrderCanceled, data);
+    public generateOrderCancelledEvent(data: any) {
+        return this.generateEvent(EventName.OrderCancelled, data);
     }
 
     public generateOrderCompletedEvent(data: any) {

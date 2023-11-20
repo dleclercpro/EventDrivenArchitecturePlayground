@@ -24,7 +24,7 @@ class Subscriber {
     }
 
     public async createSubscriptions() {
-        const events = [EventName.OrderCanceled, EventName.PaymentSuccessful];
+        const events = [EventName.OrderCancelled, EventName.PaymentSuccessful];
 
         // Subscribe to relevant events via broker
         await Promise.all(events.map(async (event: EventName) => {

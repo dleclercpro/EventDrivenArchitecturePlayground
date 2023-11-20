@@ -2,7 +2,7 @@ export enum EventName {
     UserLoggedIn = 'UserLoggedIn',
     UserLoggedOut = 'UserLoggedOut',
     OrderCreated = 'OrderCreated',
-    OrderCanceled = 'OrderCanceled',
+    OrderCancelled = 'OrderCancelled',
     OrderCompleted = 'OrderCompleted',
     PaymentSuccessful = 'PaymentSuccessful',
     PaymentUnsuccessful = 'PaymentUnsuccessful',
