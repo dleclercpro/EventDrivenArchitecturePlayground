@@ -3,7 +3,7 @@ import { Event } from '../types';
 import { EventName } from '../constants/events';
 
 class EventGenerator {
-    private static instance: EventGenerator;
+    private static instance?: EventGenerator;
 
     private constructor() {
 
