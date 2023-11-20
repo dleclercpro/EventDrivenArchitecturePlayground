@@ -1,5 +1,5 @@
 import router from './routes';
-import { ENV, APP_PORT, APP_URI, BROKER_SERVICE } from './config';
+import { ENV, APP_PORT, APP_URI, BROKER_SERVICE, SELF_SERVICE } from './config';
 import logger from './logger';
 import { APP_NAME } from './constants';
 import { generateBasicServer } from '../../CommonApp/src/utils/server';
@@ -21,7 +21,7 @@ const execute = async () => {
         // Subscribe to relevant events via broker
         await Promise.all(events.map(async (event: EventName) => {
             const data = {
-                service: APP_NAME,
+                service: SELF_SERVICE,
                 event,
             };
 

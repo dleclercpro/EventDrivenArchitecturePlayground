@@ -1,11 +1,21 @@
+import { EventName } from '../../../CommonApp/src/constants/events';
 import { ServiceName } from '../../../CommonApp/src/constants/services';
 import { Service } from '../../../CommonApp/src/types/ServiceTypes';
 import { loadEnvironment } from '../../../CommonApp/src/utils/env';
 
 export const ENV = loadEnvironment();
+export const EVENTS = Object.values(EventName);
+
+
 
 export const { APP_PROTOCOL, APP_HOST, APP_PORT } = process.env;
 export const APP_URI = `${APP_PROTOCOL}://${APP_HOST}:${APP_PORT}`;
+
+// Service
+export const SELF_SERVICE: Service = {
+    name: ServiceName.Broker,
+    uri: APP_URI,
+};
 
 // Order service
 const { ORDER_APP_PROTOCOL, ORDER_APP_HOST, ORDER_APP_PORT } = process.env;
