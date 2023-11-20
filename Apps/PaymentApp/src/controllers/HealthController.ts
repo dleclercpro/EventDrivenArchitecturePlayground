@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { HttpStatusCode, HttpStatusMessage } from '../../../CommonApp/src/types/HTTPTypes';
+import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import logger from '../logger';
 
 const HealthController: RequestHandler = async (req, res) => {
@@ -12,9 +12,7 @@ const HealthController: RequestHandler = async (req, res) => {
     } catch (err: any) {
 
         // Unknown error
-        return res
-            .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-            .send(HttpStatusMessage.INTERNAL_SERVER_ERROR);
+        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
 }
 

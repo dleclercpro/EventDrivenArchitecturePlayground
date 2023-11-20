@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { HttpStatusCode, HttpStatusMessage } from '../../../CommonApp/src/types/HTTPTypes';
+import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import { UnsubscribeData } from '../../../CommonApp/src/types/APITypes';
 import SubscriptionsManager from '../models/SubscriptionsManager';
 
@@ -15,9 +15,7 @@ const UnsubscribeController: RequestHandler = async (req, res) => {
     } catch (err: any) {
 
         // Unknown error
-        return res
-            .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-            .send(HttpStatusMessage.INTERNAL_SERVER_ERROR);
+        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
 }
 
