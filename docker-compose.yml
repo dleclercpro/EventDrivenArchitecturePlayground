@@ -11,10 +11,6 @@ services:
       - 3000:3000
     networks:
       - app
-    depends_on:
-      - order
-      - payment
-      - delivery
     environment:
       NODE_ENV: production
 
@@ -28,6 +24,8 @@ services:
       - 3001:3001
     networks:
       - app
+    depends_on:
+      - broker
     environment:
       NODE_ENV: production
 
@@ -41,6 +39,8 @@ services:
       - 3002:3002
     networks:
       - app
+    depends_on:
+      - broker
     environment:
       NODE_ENV: production
 
@@ -54,6 +54,8 @@ services:
       - 3003:3003
     networks:
       - app
+    depends_on:
+      - broker
     environment:
       NODE_ENV: production
 
