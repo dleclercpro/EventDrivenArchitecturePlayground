@@ -6,13 +6,14 @@ import ServiceSubscriber from './models/ServiceSubscriber';
 
 
 
-const server = generateBasicServer(router);
+export const server = generateBasicServer(router);
+export const subscriber = new ServiceSubscriber();
 
 const execute = async () => {
     server.listen(SERVICE.port, async () => {
         logger.info(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
 
-        await new ServiceSubscriber().createSubscriptions();
+        await subscriber.createSubscriptions();
     });
 }
 
