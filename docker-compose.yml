@@ -8,7 +8,7 @@ services:
       context: ./Apps
       dockerfile: BrokerApp.Dockerfile
     ports:
-      - 3000:3000
+      - 4000:4000
     networks:
       - app
     environment:
@@ -21,7 +21,7 @@ services:
       context: ./Apps
       dockerfile: OrderApp.Dockerfile
     ports:
-      - 3001:3001
+      - 4001:4001
     networks:
       - app
     depends_on:
@@ -36,7 +36,7 @@ services:
       context: ./Apps
       dockerfile: PaymentApp.Dockerfile
     ports:
-      - 3002:3002
+      - 4002:4002
     networks:
       - app
     depends_on:
@@ -51,7 +51,7 @@ services:
       context: ./Apps
       dockerfile: DeliveryApp.Dockerfile
     ports:
-      - 3003:3003
+      - 4003:4003
     networks:
       - app
     depends_on:
