@@ -3,7 +3,8 @@ import { ENV, APP_PORT, APP_URI, BROKER_SERVICE, SELF_SERVICE } from './config';
 import logger from './logger';
 import { APP_NAME } from './constants';
 import { generateBasicServer } from '../../CommonApp/src/utils/server';
-import { EventName } from '../../CommonApp/src/constants/events'
+import { EventName } from '../../CommonApp/src/constants/events';
+import { SubscriptionData } from '../../CommonApp/src/types/APITypes';
 
 
 
@@ -23,7 +24,7 @@ const execute = async () => {
             const data = {
                 service: SELF_SERVICE,
                 event,
-            };
+            } as SubscriptionData;
 
             const options = {
                 method: 'PUT',

@@ -1,19 +1,11 @@
 import { RequestHandler } from 'express';
 import { HttpStatusCode, HttpStatusMessage } from '../../../CommonApp/src/types/HTTPTypes';
-import { Service } from '../../../CommonApp/src/types/ServiceTypes';
-import { EventName } from '../../../CommonApp/src/constants/events';
+import { SubscriptionData } from '../../../CommonApp/src/types/APITypes';
 import SubscriptionsManager from '../models/SubscriptionsManager';
-
-type Body = {
-    service: Service,
-    event: EventName,
-};
-
-
 
 const UnsubscribeController: RequestHandler = async (req, res) => {
     try {
-        const { service, event } = req.body as Body;
+        const { service, event } = req.body as SubscriptionData;
 
         SubscriptionsManager.remove(event, service);
 
