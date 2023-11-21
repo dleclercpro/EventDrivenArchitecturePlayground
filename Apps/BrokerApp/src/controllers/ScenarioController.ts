@@ -27,7 +27,7 @@ const ScenarioController: RequestHandler = async (req, res) => {
             return res.sendStatus(HttpStatusCode.SERVICE_UNAVAILABLE);
         }
 
-        logger.info(`Executing scenario ${scenarioId}...`);
+        logger.debug(`Executing scenario ${scenarioId}...`);
 
         // Scenario #1
         if (scenarioId === '1') {
@@ -36,16 +36,20 @@ const ScenarioController: RequestHandler = async (req, res) => {
             const userId = crypto.randomUUID();
             const productId = crypto.randomUUID();
 
-            await new CallCreateOrder().execute({
+            const { data } = await new CallCreateOrder().execute({
                 userId,
                 productId,
             });
+
+            // Success
+            return res.json({
+                code: HttpStatusCode.OK,
+                data,
+            });
         }
 
-        // Success
-        return res.json({
-            code: HttpStatusCode.OK,
-        });
+        // No matching scenario
+        return res.sendStatus(HttpStatusCode.BAD_REQUEST);
 
     } catch (err: any) {
         logger.error(err);

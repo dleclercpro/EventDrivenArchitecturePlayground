@@ -1,6 +1,4 @@
 export enum EventName {
-    UserLoggedIn = 'UserLoggedIn',
-    UserLoggedOut = 'UserLoggedOut',
     OrderCreated = 'OrderCreated',
     OrderCancelled = 'OrderCancelled',
     OrderCompleted = 'OrderCompleted',

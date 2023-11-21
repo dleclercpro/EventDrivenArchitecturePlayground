@@ -29,14 +29,6 @@ class EventGenerator {
         };
     }
 
-    public generateUserLoggedInEvent(data: any) {
-        return this.generateEvent(EventName.UserLoggedIn, data);
-    }
-
-    public generateUserLoggedOutEvent(data: any) {
-        return this.generateEvent(EventName.UserLoggedOut, data);
-    }
-
     public generateOrderCreatedEvent(data: { orderId: string, userId: string, productId: string }) {
         return this.generateEvent(EventName.OrderCreated, data);
     }
