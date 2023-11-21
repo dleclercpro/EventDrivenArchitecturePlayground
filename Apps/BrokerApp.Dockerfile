@@ -38,13 +38,13 @@ COPY --from=build-stage ./apps/BrokerApp/dist ./
 WORKDIR /apps/CommonApp
 
 # Only install production-related packages
-RUN npm install --omit=dev
+RUN npm install --production
 
 # Install service
 WORKDIR /apps/BrokerApp
 
 # Only install production-related packages
-RUN npm install --omit=dev
+RUN npm install --production
 
 # Copy environment variables file inside service
 COPY ./BrokerApp/.env.production ./.env.production
