@@ -5,7 +5,7 @@ import Subscriber from '../../../CommonApp/src/models/Subscriber';
 class ServiceSubscriber extends Subscriber {
     protected broker = BROKER_SERVICE;
     protected service = SERVICE;
-    protected events = [EventName.PaymentUnsuccessful, EventName.DeliveryAborted];
+    protected events = [EventName.PaymentFailure, EventName.DeliveryAborted];
 }
 
 export default ServiceSubscriber;

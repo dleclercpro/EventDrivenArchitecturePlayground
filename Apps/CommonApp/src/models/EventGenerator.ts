@@ -41,12 +41,12 @@ class EventGenerator {
         return this.generateEvent(EventName.OrderCompleted, data);
     }
 
-    public generatePaymentSuccessfulEvent(data: any) {
-        return this.generateEvent(EventName.PaymentSuccessful, data);
+    public generatePaymentSuccessEvent(data: any) {
+        return this.generateEvent(EventName.PaymentSuccess, data);
     }
 
-    public generatePaymentUnsuccessfulEvent(data: any) {
-        return this.generateEvent(EventName.PaymentUnsuccessful, data);
+    public generatePaymentFailureEvent(data: any) {
+        return this.generateEvent(EventName.PaymentFailure, data);
     }
 
     public generateDeliveryStartedEvent(data: any) {
