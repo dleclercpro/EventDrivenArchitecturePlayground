@@ -5,6 +5,9 @@ import { CreateOrderRequestData } from '../../../CommonApp/src/types/APITypes';
 import { sleep } from '../../../CommonApp/src/utils/time';
 import TimeDuration from '../../../CommonApp/src/models/units/TimeDuration';
 import { TimeUnit } from '../../../CommonApp/src/types';
+import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
+import { BROKER_SERVICE } from '../config';
+import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
 
 const CreateOrderController: RequestHandler = async (req, res) => {
     try {
@@ -19,12 +22,19 @@ const CreateOrderController: RequestHandler = async (req, res) => {
         // Fake DB communication latency
         await sleep(new TimeDuration(500, TimeUnit.Milliseconds));
 
+        // Emit order creation event
+        await new CallPublish(BROKER_SERVICE).execute({
+            event: EventGenerator.generateOrderCreatedEvent({
+                orderId,
+                userId,
+                productId, 
+            }),
+        });
+
         // Success
         return res.json({
             code: HttpStatusCode.OK,
-            data: {
-                orderId,
-            },
+            data: { orderId },
         });
 
     } catch (err: any) {

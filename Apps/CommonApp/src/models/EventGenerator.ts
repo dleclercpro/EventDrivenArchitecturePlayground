@@ -37,7 +37,7 @@ class EventGenerator {
         return this.generateEvent(EventName.UserLoggedOut, data);
     }
 
-    public generateOrderCreatedEvent(data: any) {
+    public generateOrderCreatedEvent(data: { orderId: string, userId: string, productId: string }) {
         return this.generateEvent(EventName.OrderCreated, data);
     }
 

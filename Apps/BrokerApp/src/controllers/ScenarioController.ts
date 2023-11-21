@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import logger from '../logger';
+import CallCreateOrder from '../models/calls/CallCreateOrder';
 
 /**
  * This controller is used to test the event-driven architecture: it connects requests
@@ -15,6 +16,14 @@ const ScenarioController: RequestHandler = async (req, res) => {
         // Scenario #1
         if (scenarioId === '1') {
             
+            // Generate fake user and product IDs
+            const userId = crypto.randomUUID();
+            const productId = crypto.randomUUID();
+
+            await new CallCreateOrder().execute({
+                userId,
+                productId,
+            });
         }
 
         // Success
