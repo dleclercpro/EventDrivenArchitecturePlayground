@@ -23,7 +23,7 @@ abstract class Subscriber {
         // Subscribe to relevant events via broker
         const statuses = await Promise.all(this.events.map(async (event: EventName) => {
             const { code } = await new CallSubscribe(this.broker).execute({
-                service: this.service,
+                service: this.service.name,
                 event,
             });
 

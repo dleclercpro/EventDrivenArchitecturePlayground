@@ -13,10 +13,3 @@ export type ServiceHealthCheck = {
     timestamp: Date,
     result: HttpStatusCode | -1, // HTTP status code
 };
-
-export type HealthCheck = {
-    Broker: ServiceHealthCheck,
-    Order: ServiceHealthCheck,
-    Payment: ServiceHealthCheck,
-    Delivery: ServiceHealthCheck,
-};

@@ -8,6 +8,14 @@ abstract class Call<RequestData = void, ResponseData = void> {
         this.url = url;
     }
 
+    public getMethod() {
+        return this.method;
+    }
+
+    public getUrl() {
+        return this.url;
+    }
+
     public async execute(data: RequestData) {
         const options = {
             method: this.method,

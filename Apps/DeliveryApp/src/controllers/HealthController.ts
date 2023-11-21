@@ -21,6 +21,7 @@ const HealthController: RequestHandler = async (req, res) => {
         });
 
     } catch (err: any) {
+        logger.error(err);
 
         // Unknown error
         return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);

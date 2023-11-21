@@ -1,5 +1,6 @@
+import { ENV } from './config';
+import { SERVICE } from './config/services';
 import router from './routes';
-import { ENV, SERVICE } from './config';
 import logger from './logger';
 import { generateBasicServer } from '../../CommonApp/src/utils/server';
 

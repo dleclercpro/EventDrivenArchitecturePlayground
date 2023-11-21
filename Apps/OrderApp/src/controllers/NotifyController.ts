@@ -7,7 +7,7 @@ const NotifyController: RequestHandler = async (req, res) => {
     try {
         const { event } = req.body as NotifyRequestData;
 
-        logger.debug(`Event notification: ${event.name} [ID=$${event.id}]`);
+        logger.info(`Event notification: ${event.name} [ID=$${event.id}]`);
 
         // Success
         return res.json({
@@ -15,6 +15,7 @@ const NotifyController: RequestHandler = async (req, res) => {
         });
 
     } catch (err: any) {
+        logger.error(err);
 
         // Unknown error
         return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
