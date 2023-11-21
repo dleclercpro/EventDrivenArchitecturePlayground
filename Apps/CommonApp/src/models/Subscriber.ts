@@ -1,6 +1,7 @@
 import { EventName } from '../../../CommonApp/src/constants/events';
 import CallSubscribe from '../../../CommonApp/src/calls/CallSubscribe';
 import { Service } from '../types/ServiceTypes';
+import { HttpStatusCode } from '../types/HTTPTypes';
 
 abstract class Subscriber {
     protected abstract broker: Service;
@@ -13,21 +14,23 @@ abstract class Subscriber {
         this.done = false;
     }
 
-    public hasSubscribed() {
+    public isDone() {
         return this.done;
     }
 
     public async createSubscriptions() {
 
         // Subscribe to relevant events via broker
-        await Promise.all(this.events.map(async (event: EventName) => {
-            const { code, data } = await new CallSubscribe(this.broker).execute({
+        const statuses = await Promise.all(this.events.map(async (event: EventName) => {
+            const { code } = await new CallSubscribe(this.broker).execute({
                 service: this.service,
                 event,
             });
+
+            return code;
         }));
 
-        this.done = true;
+        this.done = statuses.every(s => s === HttpStatusCode.OK);
     }
 }
 
