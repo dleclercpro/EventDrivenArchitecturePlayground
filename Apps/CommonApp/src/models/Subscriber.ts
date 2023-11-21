@@ -1,5 +1,5 @@
 import { EventName } from '../../../CommonApp/src/constants/events';
-import CallSubscribe from '../../../CommonApp/src/calls/CallSubscribe';
+import CallSubscribe from '../../../CommonApp/src/models/calls/CallSubscribe';
 import { Service } from '../types/ServiceTypes';
 import { HttpStatusCode } from '../types/HTTPTypes';
 

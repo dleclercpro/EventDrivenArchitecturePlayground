@@ -12,6 +12,11 @@ const ScenarioController: RequestHandler = async (req, res) => {
 
         logger.debug(`Executing scenario ${scenarioId}...`);
 
+        // Scenario #1
+        if (scenarioId === '1') {
+            
+        }
+
         // Success
         return res.json({
             code: HttpStatusCode.OK,

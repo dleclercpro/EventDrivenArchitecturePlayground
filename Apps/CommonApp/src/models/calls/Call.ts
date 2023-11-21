@@ -1,4 +1,4 @@
-import { CallMethod, CallResponse } from '../types/APITypes';
+import { CallMethod, CallResponse } from '../../types/APITypes';
 
 abstract class Call<RequestData = void, ResponseData = void> {
     protected abstract method: CallMethod;

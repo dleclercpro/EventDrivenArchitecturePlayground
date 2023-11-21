@@ -1,5 +1,5 @@
-import { CallMethod, UnsubscribeRequestData } from '../types/APITypes';
-import { Service } from '../types/ServiceTypes';
+import { CallMethod, UnsubscribeRequestData } from '../../types/APITypes';
+import { Service } from '../../types/ServiceTypes';
 import Call from './Call';
 
 class CallUnsubscribe extends Call<UnsubscribeRequestData> {

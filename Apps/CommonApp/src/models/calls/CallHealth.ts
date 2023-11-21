@@ -1,5 +1,5 @@
-import { CallMethod } from '../types/APITypes';
-import { Service } from '../types/ServiceTypes';
+import { CallMethod } from '../../types/APITypes';
+import { Service } from '../../types/ServiceTypes';
 import Call from './Call';
 
 class CallHealth extends Call {

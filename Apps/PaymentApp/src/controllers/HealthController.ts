@@ -7,7 +7,7 @@ const HealthController: RequestHandler = async (req, res) => {
     try {
         let status;
 
-        if (subscriber.hasSubscribed()) {
+        if (subscriber.isDone()) {
             status = HttpStatusCode.OK;
             logger.debug(`Health check: ${status}`);
         } else {

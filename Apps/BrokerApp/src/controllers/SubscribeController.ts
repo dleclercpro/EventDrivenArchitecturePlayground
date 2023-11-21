@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express';
 import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import SubscriptionsManager from '../models/SubscriptionsManager';
-import { SubscribeData } from '../../../CommonApp/src/types/APITypes';
+import { SubscribeRequestData } from '../../../CommonApp/src/types/APITypes';
 
 const SubscribeController: RequestHandler = async (req, res) => {
     try {
-        const { service, event } = req.body as SubscribeData;
+        const { service, event } = req.body as SubscribeRequestData;
 
         SubscriptionsManager.add(event, service);
 

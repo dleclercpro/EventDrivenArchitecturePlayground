@@ -1,5 +1,5 @@
-import { CallMethod, PublishRequestData } from '../types/APITypes';
-import { Service } from '../types/ServiceTypes';
+import { CallMethod, PublishRequestData } from '../../types/APITypes';
+import { Service } from '../../types/ServiceTypes';
 import Call from './Call';
 
 class CallPublish extends Call<PublishRequestData> {

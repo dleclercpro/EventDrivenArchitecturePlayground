@@ -6,7 +6,7 @@ import { HealthCheck, Service } from '../../../CommonApp/src/types/ServiceTypes'
 import { EPOCH_TIME_INIT } from '../constants';
 import { ServiceName } from '../../../CommonApp/src/constants/services';
 import { DELIVERY_SERVICE, ORDER_SERVICE, PAYMENT_SERVICE } from '../config';
-import CallHealth from '../../../CommonApp/src/calls/CallHealth';
+import CallHealth from '../../../CommonApp/src/models/calls/CallHealth';
 
 const SERVICES = [ORDER_SERVICE, PAYMENT_SERVICE, DELIVERY_SERVICE];
 

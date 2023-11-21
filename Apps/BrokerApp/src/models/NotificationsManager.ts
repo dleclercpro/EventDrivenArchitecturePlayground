@@ -1,7 +1,7 @@
 import { Event } from '../../../CommonApp/src/types';
 import logger from '../logger';
 import SubscriptionsManager from './SubscriptionsManager';
-import CallNotify from '../../../CommonApp/src/calls/CallNotify';
+import CallNotify from '../../../CommonApp/src/models/calls/CallNotify';
 
 class NotificationsManager {
     private static instance?: NotificationsManager;

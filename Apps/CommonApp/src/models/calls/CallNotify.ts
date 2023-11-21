@@ -1,5 +1,5 @@
-import { CallMethod, NotifyRequestData } from '../types/APITypes';
-import { Service } from '../types/ServiceTypes';
+import { CallMethod, NotifyRequestData } from '../../types/APITypes';
+import { Service } from '../../types/ServiceTypes';
 import Call from './Call';
 
 class CallNotify extends Call<NotifyRequestData> {
