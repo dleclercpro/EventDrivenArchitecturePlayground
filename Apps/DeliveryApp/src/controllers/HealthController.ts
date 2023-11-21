@@ -9,7 +9,7 @@ const HealthController: RequestHandler = async (req, res) => {
 
         if (subscriber.isDone()) {
             status = HttpStatusCode.OK;
-            logger.debug(`Health check: ${status}`);
+            logger.trace(`Health check: ${status}`);
         } else {
             status = HttpStatusCode.SERVICE_UNAVAILABLE;
             logger.warn(`Health check: ${status}`);

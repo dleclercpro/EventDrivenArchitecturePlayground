@@ -27,7 +27,7 @@ const ScenarioController: RequestHandler = async (req, res) => {
             return res.sendStatus(HttpStatusCode.SERVICE_UNAVAILABLE);
         }
 
-        logger.debug(`Executing scenario ${scenarioId}...`);
+        logger.info(`Executing scenario ${scenarioId}...`);
 
         // Scenario #1
         if (scenarioId === '1') {

@@ -10,7 +10,7 @@ const DeleteOrderController: RequestHandler = async (req, res) => {
     try {
         const { userId, orderId } = req.body as DeleteOrderRequestData;
 
-        logger.debug(`Deletion of order [ID=${orderId}] for user [ID=${userId}]...`);
+        logger.info(`Deletion of order [ID=${orderId}] for user [ID=${userId}]...`);
 
         // Fake DB communication latency
         await sleep(new TimeDuration(500, TimeUnit.Milliseconds));

@@ -13,7 +13,7 @@ const CreateOrderController: RequestHandler = async (req, res) => {
     try {
         const { userId, productId } = req.body as CreateOrderRequestData;
 
-        logger.debug(`Creation of order for user [ID=${userId}] and product [ID=${productId}]...`);
+        logger.info(`Creation of order for user [ID=${userId}] and product [ID=${productId}]...`);
 
         // Generate fake order
         const now = new Date().getTime();
@@ -29,7 +29,7 @@ const CreateOrderController: RequestHandler = async (req, res) => {
             productId, 
         });
 
-        logger.debug(`Publishing '${event.name}' event to broker...`);
+        logger.info(`Publishing '${event.name}' event to broker...`);
 
         await new CallPublish(BROKER_SERVICE).execute({
             event,
