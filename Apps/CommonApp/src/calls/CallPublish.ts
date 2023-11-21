@@ -1,8 +1,8 @@
-import { CallMethod, PublishData } from '../types/APITypes';
+import { CallMethod, PublishRequestData } from '../types/APITypes';
 import { Service } from '../types/ServiceTypes';
 import Call from './Call';
 
-class CallPublish extends Call<PublishData> {
+class CallPublish extends Call<PublishRequestData> {
     protected method: CallMethod = 'POST';
 
     public constructor(service: Service) {

@@ -10,15 +10,25 @@ export type CallResponse<Data = void> = {
     data: Data,
 };
 
-export type SubscribeData = {
+export type SubscribeRequestData = {
     event: EventName,
     service: Service,
 };
 
-export type UnsubscribeData = SubscribeData;
+export type UnsubscribeRequestData = SubscribeRequestData;
 
-export type PublishData = {
+export type PublishRequestData = {
     event: Event,
 };
 
-export type NotifyData = PublishData;
+export type NotifyRequestData = PublishRequestData;
+
+export type CreateOrderRequestData = {
+    userId: string,
+    productId: string,
+}
+
+export type DeleteOrderRequestData = {
+    userId: string,
+    orderId: string,
+}

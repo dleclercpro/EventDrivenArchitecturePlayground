@@ -48,6 +48,7 @@ export type User = {
 
 export type Order = {
     id: string,
+    userId: string,
     productId: string,
     timestamp: Date,
 }
