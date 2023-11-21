@@ -6,8 +6,8 @@ import { sleep } from '../../../CommonApp/src/utils/time';
 import TimeDuration from '../../../CommonApp/src/models/units/TimeDuration';
 import { TimeUnit } from '../../../CommonApp/src/types';
 import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
-import { BROKER_SERVICE, SERVICE } from '../config';
 import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
+import { BROKER_SERVICE, SERVICE } from '../config/services';
 
 const CreateOrderController: RequestHandler = async (req, res) => {
     try {

@@ -1,8 +1,9 @@
 import router from './routes';
-import { ENV, SERVICE } from './config';
+import { ENV } from './config';
 import logger from './logger';
 import { generateBasicServer } from '../../CommonApp/src/utils/server';
 import ServiceSubscriber from './models/ServiceSubscriber';
+import { SERVICE } from './config/services';
 
 
 
