@@ -7,7 +7,7 @@ const NotifyController: RequestHandler = async (req, res) => {
     try {
         const { event } = req.body as NotifyRequestData;
 
-        logger.info(`Event notification: ${event.name} [ID=$${event.id}]`);
+        logger.info(`Event notification: ${event.id}`);
 
         // Success
         return res.json({
