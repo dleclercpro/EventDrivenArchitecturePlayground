@@ -30,7 +30,7 @@ const ORDER_APP_HOST = process.env.ORDER_APP_HOST as string;
 const ORDER_APP_PORT = parseNumberText(process.env.ORDER_APP_PORT);
 
 export const ORDER_SERVICE: Service = {
-    name: ServiceName.Broker,
+    name: ServiceName.Order,
     protocol: ORDER_APP_PROTOCOL,
     host: ORDER_APP_HOST,
     port: ORDER_APP_PORT,
@@ -45,7 +45,7 @@ const PAYMENT_APP_HOST = process.env.PAYMENT_APP_HOST as string;
 const PAYMENT_APP_PORT = parseNumberText(process.env.PAYMENT_APP_PORT);
 
 export const PAYMENT_SERVICE: Service = {
-    name: ServiceName.Broker,
+    name: ServiceName.Payment,
     protocol: PAYMENT_APP_PROTOCOL,
     host: PAYMENT_APP_HOST,
     port: PAYMENT_APP_PORT,
@@ -60,7 +60,7 @@ const DELIVERY_APP_HOST = process.env.DELIVERY_APP_HOST as string;
 const DELIVERY_APP_PORT = parseNumberText(process.env.DELIVERY_APP_PORT);
 
 export const DELIVERY_SERVICE: Service = {
-    name: ServiceName.Broker,
+    name: ServiceName.Delivery,
     protocol: DELIVERY_APP_PROTOCOL,
     host: DELIVERY_APP_HOST,
     port: DELIVERY_APP_PORT,

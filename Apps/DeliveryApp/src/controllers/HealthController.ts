@@ -8,11 +8,11 @@ const HealthController: RequestHandler = async (req, res) => {
         let status;
 
         if (subscriber.hasSubscribed()) {
-            logger.debug(`Health check: ${HttpStatusCode}`);
             status = HttpStatusCode.OK;
+            logger.debug(`Health check: ${status}`);
         } else {
-            logger.warn(`Health check: ${HttpStatusCode}`);
             status = HttpStatusCode.SERVICE_UNAVAILABLE;
+            logger.warn(`Health check: ${status}`);
         }
 
         // Success
@@ -23,9 +23,7 @@ const HealthController: RequestHandler = async (req, res) => {
     } catch (err: any) {
 
         // Unknown error
-        return res.json({
-            code: HttpStatusCode.INTERNAL_SERVER_ERROR,
-        });
+        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
 }
 

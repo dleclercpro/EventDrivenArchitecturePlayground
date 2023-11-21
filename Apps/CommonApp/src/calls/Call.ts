@@ -1,10 +1,4 @@
-import { HttpStatusCode } from '../types/HTTPTypes';
-
-export type CallMethod = 'GET' | 'PUT' | 'POST' | 'DELETE';
-export type CallResponse<Data> = {
-    code: HttpStatusCode,
-    data: Data,
-};
+import { CallMethod, CallResponse } from '../types/APITypes';
 
 abstract class Call<RequestData = void, ResponseData = void> {
     protected abstract method: CallMethod;
@@ -14,7 +8,7 @@ abstract class Call<RequestData = void, ResponseData = void> {
         this.url = url;
     }
 
-    public async execute(data?: RequestData) {
+    public async execute(data: RequestData) {
         const options = {
             method: this.method,
             headers: { 'Content-Type': 'application/json' },

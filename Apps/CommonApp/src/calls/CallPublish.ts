@@ -1,6 +1,6 @@
-import { PublishData } from '../types/APITypes';
+import { CallMethod, PublishData } from '../types/APITypes';
 import { Service } from '../types/ServiceTypes';
-import Call, { CallMethod } from './Call';
+import Call from './Call';
 
 class CallPublish extends Call<PublishData> {
     protected method: CallMethod = 'POST';

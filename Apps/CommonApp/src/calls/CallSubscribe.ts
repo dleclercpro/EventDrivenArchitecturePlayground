@@ -1,6 +1,6 @@
-import { SubscribeData } from '../types/APITypes';
+import { CallMethod, SubscribeData } from '../types/APITypes';
 import { Service } from '../types/ServiceTypes';
-import Call, { CallMethod } from './Call';
+import Call from './Call';
 
 class CallSubscribe extends Call<SubscribeData> {
     protected method: CallMethod = 'PUT';

@@ -6,6 +6,7 @@ import { HealthCheck, Service } from '../../../CommonApp/src/types/ServiceTypes'
 import { EPOCH_TIME_INIT } from '../constants';
 import { ServiceName } from '../../../CommonApp/src/constants/services';
 import { DELIVERY_SERVICE, ORDER_SERVICE, PAYMENT_SERVICE } from '../config';
+import CallHealth from '../../../CommonApp/src/calls/CallHealth';
 
 const SERVICES = [ORDER_SERVICE, PAYMENT_SERVICE, DELIVERY_SERVICE];
 
@@ -42,27 +43,28 @@ const HealthController: RequestHandler = async (req, res) => {
         };
 
         await Promise.all(SERVICES.map(async (service: Service) => {
-            const { name, uri } = service;
+            logger.debug(`Requesting health check from '${service.name}' service...`);
 
-            const res = await fetch(`${uri}/health`);
+            const { code } = await new CallHealth(service).execute();
 
-            check[name] = {
+            check[service.name] = {
                 timestamp: new Date(),
-                result: res.status,
+                result: code,
             };
         }));
         
         logger.debug(`Health check results ${prettifyJSON(check)}`);
 
         // Success
-        return res.send(check);
+        return res.json({
+            code: HttpStatusCode.OK,
+            data: check,
+        });
 
     } catch (err: any) {
 
         // Unknown error
-        return res.json({
-            code: HttpStatusCode.INTERNAL_SERVER_ERROR,
-        });
+        return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
 }
 
