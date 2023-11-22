@@ -3,7 +3,7 @@ import CallHealth from '../../../CommonApp/src/models/calls/CallHealth';
 import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import { Service, ServiceHealthCheck } from '../../../CommonApp/src/types/ServiceTypes';
 import { prettifyJSON } from '../../../CommonApp/src/utils/string';
-import { EPOCH_TIME_INIT } from '../constants';
+import { EPOCH_TIME_INIT } from '../../../CommonApp/src/constants';
 import logger from '../logger';
 
 class HealthCheck {

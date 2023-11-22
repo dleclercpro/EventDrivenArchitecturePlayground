@@ -13,3 +13,5 @@ export const APP_NAME = 'Common';
 
 export const PACKAGE_NAME = name;
 export const PACKAGE_VERSION = version;
+
+export const EPOCH_TIME_INIT = new Date(0);

@@ -3,6 +3,11 @@ import { HttpStatusCode } from '../../../CommonApp/src/types/HTTPTypes';
 import logger from '../logger';
 import { NotifyRequestData } from '../../../CommonApp/src/types/APITypes';
 import { SUBSCRIBED_EVENTS } from '../config';
+import { EventName } from '../../../CommonApp/src/constants/events';
+import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
+import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
+import { BROKER_SERVICE, SERVICE } from '../config/services';
+import { EventOrderCreated } from '../../../CommonApp/src/types/EventTypes';
 
 const NotifyController: RequestHandler = async (req, res) => {
     try {
@@ -13,6 +18,23 @@ const NotifyController: RequestHandler = async (req, res) => {
         // Ensure event is subscribed to
         if (!SUBSCRIBED_EVENTS.includes(event.name)) {
             throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
+        }
+
+        if (event.name === EventName.OrderCreated) {
+            const { data: order } = event as EventOrderCreated;
+
+            // Payment has an 80% chance of working
+            if (Math.random() < 0.8) {
+                await new CallPublish(BROKER_SERVICE).execute({
+                    service: SERVICE.name,
+                    event: EventGenerator.generatePaymentSuccessEvent(order),
+                });
+            } else {
+                await new CallPublish(BROKER_SERVICE).execute({
+                    service: SERVICE.name,
+                    event: EventGenerator.generatePaymentFailureEvent(order),
+                });
+            }
         }
 
         // Success

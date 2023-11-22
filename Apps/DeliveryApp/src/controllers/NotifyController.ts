@@ -7,8 +7,11 @@ import WorkerFinder from '../models/WorkerFinder';
 import { BROKER_SERVICE, SERVICE } from '../config/services';
 import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
 import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
-import { Order } from '../../../CommonApp/src/types';
+import { Delivery, Order, TimeUnit } from '../../../CommonApp/src/types';
 import { SUBSCRIBED_EVENTS } from '../config';
+import { EventPaymentSuccess, EventPaymentFailure } from '../../../CommonApp/src/types/EventTypes';
+import { sleep } from '../../../CommonApp/src/utils/time';
+import TimeDuration from '../../../CommonApp/src/models/units/TimeDuration';
 
 const NotifyController: RequestHandler = async (req, res) => {
     try {
@@ -22,27 +25,48 @@ const NotifyController: RequestHandler = async (req, res) => {
         }
 
         if (event.name === EventName.PaymentSuccess) {
-            let done = false;
+            const { data: order } = event as EventPaymentSuccess;
 
-            // Type cast
-            const order = event.data as Order;
+            let done = false;
 
             // Try and find worker that does the job until the end
             while (!done) {
                 const worker = await WorkerFinder.find();
 
-                logger.debug(`Found worker: ${worker}`);
+                const now = new Date();
+
+                // Delivery started
+                const delivery: Delivery = {
+                    id: `Delivery-${worker}-${now.getTime()}-${crypto.randomUUID()}`,
+                    orderId: order.id,
+                    workerId: worker,
+                    startTime: now,
+                };
+
+                logger.debug(`Attempting delivery...`);
+
+                // Wait random amount of time for delivery to be brought to customer
+                const wait = new TimeDuration(5 * Math.random(), TimeUnit.Seconds);
+                logger.debug(`[Delivery will take: ${wait.format()}]`)
+                await sleep(wait);
     
                 // Worker has an 90% chance of completing work (e.g. might become sick,
                 // and need to cancel their deliveries)
-                if (Math.random() > 0.9) {
+                if (Math.random() < 0.9) {
+                    logger.debug(`Success!`);
+
+                    // Delivery done
+                    delivery.endTime = new Date();
+
                     await new CallPublish(BROKER_SERVICE).execute({
                         service: SERVICE.name,
-                        event: EventGenerator.generateDeliveryCompletedEvent(order),
+                        event: EventGenerator.generateDeliveryCompletedEvent(delivery),
                     });
     
                     // Job is now finally done
                     done = true;
+                } else {
+                    logger.debug(`Failure.`);
                 }
             }
         }

@@ -1,6 +1,7 @@
 import os from 'os';
-import { Event, Order } from '../types';
+import { Delivery, Event, Order } from '../types';
 import { EventName } from '../constants/events';
+import { EventDeliveryCompleted, EventDeliveryStarted, EventOrderCancelled, EventOrderCompleted, EventOrderCreated, EventPaymentFailure, EventPaymentSuccess } from '../types/EventTypes';
 
 class EventGenerator {
     private static instance?: EventGenerator;
@@ -29,32 +30,32 @@ class EventGenerator {
         };
     }
 
-    public generateOrderCreatedEvent(data: { orderId: string, userId: string, productId: string }) {
-        return this.generateEvent(EventName.OrderCreated, data);
+    public generateOrderCreatedEvent(data: Order) {
+        return this.generateEvent(EventName.OrderCreated, data) as EventOrderCreated;
     }
 
-    public generateOrderCancelledEvent(data: any) {
-        return this.generateEvent(EventName.OrderCancelled, data);
+    public generateOrderCancelledEvent(data: Order) {
+        return this.generateEvent(EventName.OrderCancelled, data) as EventOrderCancelled;
     }
 
-    public generateOrderCompletedEvent(data: any) {
-        return this.generateEvent(EventName.OrderCompleted, data);
+    public generateOrderCompletedEvent(data: Order) {
+        return this.generateEvent(EventName.OrderCompleted, data) as EventOrderCompleted;
     }
 
-    public generatePaymentSuccessEvent(data: any) {
-        return this.generateEvent(EventName.PaymentSuccess, data);
+    public generatePaymentSuccessEvent(data: Order) {
+        return this.generateEvent(EventName.PaymentSuccess, data) as EventPaymentSuccess;
     }
 
-    public generatePaymentFailureEvent(data: any) {
-        return this.generateEvent(EventName.PaymentFailure, data);
+    public generatePaymentFailureEvent(data: Order) {
+        return this.generateEvent(EventName.PaymentFailure, data) as EventPaymentFailure;
     }
 
-    public generateDeliveryStartedEvent(data: Order) {
-        return this.generateEvent(EventName.DeliveryStarted, data);
+    public generateDeliveryStartedEvent(data: Delivery) {
+        return this.generateEvent(EventName.DeliveryStarted, data) as EventDeliveryStarted;
     }
 
-    public generateDeliveryCompletedEvent(data: Order) {
-        return this.generateEvent(EventName.DeliveryCompleted, data);
+    public generateDeliveryCompletedEvent(data: Delivery) {
+        return this.generateEvent(EventName.DeliveryCompleted, data) as EventDeliveryCompleted;
     }
 }
 

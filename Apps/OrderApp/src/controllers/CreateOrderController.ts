@@ -16,17 +16,18 @@ const CreateOrderController: RequestHandler = async (req, res) => {
         logger.info(`Creation of order for user [ID=${userId}] and product [ID=${productId}]...`);
 
         // Generate fake order
-        const now = new Date().getTime();
-        const orderId = `${userId}-${productId}-${now}-${crypto.randomUUID()}`;
+        const now = new Date();
+        const orderId = `${userId}-${productId}-${now.getTime()}-${crypto.randomUUID()}`;
 
         // Fake DB communication latency
         await sleep(new TimeDuration(500, TimeUnit.Milliseconds));
 
         // Emit order creation event
         const event = EventGenerator.generateOrderCreatedEvent({
-            orderId,
+            id: orderId,
             userId,
-            productId, 
+            productId,
+            startTime: now,
         });
 
         logger.info(`Publishing '${event.name}' event to broker...`);

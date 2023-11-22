@@ -50,13 +50,14 @@ export type Order = {
     id: string,
     userId: string,
     productId: string,
-    timestamp: Date,
+    startTime: Date,
+    endTime?: Date,
 }
 
 export type Delivery = {
     id: string,
+    orderId: string,
     workerId: string,
-    start: Date,
-    abort?: Date,
-    end?: Date,
+    startTime: Date,
+    endTime?: Date,
 }
