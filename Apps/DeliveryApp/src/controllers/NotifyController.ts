@@ -8,11 +8,16 @@ import { BROKER_SERVICE, SERVICE } from '../config/services';
 import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
 import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
 import { Order } from '../../../CommonApp/src/types';
+import { SUBSCRIBED_EVENTS } from '../config';
 
 const NotifyController: RequestHandler = async (req, res) => {
     try {
         const { event } = req.body as NotifyRequestData;
-        const { data } = event;
+
+        // Ensure event is subscribed to
+        if (!SUBSCRIBED_EVENTS.includes(event.name)) {
+            throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
+        }
 
         logger.info(`Event notification: ${event.id}`);
 
@@ -20,7 +25,7 @@ const NotifyController: RequestHandler = async (req, res) => {
             let done = false;
 
             // Type cast
-            const order = data as Order;
+            const order = event.data as Order;
 
             // Try and find worker that does the job until the end
             while (!done) {
