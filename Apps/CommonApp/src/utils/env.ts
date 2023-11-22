@@ -15,7 +15,7 @@ export const loadEnvironment = () => {
     }
     
     if (!ENVIRONMENTS.includes(env)) {
-        console.error(`Invalid environment variable: '${env}'`);
+        console.error(`Invalid environment variable: ${env}`);
         process.exit(-1);
     }
 
@@ -26,7 +26,7 @@ export const loadEnvironment = () => {
     }
     
     dotenv.config({ path: filepath });
-    console.debug(`Loaded environment: '${env}'\n`);
+    console.debug(`Loaded environment: ${env}\n`);
 
     return env;
 }

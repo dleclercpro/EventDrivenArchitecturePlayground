@@ -39,8 +39,8 @@ const NotifyController: RequestHandler = async (req, res) => {
             // FIXME: Fetch order from DB (fake an order for now)
             const order: Order = {
                 id: delivery.orderId,
-                userId: '',
-                productId: '',
+                userId: 'DUMMY_USER',
+                productId: 'DUMMY_PRODUCT',
                 startTime: EPOCH_TIME_INIT,
                 endTime: now,
             };
