@@ -13,7 +13,7 @@ const CreateOrderController: RequestHandler = async (req, res) => {
     try {
         const { userId, productId } = req.body as CreateOrderRequestData;
 
-        logger.info(`Creation of order for user [ID=${userId}] and product [ID=${productId}]...`);
+        logger.info(`Creation of order: [UserID=${userId}, ProductID=${productId}]...`);
 
         // Generate fake order
         const now = new Date();
