@@ -10,7 +10,7 @@ const server = generateBasicServer(router);
 
 const execute = async () => {
     server.listen(SERVICE.port, () => {
-        logger.info(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
+        logger.debug(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
     });
 }
 

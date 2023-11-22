@@ -23,21 +23,21 @@ class WorkerFinder {
 
         // Look for worker until one accepts work
         while (!worker) {
-            logger.debug(`Searching for suitable worker...`);
+            logger.info(`Searching for suitable worker...`);
 
             // Random amount of time needed to find most suitable worker
             const wait = new TimeDuration(5 * Math.random(), TimeUnit.Seconds);
-            logger.debug(`[Worker search will take: ${wait.format()}]`);
+            logger.info(`[Worker search will take: ${wait.format()}]`);
             await sleep(wait);
 
-            logger.debug(`Worker found.`);
+            logger.info(`Worker found.`);
 
             // 50/50 chance of worker accepting work
             if (Math.random() > 0.5) {
                 worker = crypto.randomUUID();
-                logger.debug(`Worker accepted job.`);
+                logger.info(`Worker accepted job.`);
             } else {
-                logger.debug(`Worker declined job.`);
+                logger.info(`Worker declined job.`);
             }
         }
 

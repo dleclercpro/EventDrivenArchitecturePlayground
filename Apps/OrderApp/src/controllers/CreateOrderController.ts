@@ -30,7 +30,7 @@ const CreateOrderController: RequestHandler = async (req, res) => {
             startTime: now,
         });
 
-        logger.info(`Publishing '${event.name}' event to broker...`);
+        logger.debug(`Publishing '${event.name}' event to broker...`);
 
         await new CallPublish(BROKER_SERVICE).execute({
             event,

@@ -8,7 +8,7 @@ const PublishController: RequestHandler = async (req, res) => {
     try {
         const { event, service } = req.body as PublishRequestData;
 
-        logger.info(`Received publication of a '${event.name}' event from the '${service}' service.`);
+        logger.debug(`Received '${event.name}' event publication from '${service}' service.`);
 
         await NotificationsManager.notify(event);
         

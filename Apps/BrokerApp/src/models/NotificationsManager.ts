@@ -23,7 +23,7 @@ class NotificationsManager {
 
         // Push event to all subscribed services
         await Promise.all(subscribers.map(async (service) => {
-            logger.debug(`Notifying '${service.name}' service of '${event.name}' event...`);
+            logger.debug(`Sending '${event.name}' event notification to '${service.name}' service...`);
 
             const { code, data } = await new CallNotify(service).execute({
                 event,

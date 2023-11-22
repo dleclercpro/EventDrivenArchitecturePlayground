@@ -12,7 +12,7 @@ export const subscriber = new ServiceSubscriber();
 
 const execute = async () => {
     server.listen(SERVICE.port, async () => {
-        logger.info(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
+        logger.debug(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
 
         await subscriber.createSubscriptions();
     });
