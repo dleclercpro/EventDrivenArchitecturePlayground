@@ -36,14 +36,14 @@ const ScenarioController: RequestHandler = async (req, res) => {
             const userId = crypto.randomUUID();
             const productId = crypto.randomUUID();
 
-            const { data } = await new CallCreateOrder().execute({
+            const { code, data } = await new CallCreateOrder().execute({
                 userId,
                 productId,
             });
 
             // Success
             return res.json({
-                code: HttpStatusCode.OK,
+                code,
                 data,
             });
         }
