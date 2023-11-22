@@ -53,7 +53,7 @@ const NotifyController: RequestHandler = async (req, res) => {
                 // Worker has an 90% chance of completing work (e.g. might become sick,
                 // and need to cancel their deliveries)
                 if (Math.random() < 0.9) {
-                    logger.debug(`Success!`);
+                    logger.debug(`Delivery successful.`);
 
                     // Delivery done
                     delivery.endTime = new Date();
@@ -66,7 +66,7 @@ const NotifyController: RequestHandler = async (req, res) => {
                     // Job is now finally done
                     done = true;
                 } else {
-                    logger.debug(`Failure.`);
+                    logger.debug(`Delivery aborted. Re-assigning job to different worker...`);
                 }
             }
         }
