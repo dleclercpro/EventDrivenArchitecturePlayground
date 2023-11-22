@@ -1,6 +1,6 @@
 {
   "name": "event-driven-architecture-playground--order",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "David Leclerc",
   "main": "./src/index.ts",
   "scripts": {
