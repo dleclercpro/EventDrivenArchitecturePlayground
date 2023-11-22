@@ -1,11 +1,11 @@
-import { EventName } from '../../../CommonApp/src/constants/events';
 import Subscriber from '../../../CommonApp/src/models/Subscriber';
+import { SUBSCRIBED_EVENTS } from '../config';
 import { BROKER_SERVICE, SERVICE } from '../config/services';
 
 class ServiceSubscriber extends Subscriber {
     protected broker = BROKER_SERVICE;
     protected service = SERVICE;
-    protected events = [EventName.PaymentSuccess];
+    protected events = SUBSCRIBED_EVENTS;
 }
 
 export default ServiceSubscriber;
