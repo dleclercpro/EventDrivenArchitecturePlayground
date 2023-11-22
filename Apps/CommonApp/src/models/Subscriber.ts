@@ -2,6 +2,9 @@ import { EventName } from '../../../CommonApp/src/constants/events';
 import CallSubscribe from '../../../CommonApp/src/models/calls/CallSubscribe';
 import { Service } from '../types/ServiceTypes';
 import { HttpStatusCode } from '../types/HTTPTypes';
+import { sleep } from '../utils/time';
+import TimeDuration from './units/TimeDuration';
+import { TimeUnit } from '../types';
 
 abstract class Subscriber {
     protected abstract broker: Service;
@@ -18,19 +21,50 @@ abstract class Subscriber {
         return this.done;
     }
 
+    protected async subscribe(event: EventName) {
+        const { code } = await new CallSubscribe(this.broker).execute({
+            service: this.service.name,
+            event,
+        });
+
+        return code as HttpStatusCode;
+    }
+
+    protected async createSubscription(event: EventName, maxRetries: number = 3) {
+        let status: HttpStatusCode | -1 = -1;
+        let retries: number = 0;
+
+        while (status !== HttpStatusCode.OK && retries < maxRetries) {
+            try {
+                status = await this.subscribe(event);
+            } catch (err: any) {
+                retries += 1;
+
+                // Back off exponentially with each failed attempt
+                // Attempt 0: 1s
+                // Attempt 1: 2s
+                // Attempt 2: 4s
+                await sleep(new TimeDuration(Math.pow(2, retries), TimeUnit.Seconds))
+            }
+        }
+
+        if (status !== HttpStatusCode.OK) {
+            throw new Error('CANNOT_SUBSCRIBE_EVENT');
+        }
+    }
+
     public async createSubscriptions() {
 
         // Subscribe to relevant events via broker
-        const statuses = await Promise.all(this.events.map(async (event: EventName) => {
-            const { code } = await new CallSubscribe(this.broker).execute({
-                service: this.service.name,
-                event,
-            });
-
-            return code;
+        const results = await Promise.all(this.events.map(async (event: EventName) => {
+            return this.createSubscription(event)
+                .then(() => true)
+                .catch(() => false);
         }));
 
-        this.done = statuses.every(s => s === HttpStatusCode.OK);
+        // Subscriber's job is considered done if all subscriptions
+        // were successful
+        this.done = results.every(r => r);
     }
 }
 
