@@ -18,7 +18,7 @@ const NotifyController: RequestHandler = async (req, res) => {
             throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
         }
 
-        logger.info(`[NOTIFICATION] ${event.id}`);
+        logger.debug(`Notification: ${event.name}`);
 
         if (event.name === EventName.OrderCreated) {
             const { data: order } = event as EventOrderCreated;

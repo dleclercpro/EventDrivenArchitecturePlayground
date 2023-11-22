@@ -20,7 +20,7 @@ const NotifyController: RequestHandler = async (req, res) => {
             throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
         }
 
-        logger.info(`[NOTIFICATION] ${event.id}`);
+        logger.debug(`Notification: ${event.name}`);
 
         if (event.name === EventName.PaymentFailure) {
             const { data: order } = event as EventPaymentFailure;
@@ -36,7 +36,7 @@ const NotifyController: RequestHandler = async (req, res) => {
 
             const now = new Date();
 
-            // FIXME: Fetch order from DB
+            // FIXME: Fetch order from DB (fake an order for now)
             const order: Order = {
                 id: delivery.orderId,
                 userId: '',
