@@ -8,12 +8,12 @@ const NotifyController: RequestHandler = async (req, res) => {
     try {
         const { event } = req.body as NotifyRequestData;
 
+        logger.info(`Event notification: ${event.id}`);
+
         // Ensure event is subscribed to
         if (!SUBSCRIBED_EVENTS.includes(event.name)) {
             throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
         }
-
-        logger.info(`Event notification: ${event.id}`);
 
         // Success
         return res.json({
