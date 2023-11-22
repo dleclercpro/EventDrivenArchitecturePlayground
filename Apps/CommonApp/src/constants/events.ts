@@ -5,6 +5,5 @@ export enum EventName {
     PaymentSuccess = 'PaymentSuccess',
     PaymentFailure = 'PaymentFailure',
     DeliveryStarted = 'DeliveryStarted',
-    DeliveryAborted = 'DeliveryAborted',
     DeliveryCompleted = 'DeliveryCompleted',
 }

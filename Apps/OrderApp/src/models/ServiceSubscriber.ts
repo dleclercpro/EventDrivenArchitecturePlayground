@@ -5,7 +5,7 @@ import { BROKER_SERVICE, SERVICE } from '../config/services';
 class ServiceSubscriber extends Subscriber {
     protected broker = BROKER_SERVICE;
     protected service = SERVICE;
-    protected events = [EventName.PaymentFailure, EventName.DeliveryAborted];
+    protected events = [EventName.PaymentFailure, EventName.DeliveryCompleted];
 }
 
 export default ServiceSubscriber;

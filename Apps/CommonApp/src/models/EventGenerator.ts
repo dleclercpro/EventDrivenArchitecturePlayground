@@ -1,5 +1,5 @@
 import os from 'os';
-import { Event } from '../types';
+import { Event, Order } from '../types';
 import { EventName } from '../constants/events';
 
 class EventGenerator {
@@ -49,15 +49,11 @@ class EventGenerator {
         return this.generateEvent(EventName.PaymentFailure, data);
     }
 
-    public generateDeliveryStartedEvent(data: any) {
+    public generateDeliveryStartedEvent(data: Order) {
         return this.generateEvent(EventName.DeliveryStarted, data);
     }
 
-    public generateDeliveryAbortedEvent(data: any) {
-        return this.generateEvent(EventName.DeliveryAborted, data);
-    }
-
-    public generateDeliveryCompletedEvent(data: any) {
+    public generateDeliveryCompletedEvent(data: Order) {
         return this.generateEvent(EventName.DeliveryCompleted, data);
     }
 }
