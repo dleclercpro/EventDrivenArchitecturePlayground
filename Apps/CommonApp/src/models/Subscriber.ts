@@ -27,7 +27,7 @@ abstract class Subscriber {
             event,
         });
 
-        return code as HttpStatusCode;
+        return code;
     }
 
     protected async createSubscription(event: EventName, maxRetries: number = 3) {
