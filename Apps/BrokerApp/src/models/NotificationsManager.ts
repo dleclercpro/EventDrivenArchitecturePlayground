@@ -36,9 +36,9 @@ class NotificationsManager {
         // Ensure all services were notified successfully
         responses.forEach(({ service, response }) => {
             if (response.code === HttpStatusCode.OK) {
-                logger.debug(`Service successfully notified of event '${event.name}': ${service}`);
+                logger.debug(`Successfully notified '${service.name}' service of event: ${event.name}`);
             } else {
-                logger.fatal(`Service could NOT be notified of event '${event.name}': ${service}`);
+                logger.fatal(`Failed to notify '${service.name}' service of event: ${event.name}`);
             }
         });
     }
