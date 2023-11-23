@@ -8,6 +8,9 @@ import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
 import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
 import { BROKER_SERVICE, SERVICE } from '../config/services';
 import { EventOrderCreated } from '../../../CommonApp/src/types/EventTypes';
+import { Event } from '../../../CommonApp/src/types';
+
+
 
 const NotifyController: RequestHandler = async (req, res) => {
     try {
@@ -18,29 +21,13 @@ const NotifyController: RequestHandler = async (req, res) => {
             throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
         }
 
-        logger.debug(`Notification: ${event.name}`);
-
-        if (event.name === EventName.OrderCreated) {
-            const { data: order } = event as EventOrderCreated;
-
-            // Payment has an 80% chance of working
-            if (Math.random() < 0.8) {
-                await new CallPublish(BROKER_SERVICE).execute({
-                    service: SERVICE.name,
-                    event: EventGenerator.generatePaymentSuccessEvent(order),
-                });
-            } else {
-                await new CallPublish(BROKER_SERVICE).execute({
-                    service: SERVICE.name,
-                    event: EventGenerator.generatePaymentFailureEvent(order),
-                });
-            }
-        }
-
-        // Success
-        return res.json({
+        // Tell broker the event was well received
+        res.json({
             code: HttpStatusCode.OK,
         });
+
+        // Process expected event
+        await processEvent(event);
 
     } catch (err: any) {
         logger.error(err);
@@ -49,5 +36,30 @@ const NotifyController: RequestHandler = async (req, res) => {
         return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
 }
+
+
+
+const processEvent = async (event: Event) => {
+    logger.debug(`Notification: ${event.name}`);
+
+    if (event.name === EventName.OrderCreated) {
+        const { data: order } = event as EventOrderCreated;
+
+        // Payment has an 80% chance of working
+        if (Math.random() < 0.8) {
+            await new CallPublish(BROKER_SERVICE).execute({
+                service: SERVICE.name,
+                event: EventGenerator.generatePaymentSuccessEvent(order),
+            });
+        } else {
+            await new CallPublish(BROKER_SERVICE).execute({
+                service: SERVICE.name,
+                event: EventGenerator.generatePaymentFailureEvent(order),
+            });
+        }
+    }
+}
+
+
 
 export default NotifyController;

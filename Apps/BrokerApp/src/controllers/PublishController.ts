@@ -10,12 +10,13 @@ const PublishController: RequestHandler = async (req, res) => {
 
         logger.debug(`Received event publication from '${service}' service: ${event.name}`);
 
-        await NotificationsManager.notify(event);
-        
-        // Success
-        return res.json({
+        // Tell publisher the event was well received
+        res.json({
             code: HttpStatusCode.OK,
         });
+
+        // Notify services subscribed to event
+        await NotificationsManager.notify(event);
 
     } catch (err: any) {
         logger.error(err);

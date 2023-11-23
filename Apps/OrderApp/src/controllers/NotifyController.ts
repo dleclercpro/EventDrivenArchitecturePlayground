@@ -8,8 +8,10 @@ import { EventDeliveryCompleted, EventPaymentFailure } from '../../../CommonApp/
 import CallPublish from '../../../CommonApp/src/models/calls/CallPublish';
 import { BROKER_SERVICE, SERVICE } from '../config/services';
 import EventGenerator from '../../../CommonApp/src/models/EventGenerator';
-import { Order } from '../../../CommonApp/src/types';
+import { Event, Order } from '../../../CommonApp/src/types';
 import { EPOCH_TIME_INIT } from '../../../CommonApp/src/constants';
+
+
 
 const NotifyController: RequestHandler = async (req, res) => {
     try {
@@ -20,41 +22,13 @@ const NotifyController: RequestHandler = async (req, res) => {
             throw new Error(`NOT_SUBSCRIBED_TO_EVENT`);
         }
 
-        logger.debug(`Notification: ${event.name}`);
-
-        if (event.name === EventName.PaymentFailure) {
-            const { data: order } = event as EventPaymentFailure;
-
-            await new CallPublish(BROKER_SERVICE).execute({
-                service: SERVICE.name,
-                event: EventGenerator.generateOrderCancelledEvent(order),
-            });
-        }
-
-        if (event.name === EventName.DeliveryCompleted) {
-            const { data: delivery } = event as EventDeliveryCompleted;
-
-            const now = new Date();
-
-            // FIXME: Fetch order from DB (fake an order for now)
-            const order: Order = {
-                id: delivery.orderId,
-                userId: 'DUMMY_USER',
-                productId: 'DUMMY_PRODUCT',
-                startTime: EPOCH_TIME_INIT,
-                endTime: now,
-            };
-
-            await new CallPublish(BROKER_SERVICE).execute({
-                service: SERVICE.name,
-                event: EventGenerator.generateOrderCompletedEvent(order),
-            });
-        }
-
-        // Success
-        return res.json({
+        // Tell broker the event was well received
+        res.json({
             code: HttpStatusCode.OK,
         });
+
+        // Process expected event
+        await processEvent(event);
 
     } catch (err: any) {
         logger.error(err);
@@ -63,5 +37,42 @@ const NotifyController: RequestHandler = async (req, res) => {
         return res.sendStatus(HttpStatusCode.INTERNAL_SERVER_ERROR);
     }
 }
+
+
+
+const processEvent = async (event: Event) => {
+    logger.debug(`Notification: ${event.name}`);
+
+    if (event.name === EventName.PaymentFailure) {
+        const { data: order } = event as EventPaymentFailure;
+
+        await new CallPublish(BROKER_SERVICE).execute({
+            service: SERVICE.name,
+            event: EventGenerator.generateOrderCancelledEvent(order),
+        });
+    }
+
+    if (event.name === EventName.DeliveryCompleted) {
+        const { data: delivery } = event as EventDeliveryCompleted;
+
+        const now = new Date();
+
+        // FIXME: Fetch order from DB (fake an order for now)
+        const order: Order = {
+            id: delivery.orderId,
+            userId: 'DUMMY_USER',
+            productId: 'DUMMY_PRODUCT',
+            startTime: EPOCH_TIME_INIT,
+            endTime: now,
+        };
+
+        await new CallPublish(BROKER_SERVICE).execute({
+            service: SERVICE.name,
+            event: EventGenerator.generateOrderCompletedEvent(order),
+        });
+    }
+}
+
+
 
 export default NotifyController;
