@@ -1,6 +1,6 @@
 {
   "name": "event-driven-architecture-playground--payment",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "David Leclerc",
   "main": "./src/index.ts",
   "scripts": {
