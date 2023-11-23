@@ -14,3 +14,10 @@ This service takes care of order payments.
 
 ### Delivery
 This services takes care of order shipments.
+
+## Event Flow
+Below is a diagram of the event flow implemented in this app. Each square represents the emission of an event. Each diamond represents a process, which takes place in one of the aforementioned services.
+
+<p align="center" width="100%">
+  <img alt="Event Flow" src="./Diagrams/EventFlow.drawio.svg" width="75%" />
+</p>
