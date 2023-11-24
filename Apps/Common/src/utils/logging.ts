@@ -1,9 +1,10 @@
 import pino, { TransportTargetOptions } from 'pino';
 import pretty from 'pino-pretty';
 import { Environment } from '../types';
+import { LOGGING_LEVEL } from '../config';
 
 const CONSOLE_TRANSPORT: TransportTargetOptions = {
-    level: 'trace',
+    level: LOGGING_LEVEL,
     target: 'pino-pretty',
     options: {
         colorize: true,
@@ -17,7 +18,7 @@ export const getLoggerByEnvironment = (env: Environment) => {
             return pino(pretty({ sync: true }));
         default:
             return pino({
-                level: 'trace',
+                level: LOGGING_LEVEL,
                 timestamp: pino.stdTimeFunctions.isoTime,
                 transport: CONSOLE_TRANSPORT,
             });
