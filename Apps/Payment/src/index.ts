@@ -8,18 +8,18 @@ import ServiceSubscriber from './models/ServiceSubscriber';
 
 
 
-export const Server = new AppServer(logger);
-export const Subscriber = new ServiceSubscriber();
+export const APP_SERVER = new AppServer(logger);
+export const SUBSCRIBER = new ServiceSubscriber();
 
 
 
 const execute = async () => {
-    const { server } = await Server.setup(router);
+    const { server } = await APP_SERVER.setup(router);
 
     server.listen(SERVICE.port, async () => {
         logger.debug(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
 
-        await Subscriber.createSubscriptions();
+        await SUBSCRIBER.createSubscriptions();
     });
 }
 
@@ -28,11 +28,11 @@ const execute = async () => {
 // Handle graceful shutdown
 process.on('SIGTERM', async () => {
     logger.trace(`Received SIGTERM signal.`);
-    await Server.stop();
+    await APP_SERVER.stop();
 });
 process.on('SIGINT', async () => {
     logger.trace(`Received SIGINT signal.`);
-    await Server.stop();
+    await APP_SERVER.stop();
 });
 
 
