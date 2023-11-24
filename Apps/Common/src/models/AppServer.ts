@@ -6,13 +6,16 @@ import { Logger } from 'pino';
 import TimeDuration from './units/TimeDuration';
 import { TimeUnit } from '../types';
 import { sleep } from '../utils/time';
+import { Service } from '../types/ServiceTypes';
 
 class AppServer {
+    protected service: Service;
     protected logger: Logger;
     protected server?: Server;
     protected app?: express.Express;
 
-    public constructor(logger: Logger) {
+    public constructor(service: Service, logger: Logger) {
+        this.service = service;
         this.logger = logger;
     }
 
@@ -32,11 +35,6 @@ class AppServer {
     
         // Define server's API endpoints
         this.app.use('/', router);
-
-        return {
-            server: this.server,
-            app: this.app,
-        };
     }
 
     public getServer() {
@@ -47,8 +45,26 @@ class AppServer {
         return this.app;
     }
 
-    public async stop() {
-        await Promise.race([this.shutdown(), this.kill()]);
+    public async start() {
+        if (!this.server) {
+            throw new Error('MISSING_SERVER');
+        }
+
+        this.server.listen(this.service.port, async () => {
+            this.logger.debug(`'${this.service.name}' app server listening at: ${this.service.uri}`);
+        });
+    }
+
+    public async stop(timeout: TimeDuration = new TimeDuration(5, TimeUnit.Seconds)) {
+        const waitAndKill = async (wait: TimeDuration) => {
+            await sleep(wait);
+
+            this.logger.fatal(`Server did not shut down in time.`);
+
+            await this.kill();
+        }
+
+        await Promise.race([this.shutdown(), waitAndKill(timeout)]);
     }
 
     protected async shutdown() {
@@ -63,7 +79,8 @@ class AppServer {
                     reject(err);
                 }
 
-                this.logger.info(`Server shut down gracefully. Exiting process...`);
+                this.logger.info(`Server shut down gracefully.`);
+                this.logger.info(`Exiting process...`);
                 resolve(process.exit(0));
             });
         });
@@ -74,9 +91,7 @@ class AppServer {
             throw new Error('MISSING_SERVER');
         }
 
-        await sleep(new TimeDuration(5, TimeUnit.Seconds));
-
-        this.logger.fatal(`Server did not shut down in time. Forcibly exiting process...`);
+        this.logger.fatal(`Forcibly exiting process...`);
         return process.exit(1);
     }
 }
