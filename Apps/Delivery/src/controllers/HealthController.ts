@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express';
 import { HttpStatusCode } from '../../../Common/src/types/HTTPTypes';
 import logger from '../logger';
-import { subscriber } from '..';
+import { Subscriber } from '..';
 
 const HealthController: RequestHandler = async (req, res) => {
     try {
         let status;
 
-        if (subscriber.isDone()) {
+        if (Subscriber.isDone()) {
             status = HttpStatusCode.OK;
             logger.trace(`Health check: ${status}`);
         } else {

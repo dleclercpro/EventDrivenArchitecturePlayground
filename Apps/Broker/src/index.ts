@@ -3,16 +3,18 @@ import { ENV } from './config';
 import { SERVICE } from './config/services';
 import router from './routes';
 import logger from './logger';
-import { generateBasicServer, shutdownServer } from '../../Common/src/utils/server';
+import AppServer from '../../Common/src/models/AppServer';
 
 
 
-const { server, app } = generateBasicServer(router);
+export const Server = new AppServer(logger);
 
 
 
 const execute = async () => {
-    server.listen(SERVICE.port, () => {
+    const { server } = await Server.setup(router);
+
+    server.listen(SERVICE.port, async () => {
         logger.debug(`'${SERVICE.name}' app listening in ${ENV} mode at: ${SERVICE.uri}`);
     });
 }
@@ -20,13 +22,13 @@ const execute = async () => {
 
 
 // Handle graceful shutdown
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
     logger.trace(`Received SIGTERM signal.`);
-    shutdownServer(server, logger);
+    await Server.stop();
 });
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
     logger.trace(`Received SIGINT signal.`);
-    shutdownServer(server, logger);
+    await Server.stop();
 });
 
 
