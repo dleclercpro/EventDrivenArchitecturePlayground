@@ -3,6 +3,7 @@ version: '3.8'
 services:
   broker:
     container_name: broker-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/broker
     build:
       context: ./Apps
@@ -16,6 +17,7 @@ services:
 
   order:
     container_name: order-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/order
     build:
       context: ./Apps
@@ -29,6 +31,7 @@ services:
 
   payment:
     container_name: payment-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/payment
     build:
       context: ./Apps
@@ -42,6 +45,7 @@ services:
 
   delivery:
     container_name: delivery-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/delivery
     build:
       context: ./Apps
