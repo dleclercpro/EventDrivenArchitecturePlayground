@@ -3,10 +3,11 @@ version: '3.8'
 services:
   broker:
     container_name: broker-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/broker
     build:
       context: ./Apps
-      dockerfile: BrokerApp.Dockerfile
+      dockerfile: Broker.Dockerfile
     ports:
       - 4000:4000
     networks:
@@ -16,10 +17,11 @@ services:
 
   order:
     container_name: order-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/order
     build:
       context: ./Apps
-      dockerfile: OrderApp.Dockerfile
+      dockerfile: Order.Dockerfile
     networks:
       - app
     depends_on:
@@ -29,10 +31,11 @@ services:
 
   payment:
     container_name: payment-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/payment
     build:
       context: ./Apps
-      dockerfile: PaymentApp.Dockerfile
+      dockerfile: Payment.Dockerfile
     networks:
       - app
     depends_on:
@@ -42,10 +45,11 @@ services:
 
   delivery:
     container_name: delivery-app
+    stop_grace_period: 1s # SIGKILL after 1s
     image: eda-playground/delivery
     build:
       context: ./Apps
-      dockerfile: DeliveryApp.Dockerfile
+      dockerfile: Delivery.Dockerfile
     networks:
       - app
     depends_on:
