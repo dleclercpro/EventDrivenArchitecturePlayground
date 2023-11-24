@@ -1,14 +1,17 @@
-import router from './routes';
+import process from 'process';
 import { ENV } from './config';
-import logger from './logger';
-import { generateBasicServer } from '../../Common/src/utils/server';
-import ServiceSubscriber from './models/ServiceSubscriber';
 import { SERVICE } from './config/services';
+import router from './routes';
+import logger from './logger';
+import { generateBasicServer, shutdownServer } from '../../Common/src/utils/server';
+import ServiceSubscriber from './models/ServiceSubscriber';
 
 
 
-export const server = generateBasicServer(router);
+const { server, app } = generateBasicServer(router);
 export const subscriber = new ServiceSubscriber();
+
+
 
 const execute = async () => {
     server.listen(SERVICE.port, async () => {
@@ -20,9 +23,24 @@ const execute = async () => {
 
 
 
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+    logger.trace(`Received SIGTERM signal.`);
+    shutdownServer(server, logger);
+});
+process.on('SIGINT', () => {
+    logger.trace(`Received SIGINT signal.`);
+    shutdownServer(server, logger);
+});
+
+
+
+// Run server
 execute()
     .catch((err) => {
         logger.fatal(err, `Uncaught error:`);
     });
+
+
 
 export default execute;

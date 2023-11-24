@@ -3,7 +3,7 @@ import pretty from 'pino-pretty';
 import { Environment } from '../types';
 
 const CONSOLE_TRANSPORT: TransportTargetOptions = {
-    level: 'debug',
+    level: 'trace',
     target: 'pino-pretty',
     options: {
         colorize: true,
@@ -17,7 +17,7 @@ export const getLoggerByEnvironment = (env: Environment) => {
             return pino(pretty({ sync: true }));
         default:
             return pino({
-                level: 'debug',
+                level: 'trace',
                 timestamp: pino.stdTimeFunctions.isoTime,
                 transport: CONSOLE_TRANSPORT,
             });
