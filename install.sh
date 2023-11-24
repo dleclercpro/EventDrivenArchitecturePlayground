@@ -2,36 +2,36 @@ cd ./Apps
 
 
 
-echo "Installing 'CommonApp'..."
-cd ./CommonApp
+echo "Installing 'Common' app..."
+cd ./Common
 npm i > /dev/null
 cd ..
 
 
 
-echo "Installing 'BrokerApp'..."
-cd ./BrokerApp
+echo "Installing 'Broker' app..."
+cd ./Broker
 npm i > /dev/null
 cd ..
 
 
 
-echo "Installing 'OrderApp'..."
-cd ./OrderApp
+echo "Installing 'Order' app..."
+cd ./Order
 npm i > /dev/null
 cd ..
 
 
 
-echo "Installing 'PaymentApp'..."
-cd ./PaymentApp
+echo "Installing 'Payment' app..."
+cd ./Payment
 npm i > /dev/null
 cd ..
 
 
 
-echo "Installing 'DeliveryApp'..."
-cd ./DeliveryApp
+echo "Installing 'Delivery' app..."
+cd ./Delivery
 npm i > /dev/null
 cd ..
 
