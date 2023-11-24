@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the BrokerApp Docker image
-      run: docker build . --file /Apps/BrokerApp.Dockerfile --tag eda-playground--broker:$(date +%s)
+      run: docker build . --file ./Apps/BrokerApp.Dockerfile --tag eda-playground--broker:$(date +%s)
