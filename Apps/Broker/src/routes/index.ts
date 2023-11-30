@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
 import HealthController from '../controllers/HealthController';
 import SubscribeController from '../controllers/SubscribeController';
 import UnsubscribeController from '../controllers/UnsubscribeController';
@@ -8,6 +8,11 @@ import ScenarioController from '../controllers/ScenarioController';
 
 
 const router = Router();
+
+
+
+// Public files
+router.use('/', express.static('public'));
 
 
 
