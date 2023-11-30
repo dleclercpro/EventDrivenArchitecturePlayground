@@ -13,7 +13,7 @@ import { TimeUnit } from '../../Common/src/types';
 
 
 export const APP_SERVER = new AppServer(SERVICE, logger);
-export const WEB_SOCKET_SERVER = new WebSocketServer(SERVICE, logger);
+export const WEB_SOCKET_SERVER = new WebSocketServer(logger);
 export const SUBSCRIBER = new ServiceSubscriber();
 
 
@@ -24,7 +24,7 @@ const execute = async () => {
     await APP_SERVER.setup(router);
     await APP_SERVER.start();
 
-    await WEB_SOCKET_SERVER.setup();
+    await WEB_SOCKET_SERVER.setup(APP_SERVER.getServer()!);
     await WEB_SOCKET_SERVER.start();
 
     await SUBSCRIBER.createSubscriptions();
@@ -35,8 +35,10 @@ const execute = async () => {
 // Shut down gracefully
 const TIMEOUT = new TimeDuration(2, TimeUnit.Seconds);
 const stopServers = async () => {
-    await WEB_SOCKET_SERVER.stop();
-    await APP_SERVER.stop();
+    await Promise.all([
+        WEB_SOCKET_SERVER.stop(),
+        APP_SERVER.stop(),
+    ]);
     process.exit(0);
 };
 
