@@ -4,6 +4,9 @@ import { SERVICE } from './config/services';
 import router from './routes';
 import logger from './logger';
 import AppServer from '../../Common/src/models/AppServer';
+import TimeDuration from '../../Common/src/models/units/TimeDuration';
+import { killAfterTimeout } from '../../Common/src/utils/process';
+import { TimeUnit } from '../../Common/src/types';
 
 
 
@@ -20,14 +23,20 @@ const execute = async () => {
 
 
 
-// Handle graceful shutdown
+// Shut down gracefully
+const TIMEOUT = new TimeDuration(2, TimeUnit.Seconds);
+const stopAppServer = async () => {
+    await APP_SERVER.stop();
+    process.exit(0);
+};
+
 process.on('SIGTERM', async () => {
     logger.trace(`Received SIGTERM signal.`);
-    await APP_SERVER.stop();
+    await Promise.race([stopAppServer(), killAfterTimeout(TIMEOUT)]);
 });
 process.on('SIGINT', async () => {
     logger.trace(`Received SIGINT signal.`);
-    await APP_SERVER.stop();
+    await Promise.race([stopAppServer(), killAfterTimeout(TIMEOUT)]);
 });
 
 
