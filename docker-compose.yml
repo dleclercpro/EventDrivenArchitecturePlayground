@@ -3,7 +3,7 @@ version: '3.8'
 services:
   broker:
     container_name: broker-app
-    image: eda-playground/broker
+    image: dleclercpro/eda-playground-broker:v1.0.0
     build:
       context: ./Apps
       dockerfile: BrokerApp.Dockerfile
@@ -16,7 +16,7 @@ services:
 
   order:
     container_name: order-app
-    image: eda-playground/order
+    image: dleclercpro/eda-playground-order:v1.0.0
     build:
       context: ./Apps
       dockerfile: OrderApp.Dockerfile
@@ -29,7 +29,7 @@ services:
 
   payment:
     container_name: payment-app
-    image: eda-playground/payment
+    image: dleclercpro/eda-playground-payment:v1.0.0
     build:
       context: ./Apps
       dockerfile: PaymentApp.Dockerfile
@@ -42,7 +42,7 @@ services:
 
   delivery:
     container_name: delivery-app
-    image: eda-playground/delivery
+    image: dleclercpro/eda-playground-delivery:v1.0.0
     build:
       context: ./Apps
       dockerfile: DeliveryApp.Dockerfile
