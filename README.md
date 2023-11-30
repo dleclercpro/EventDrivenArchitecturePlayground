@@ -46,4 +46,3 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 
 ## Version Goals
 - v1.0.0: Deploy a containerized set of microservices, which communicate together using an EDA.
-- v1.1.0: Introduce a load balancer container, which redirects requests to the appropriate services.
