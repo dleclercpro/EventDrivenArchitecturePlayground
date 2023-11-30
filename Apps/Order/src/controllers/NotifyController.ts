@@ -10,6 +10,7 @@ import { BROKER_SERVICE, SERVICE } from '../config/services';
 import EventGenerator from '../../../Common/src/models/EventGenerator';
 import { Event, Order } from '../../../Common/src/types';
 import { EPOCH_TIME_INIT } from '../../../Common/src/constants';
+import { WEB_SOCKET_SERVER } from '..';
 
 
 
@@ -70,6 +71,13 @@ const processEvent = async (event: Event) => {
             service: SERVICE.name,
             event: EventGenerator.generateOrderCompletedEvent(order),
         });
+
+        // Notify client of order completion
+        const ws = WEB_SOCKET_SERVER.findWebSocketByUserId(order.userId);
+
+        if (ws) {
+            ws.send(JSON.stringify(order));
+        }
     }
 }
 
