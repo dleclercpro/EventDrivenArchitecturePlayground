@@ -1,0 +1,32 @@
+html, body {
+    font-family: 'Roboto';
+    font-size: 14px;
+}
+
+div#content {
+    display: flex;
+}
+
+div#content > section {
+    width: 100%;
+}
+
+.title {
+    font-size: 32px;
+    text-decoration: underline;
+}
+
+.section-title {
+    font-size: 22px;
+}
+
+select {
+    min-width: 240px;
+    min-height: 30px;
+}
+
+button {
+    min-width: 120px;
+    min-height: 30px;
+    font-weight: 700;
+}
