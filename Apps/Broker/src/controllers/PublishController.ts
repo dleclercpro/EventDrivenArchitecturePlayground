@@ -31,12 +31,13 @@ const processEvent = async (event: Event) => {
 
     // Event is attached to user: try and notify them
     if (event.userId) {
-        const ws = WEB_SOCKET_SERVER.findWebSocketByUserId(event.userId);
+        const ws = WEB_SOCKET_SERVER.findOpenWebSocketByUserId(event.userId);
 
         if (ws) {
             logger.debug(`Sending event to client app: ${event.name}`);
-
-            ws.send(JSON.stringify(event.data));
+            ws.send(JSON.stringify(event));
+        } else {
+            logger.warn(`Could not find user to send event '${event.name}' to!`);
         }
     }
 

@@ -13,6 +13,18 @@ WS.addEventListener('message', (e) => handleMessage(e));
 
 
 
+const formatTime = (date) => {
+  // Extract hours, minutes, and seconds
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+
+  // Concatenate into the desired format
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+
+
 const handleOpenConnection = (event) => {
   console.log(`[WebSocket] Connection opened.`);
 
@@ -25,22 +37,32 @@ const handleCloseConnection = (event) => {
 }
 
 const handleError = (event) => {
-  console.error(`[WebSocket] Error: ${JSON.stringify(e)}`)
+  console.error(`[WebSocket] Error: ${JSON.stringify(event)}`)
 }
 
-const handleMessage = (event) => {
-  console.log(`[WebSocket] Message: ${event.data}`);
+const handleMessage = (message) => {
+  console.log(`[WebSocket] Message: ${message}`);
 
-  const emptyNotification = docuemnt.getElementById('empty-message');
+  const event = JSON.parse(message.data);
+  const time = new Date(event.time);
+
+  const emptyNotification = document.getElementById('empty-notification');
   const notifications = document.getElementById('notifications');
 
   if (notifications.contains(emptyNotification)) {
     notifications.removeChild(emptyNotification);
   }
 
-  const p = document.createElement('p');
-  p.appendChild(document.createTextNode(event.data));
-  notifications.appendChild(p);
+  const eventElement = document.createElement('p');
+  const timeElement = document.createElement('strong');
+
+  timeElement.appendChild(document.createTextNode(`${formatTime(time)}:`));
+
+  eventElement.appendChild(timeElement);
+  eventElement.appendChild(document.createTextNode(' '));
+  eventElement.appendChild(document.createTextNode(event.name));
+  
+  notifications.appendChild(eventElement);
 }
 
 
@@ -60,6 +82,4 @@ const submitOrder = async () => {
   });
 
   console.log(`Order sent: ${productId}`);
-
-  products.value = '';
 }

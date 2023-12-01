@@ -25,6 +25,7 @@ class EventGenerator {
     protected generateEvent<Data>(name: EventName, data: Data): Event<Data> {
         return {
             id: this.generateEventId(name),
+            time: new Date(),
             name,
             data,
         };

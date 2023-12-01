@@ -30,7 +30,9 @@ class WebSocketServer {
         this.server.on('connection', (ws: CustomWebSocket) => {
             this.logger.debug(`[WebSocket] Client connected.`);
 
-            ws.on('message', (message: string) => {
+            ws.on('message', (msg: string) => {
+                const message = String(msg);
+
                 this.logger.info(`[WebSocket] Received: ${message}`);
 
                 // First message is user ID
@@ -67,7 +69,7 @@ class WebSocketServer {
         });
     }
 
-    public findWebSocketByUserId(userId: string) {
+    public findOpenWebSocketByUserId(userId: string) {
         if (!this.server) throw new Error('MISSING_SERVER');
 
         return Array.from(this.server.clients)
@@ -77,7 +79,7 @@ class WebSocketServer {
                     ws.userId === userId &&
                     ws.readyState === WebSocket.OPEN
                 );
-            }) as CustomWebSocket;
+            }) as CustomWebSocket | undefined;
     }
 }
 

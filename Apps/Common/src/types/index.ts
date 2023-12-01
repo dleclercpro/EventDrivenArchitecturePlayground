@@ -40,6 +40,7 @@ export type Event<Data = any> = {
     id: string,
     userId?: string,
     name: EventName,
+    time: Date,
     data?: Data,
 };
 
