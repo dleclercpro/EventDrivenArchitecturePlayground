@@ -15,8 +15,8 @@ class SubscriptionsManager {
         this.subscriptions = {} as Subscriptions;
 
         // Initialize list of subscribers for each event
-        EVENTS.forEach(event => {
-            this.subscriptions[event] = [];
+        EVENTS.forEach(eventName => {
+            this.subscriptions[eventName] = [];
         });
     }
 
@@ -28,39 +28,39 @@ class SubscriptionsManager {
         return SubscriptionsManager.instance;
     }
 
-    public getSubscribers(event: EventName) {
-        return this.subscriptions[event];
+    public getSubscribers(eventName: EventName) {
+        return this.subscriptions[eventName];
     }
 
-    public has(event: EventName, service: Service) {
-        const subscribers = this.getSubscribers(event);
+    public has(eventName: EventName, service: Service) {
+        const subscribers = this.getSubscribers(eventName);
 
         return subscribers.findIndex(({ name }) => service.name === name) !== -1;
     }
 
-    public add(event: EventName, service: Service) {
-        const subscribers = this.getSubscribers(event);
+    public add(eventName: EventName, service: Service) {
+        const subscribers = this.getSubscribers(eventName);
 
-        if (this.has(event, service)) {
-            logger.debug(`Service '${service.name}' is already a subscriber of event '${event}': no need to add them.`);
+        if (this.has(eventName, service)) {
+            logger.debug(`Service '${service.name}' is already a subscriber of event '${eventName}': no need to add them.`);
             return;
         }
 
-        logger.debug(`Subscribing '${service.name}' service to '${event}' event...`);
+        logger.debug(`Subscribing '${service.name}' service to '${eventName}' event...`);
 
         // Add service to event's list of subscribers
         subscribers.push(service);
     }
 
-    public remove(event: EventName, service: Service) {
-        const subscribers = this.getSubscribers(event);
+    public remove(eventName: EventName, service: Service) {
+        const subscribers = this.getSubscribers(eventName);
 
-        if (!this.has(event, service)) {
-            logger.debug(`Service '${service.name}' is not a subscriber of event '${event}': cannot remove them.`);
+        if (!this.has(eventName, service)) {
+            logger.debug(`Service '${service.name}' is not a subscriber of event '${eventName}': cannot remove them.`);
             return;
         }
 
-        logger.debug(`Unsubscribing '${service.name}' service from '${event}' event...`);
+        logger.debug(`Unsubscribing '${service.name}' service from '${eventName}' event...`);
 
         // Remove service from event's list of subscribers
         subscribers.splice(subscribers.findIndex(({ name }) => service.name === name), 1);

@@ -21,22 +21,22 @@ abstract class Subscriber {
         return this.done;
     }
 
-    protected async subscribe(event: EventName) {
+    protected async subscribe(eventName: EventName) {
         const { code } = await new CallSubscribe(this.broker).execute({
             service: this.service.name,
-            event,
+            eventName: eventName,
         });
 
         return code;
     }
 
-    protected async createSubscription(event: EventName, maxRetries: number = 3) {
+    protected async createSubscription(eventName: EventName, maxRetries: number = 3) {
         let status: HttpStatusCode | -1 = -1;
         let retries: number = 0;
 
         while (status !== HttpStatusCode.OK && retries < maxRetries) {
             try {
-                status = await this.subscribe(event);
+                status = await this.subscribe(eventName);
             } catch (err: any) {
                 retries += 1;
 
@@ -56,8 +56,8 @@ abstract class Subscriber {
     public async createSubscriptions() {
 
         // Subscribe to relevant events via broker
-        const results = await Promise.all(this.events.map(async (event: EventName) => {
-            return this.createSubscription(event)
+        const results = await Promise.all(this.events.map(async (eventName: EventName) => {
+            return this.createSubscription(eventName)
                 .then(() => true)
                 .catch(() => false);
         }));
