@@ -81,7 +81,10 @@ const processEvent = async (event: Event) => {
 
                 await new CallPublish(BROKER_SERVICE).execute({
                     service: SERVICE.name,
-                    event: EventGenerator.generateDeliveryCompletedEvent(delivery),
+                    event: {
+                        userId: event.userId,
+                        ...EventGenerator.generateDeliveryCompletedEvent(delivery),
+                    },
                 });
 
                 // Job is now finally done

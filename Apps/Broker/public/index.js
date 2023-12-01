@@ -1,18 +1,36 @@
-const PROTOCOL = `ws`;
 const HOST = `localhost`;
 const PORT = 4000;
-const URL = `${PROTOCOL}://${HOST}:${PORT}`;
+const URL = `http://${HOST}:${PORT}`;
+const WS_URL = `ws://${HOST}:${PORT}`;
+const USER_ID = 'DUMMY_USER_12345';
 
-const WS = new WebSocket(BROKER_URL);
+const WS = new WebSocket(WS_URL);
 
-WS.onopen = (e) => console.log(`WS connection opened.`);
-WS.onclose = (e) => console.log(`WS connection closed.`);
-WS.onmessage = (e) => handleNotification(e);
-WS.onerror = (err) => console.error(`WS error: ${err}`);
+WS.addEventListener('open', (e) => handleOpenConnection(e));
+WS.addEventListener('close', (e) => handleCloseConnection(e));
+WS.addEventListener('error', (e) => handleError(e));
+WS.addEventListener('message', (e) => handleMessage(e));
 
 
 
-const handleNotification = (event) => {
+const handleOpenConnection = (event) => {
+  console.log(`[WebSocket] Connection opened.`);
+
+  // Send user ID to server
+  WS.send(USER_ID);
+}
+
+const handleCloseConnection = (event) => {
+  console.log(`[WebSocket] Connection closed.`);
+}
+
+const handleError = (event) => {
+  console.error(`[WebSocket] Error: ${JSON.stringify(e)}`)
+}
+
+const handleMessage = (event) => {
+  console.log(`[WebSocket] Message: ${event.data}`);
+
   const emptyNotification = docuemnt.getElementById('empty-message');
   const notifications = document.getElementById('notifications');
 
@@ -20,20 +38,28 @@ const handleNotification = (event) => {
     notifications.removeChild(emptyNotification);
   }
 
-  console.log(`Received notification: ${event.data}`);
-
   const p = document.createElement('p');
   p.appendChild(document.createTextNode(event.data));
   notifications.appendChild(p);
 }
 
-const sendOrder = () => {
+
+
+const submitOrder = async () => {
   const products = document.getElementById('products-select');
-  const product = products.value;
+  const productId = products.value;
 
-  WS.send(product);
+  // Send order to server
+  await fetch(`${URL}/order`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: USER_ID,
+      productId,
+    }),
+  });
 
-  console.log(`Order sent: ${product}`);
+  console.log(`Order sent: ${productId}`);
 
   products.value = '';
 }

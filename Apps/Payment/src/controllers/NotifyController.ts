@@ -49,12 +49,18 @@ const processEvent = async (event: Event) => {
         if (Math.random() < 0.8) {
             await new CallPublish(BROKER_SERVICE).execute({
                 service: SERVICE.name,
-                event: EventGenerator.generatePaymentSuccessEvent(order),
+                event: {
+                    userId: event.userId,
+                    ...EventGenerator.generatePaymentSuccessEvent(order),
+                },
             });
         } else {
             await new CallPublish(BROKER_SERVICE).execute({
                 service: SERVICE.name,
-                event: EventGenerator.generatePaymentFailureEvent(order),
+                event: {
+                    userId: event.userId,
+                    ...EventGenerator.generatePaymentFailureEvent(order),
+                },
             });
         }
     }
