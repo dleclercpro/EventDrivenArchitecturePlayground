@@ -32,9 +32,35 @@ export interface EventPaymentFailure extends Event {
     data: Order,
 };
 
+export interface EventWorkerSearchStarted extends Event {
+    id: string,
+    name: EventName.WorkerSearchStarted,
+};
+
+export interface EventWorkerSearchCompleted extends Event {
+    id: string,
+    name: EventName.WorkerSearchCompleted,
+};
+
+export interface EventWorkerAcceptedJob extends Event {
+    id: string,
+    name: EventName.WorkerAcceptedJob,
+};
+
+export interface EventWorkerRefusedJob extends Event {
+    id: string,
+    name: EventName.WorkerRefusedJob,
+};
+
 export interface EventDeliveryStarted extends Event {
     id: string,
     name: EventName.DeliveryStarted,
+    data: Delivery,
+};
+
+export interface EventDeliveryAborted extends Event {
+    id: string,
+    name: EventName.DeliveryAborted,
     data: Delivery,
 };
 

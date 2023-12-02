@@ -4,6 +4,11 @@ export enum EventName {
     OrderCompleted = 'OrderCompleted',
     PaymentSuccess = 'PaymentSuccess',
     PaymentFailure = 'PaymentFailure',
+    WorkerSearchStarted = 'WorkerSearchStarted',
+    WorkerSearchCompleted = 'WorkerSearchCompleted',
+    WorkerAcceptedJob = 'WorkerAcceptedJob',
+    WorkerRefusedJob = 'WorkerRefusedJob',
     DeliveryStarted = 'DeliveryStarted',
+    DeliveryAborted = 'DeliveryAborted',
     DeliveryCompleted = 'DeliveryCompleted',
 }
