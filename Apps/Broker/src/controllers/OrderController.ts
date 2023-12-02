@@ -5,13 +5,9 @@ import CallCreateOrder from '../models/calls/CallCreateOrder';
 import HealthCheck from '../models/HealthCheck';
 import { DELIVERY_SERVICE, ORDER_SERVICE, PAYMENT_SERVICE } from '../config/services';
 
-/**
- * This controller is used to test the event-driven architecture: it connects requests
- * to various test scenarios (e.g. a customer passing an order).
- */
-const ScenarioController: RequestHandler = async (req, res) => {
+const OrderController: RequestHandler = async (req, res) => {
     try {
-        const { scenarioId } = req.params;
+        const { userId, productId } = req.body;
 
         // Before running any scenario, ensure services are ready
         const health = await new HealthCheck([
@@ -27,29 +23,23 @@ const ScenarioController: RequestHandler = async (req, res) => {
             return res.sendStatus(HttpStatusCode.SERVICE_UNAVAILABLE);
         }
 
-        logger.info(`Executing scenario ${scenarioId}...`);
-
-        // Scenario #1
-        if (scenarioId === '1') {
-            
-            // Generate fake user and product IDs
-            const userId = crypto.randomUUID();
-            const productId = crypto.randomUUID();
-
-            const { code, data } = await new CallCreateOrder().execute({
-                userId,
-                productId,
-            });
-
-            // Success
-            return res.json({
-                code,
-                data,
-            });
+        // Verify data validity
+        if (!userId || !productId) {
+            res.sendStatus(HttpStatusCode.BAD_REQUEST);
         }
 
-        // No matching scenario
-        return res.sendStatus(HttpStatusCode.BAD_REQUEST);
+        logger.info(`User '${userId}' ordered product: ${productId}...`);
+
+        const { code, data } = await new CallCreateOrder().execute({
+            userId,
+            productId,
+        });
+
+        // Success
+        return res.json({
+            code,
+            data,
+        });
 
     } catch (err: any) {
         logger.error(err);
@@ -59,4 +49,4 @@ const ScenarioController: RequestHandler = async (req, res) => {
     }
 }
 
-export default ScenarioController;
+export default OrderController;

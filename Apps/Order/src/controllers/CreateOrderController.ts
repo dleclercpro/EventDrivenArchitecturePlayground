@@ -8,6 +8,7 @@ import { TimeUnit } from '../../../Common/src/types';
 import CallPublish from '../../../Common/src/models/calls/CallPublish';
 import EventGenerator from '../../../Common/src/models/EventGenerator';
 import { BROKER_SERVICE, SERVICE } from '../config/services';
+import { EventOrderCreated } from '../../../Common/src/types/EventTypes';
 
 const CreateOrderController: RequestHandler = async (req, res) => {
     try {
@@ -23,12 +24,15 @@ const CreateOrderController: RequestHandler = async (req, res) => {
         await sleep(new TimeDuration(500, TimeUnit.Milliseconds));
 
         // Emit order creation event
-        const event = EventGenerator.generateOrderCreatedEvent({
-            id: orderId,
+        const event: EventOrderCreated = {
             userId,
-            productId,
-            startTime: now,
-        });
+            ...EventGenerator.generateOrderCreatedEvent({
+                id: orderId,
+                userId,
+                productId,
+                startTime: now,
+            }),
+        };
 
         logger.debug(`Sending event publication to broker: ${event.name}`);
 

@@ -23,18 +23,32 @@ class WebSocketServer {
     public async start() {
         if (!this.server) throw new Error('MISSING_SERVER');
 
+        this.server.on('listening', () => {
+            this.logger.debug(`[WebSocket] Server is listening for connections...`);
+        });
+
         this.server.on('connection', (ws: CustomWebSocket) => {
             this.logger.debug(`[WebSocket] Client connected.`);
 
-            // FIXME: simulate authentication by assigning a user ID
-            ws.userId = 'DUMMY_USER';
+            ws.on('message', (msg: string) => {
+                const message = String(msg);
 
-            ws.on('message', (message: string) => {
                 this.logger.info(`[WebSocket] Received: ${message}`);
+
+                // First message is user ID
+                if (!ws.userId) {
+                    ws.userId = message;
+
+                    this.logger.info(`[WebSocket] Stocked socket connection for user: ${ws.userId}`);
+                }
             });
 
             ws.on('close', () => {
                 this.logger.info(`[WebSocket] Client disconnected.`);
+            });
+
+            ws.on('error', (err) => {
+                this.logger.error(`[WebSocket] Client experienced an error: ${err}`);
             });
         });
     }
@@ -55,7 +69,7 @@ class WebSocketServer {
         });
     }
 
-    public findWebSocketByUserId(userId: string) {
+    public findOpenWebSocketByUserId(userId: string) {
         if (!this.server) throw new Error('MISSING_SERVER');
 
         return Array.from(this.server.clients)
@@ -65,7 +79,7 @@ class WebSocketServer {
                     ws.userId === userId &&
                     ws.readyState === WebSocket.OPEN
                 );
-            }) as CustomWebSocket;
+            }) as CustomWebSocket | undefined;
     }
 }
 

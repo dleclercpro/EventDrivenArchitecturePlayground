@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebSocket Client</title>
-</head>
-<body>
-  <input type="text" id="messageInput" placeholder="Type a message">
-  <button onclick="sendMessage()">Send</button>
-  <ul id="messages"></ul>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy eShop</title>
 
-  <script>
-    // Talk with broker
-    const ws = new WebSocket('ws://localhost:4000');
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    ws.onmessage = (event) => {
-      const messagesElement = document.getElementById('messages');
-      const li = document.createElement('li');
-      li.appendChild(document.createTextNode(event.data));
-      messagesElement.appendChild(li);
-    };
+    <link href="/index.css" rel="stylesheet">
+  </head>
 
-    function sendMessage() {
-      const messageInput = document.getElementById('messageInput');
-      const message = messageInput.value;
-      ws.send(message);
-      messageInput.value = '';
-    }
-  </script>
-</body>
+  <body>
+    <h1 class="title">Dummy eShop</h1>
+
+    <div id="content">
+      <section>
+        <h2 class="section-title">Order</h2>
+
+        <p>Here is our selection of products:</p>
+  
+        <select id="products-select" name="products">
+          <option value="1">Product 1</option>
+          <option value="2">Product 2</option>
+          <option value="3">Product 3</option>
+          <option value="4">Product 4</option>
+          <option value="5">Product 5</option>
+        </select>
+    
+        <button id="order-button" onclick="submitOrder()">Buy</button>
+      </section>
+  
+      <section>
+        <h2 class="section-title">Notifications</h2>
+        
+        <div id="notifications">
+          <p id="empty-notification">You have no notifications yet.</p>
+        </div>
+      </section>
+    </div>
+
+    <script src="/index.js"></script>
+  </body>
 </html>

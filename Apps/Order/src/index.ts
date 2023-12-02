@@ -4,7 +4,6 @@ import { SERVICE } from './config/services';
 import router from './routes';
 import logger from './logger';
 import AppServer from '../../Common/src/models/AppServer';
-import WebSocketServer from '../../Common/src/models/WebSocketServer';
 import ServiceSubscriber from './models/ServiceSubscriber';
 import { killAfterTimeout } from '../../Common/src/utils/process';
 import TimeDuration from '../../Common/src/models/units/TimeDuration';
@@ -13,7 +12,6 @@ import { TimeUnit } from '../../Common/src/types';
 
 
 export const APP_SERVER = new AppServer(SERVICE, logger);
-export const WEB_SOCKET_SERVER = new WebSocketServer(logger);
 export const SUBSCRIBER = new ServiceSubscriber();
 
 
@@ -24,9 +22,6 @@ const execute = async () => {
     await APP_SERVER.setup(router);
     await APP_SERVER.start();
 
-    await WEB_SOCKET_SERVER.setup(APP_SERVER.getServer()!);
-    await WEB_SOCKET_SERVER.start();
-
     await SUBSCRIBER.createSubscriptions();
 }
 
@@ -34,21 +29,19 @@ const execute = async () => {
 
 // Shut down gracefully
 const TIMEOUT = new TimeDuration(2, TimeUnit.Seconds);
-const stopServers = async () => {
-    await Promise.all([
-        WEB_SOCKET_SERVER.stop(),
-        APP_SERVER.stop(),
-    ]);
+const stopServer = async () => {
+    await APP_SERVER.stop(),
+
     process.exit(0);
 };
 
 process.on('SIGTERM', async () => {
     logger.trace(`Received SIGTERM signal.`);
-    await Promise.race([stopServers(), killAfterTimeout(TIMEOUT)]);
+    await Promise.race([stopServer(), killAfterTimeout(TIMEOUT)]);
 });
 process.on('SIGINT', async () => {
     logger.trace(`Received SIGINT signal.`);
-    await Promise.race([stopServers(), killAfterTimeout(TIMEOUT)]);
+    await Promise.race([stopServer(), killAfterTimeout(TIMEOUT)]);
 });
 
 

@@ -7,9 +7,9 @@ import { SERVICES } from '../config/services';
 
 const UnsubscribeController: RequestHandler = async (req, res) => {
     try {
-        const { service, event } = req.body as UnsubscribeRequestData;
+        const { service, eventName } = req.body as UnsubscribeRequestData;
 
-        SubscriptionsManager.remove(event, SERVICES.get(service)!);
+        SubscriptionsManager.remove(eventName, SERVICES.get(service)!);
 
         // Success
         return res.json({

@@ -7,9 +7,9 @@ import { SERVICES } from '../config/services';
 
 const SubscribeController: RequestHandler = async (req, res) => {
     try {
-        const { service, event } = req.body as SubscribeRequestData;
+        const { service, eventName } = req.body as SubscribeRequestData;
 
-        SubscriptionsManager.add(event, SERVICES.get(service)!);
+        SubscriptionsManager.add(eventName, SERVICES.get(service)!);
 
         // Success
         return res.json({

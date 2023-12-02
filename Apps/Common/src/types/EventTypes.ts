@@ -1,49 +1,45 @@
 import { Delivery, Order } from '.';
+import { Event } from '../types/';
 import { EventName } from '../constants/events';
 
-export type EventOrderCreated = {
+export interface EventOrderCreated extends Event {
     id: string,
     name: EventName.OrderCreated,
     data: Order,
 };
 
-export type EventOrderCancelled = {
+export interface EventOrderCancelled extends Event {
     id: string,
     name: EventName.OrderCancelled,
     data: Order,
 };
 
-export type EventOrderCompleted = {
+export interface EventOrderCompleted extends Event {
     id: string,
     name: EventName.OrderCompleted,
     data: Order,
 };
 
-export type EventPaymentSuccess = {
+export interface EventPaymentSuccess extends Event {
     id: string,
     name: EventName.PaymentSuccess,
     data: Order,
 };
 
-export type EventPaymentFailure = {
+export interface EventPaymentFailure extends Event {
     id: string,
     name: EventName.PaymentFailure,
     data: Order,
 };
 
-export type EventDeliveryStarted = {
+export interface EventDeliveryStarted extends Event {
     id: string,
     name: EventName.DeliveryStarted,
     data: Delivery,
 };
 
-export type EventDeliveryCompleted = {
+export interface EventDeliveryCompleted extends Event {
     id: string,
     name: EventName.DeliveryCompleted,
     data: Delivery,
 };
-
-export type Events = 
-    EventOrderCreated |
-    EventOrderCancelled |
-    EventOrderCompleted;
