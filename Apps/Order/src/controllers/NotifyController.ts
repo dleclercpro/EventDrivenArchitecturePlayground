@@ -5,11 +5,9 @@ import { NotifyRequestData } from '../../../Common/src/types/APITypes';
 import { SUBSCRIBED_EVENTS } from '../config';
 import { EventName } from '../../../Common/src/constants/events';
 import { EventDeliveryCompleted, EventPaymentFailure } from '../../../Common/src/types/EventTypes';
-import CallPublish from '../../../Common/src/models/calls/CallPublish';
-import { BROKER_SERVICE, SERVICE } from '../config/services';
-import EventGenerator from '../../../Common/src/models/EventGenerator';
 import { Event, Order } from '../../../Common/src/types';
 import { EPOCH_TIME_INIT } from '../../../Common/src/constants';
+import OrderManager from '../models/OrderManager';
 
 
 
@@ -46,13 +44,7 @@ const processEvent = async (event: Event) => {
     if (event.name === EventName.PaymentFailure) {
         const { data: order } = event as EventPaymentFailure;
 
-        await new CallPublish(BROKER_SERVICE).execute({
-            service: SERVICE.name,
-            event: {
-                userId: event.userId,
-                ...EventGenerator.generateOrderCancelledEvent(order),
-            },
-        });
+        await new OrderManager(order).cancelOrder();
     }
 
     if (event.name === EventName.DeliveryCompleted) {
@@ -69,13 +61,7 @@ const processEvent = async (event: Event) => {
             endTime: now,
         };
 
-        await new CallPublish(BROKER_SERVICE).execute({
-            service: SERVICE.name,
-            event: {
-                userId: event.userId,
-                ...EventGenerator.generateOrderCompletedEvent(order),
-            },
-        });
+        await new OrderManager(order).completeOrder();
     }
 }
 

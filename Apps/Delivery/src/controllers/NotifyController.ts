@@ -4,14 +4,10 @@ import logger from '../logger';
 import { NotifyRequestData } from '../../../Common/src/types/APITypes';
 import { EventName } from '../../../Common/src/constants/events';
 import WorkerFinder from '../models/WorkerFinder';
-import { BROKER_SERVICE, SERVICE } from '../config/services';
-import CallPublish from '../../../Common/src/models/calls/CallPublish';
-import EventGenerator from '../../../Common/src/models/EventGenerator';
-import { Delivery, Event, TimeUnit } from '../../../Common/src/types';
+import { Delivery, Event } from '../../../Common/src/types';
 import { SUBSCRIBED_EVENTS } from '../config';
 import { EventPaymentSuccess } from '../../../Common/src/types/EventTypes';
-import { sleep } from '../../../Common/src/utils/time';
-import TimeDuration from '../../../Common/src/models/units/TimeDuration';
+import DeliveryManager from '../models/DeliveryManager';
 
 
 
@@ -50,63 +46,27 @@ const processEvent = async (event: Event) => {
     if (event.name === EventName.PaymentSuccess) {
         const { data: order } = event as EventPaymentSuccess;
 
+        const workerFinder = new WorkerFinder(order);
+
         let done = false;
 
         // Try and find worker that does the job until the end
         while (!done) {
-            const worker = await WorkerFinder.find(order);
+            const worker = await workerFinder.find();
 
             const now = new Date();
 
-            // Delivery started
+            // Define delivery
             const delivery: Delivery = {
-                id: `Delivery-${worker}-${now.getTime()}-${crypto.randomUUID()}`,
+                id: `delivery-${worker}-${now.getTime()}-${crypto.randomUUID()}`,
+                userId: order.userId,
                 orderId: order.id,
                 workerId: worker,
                 startTime: now,
             };
 
-            logger.info(`Attempting delivery...`);
-            await new CallPublish(BROKER_SERVICE).execute({
-                service: SERVICE.name,
-                event: {
-                    userId: event.userId,
-                    ...EventGenerator.generateDeliveryStartedEvent(delivery),
-                },
-            });
-
-            // Wait random amount of time for delivery to be brought to customer
-            const wait = new TimeDuration(5 * Math.random(), TimeUnit.Seconds);
-            logger.info(`[Delivery will take: ${wait.format()}]`)
-            await sleep(wait);
-
-            // Worker has an 90% chance of completing work (e.g. might become sick,
-            // and need to cancel their deliveries)
-            if (Math.random() < 0.9) {
-                delivery.endTime = new Date();
-
-                logger.info(`Delivery successful.`);
-                await new CallPublish(BROKER_SERVICE).execute({
-                    service: SERVICE.name,
-                    event: {
-                        userId: event.userId,
-                        ...EventGenerator.generateDeliveryCompletedEvent(delivery),
-                    },
-                });
-
-                // Job is now finally done
-                done = true;
-                
-            } else {
-                logger.info(`Delivery aborted. Re-assigning job to different worker...`);
-                await new CallPublish(BROKER_SERVICE).execute({
-                    service: SERVICE.name,
-                    event: {
-                        userId: event.userId,
-                        ...EventGenerator.generateDeliveryAbortedEvent(delivery),
-                    },
-                });
-            }
+            // Attempt it
+            await new DeliveryManager(delivery).attempt();
         }
     }
 }

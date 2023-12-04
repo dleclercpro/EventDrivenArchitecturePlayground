@@ -29,7 +29,7 @@ const OrderController: RequestHandler = async (req, res) => {
             return res.sendStatus(HttpStatusCode.BAD_REQUEST);
         }
 
-        logger.info(`User '${userId}' ordered product: ${productId}...`);
+        logger.info(`User '${userId}' ordered product '${productId}'.`);
 
         const { code, data } = await new CallCreateOrder().execute({
             userId,

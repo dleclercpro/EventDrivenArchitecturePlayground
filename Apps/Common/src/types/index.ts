@@ -58,6 +58,7 @@ export type Order = {
 
 export type Delivery = {
     id: string,
+    userId: string,
     orderId: string,
     workerId: string,
     startTime: Date,

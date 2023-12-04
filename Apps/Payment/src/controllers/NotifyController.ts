@@ -4,11 +4,9 @@ import logger from '../logger';
 import { NotifyRequestData } from '../../../Common/src/types/APITypes';
 import { SUBSCRIBED_EVENTS } from '../config';
 import { EventName } from '../../../Common/src/constants/events';
-import EventGenerator from '../../../Common/src/models/EventGenerator';
-import CallPublish from '../../../Common/src/models/calls/CallPublish';
-import { BROKER_SERVICE, SERVICE } from '../config/services';
 import { EventOrderCreated } from '../../../Common/src/types/EventTypes';
 import { Event } from '../../../Common/src/types';
+import PaymentHandler from '../models/PaymentHandler';
 
 
 
@@ -45,23 +43,13 @@ const processEvent = async (event: Event) => {
     if (event.name === EventName.OrderCreated) {
         const { data: order } = event as EventOrderCreated;
 
+        const paymentHandler = new PaymentHandler(order);
+
         // Payment has an 80% chance of working
         if (Math.random() < 0.8) {
-            await new CallPublish(BROKER_SERVICE).execute({
-                service: SERVICE.name,
-                event: {
-                    userId: event.userId,
-                    ...EventGenerator.generatePaymentSuccessEvent(order),
-                },
-            });
+            await paymentHandler.approvePayment();
         } else {
-            await new CallPublish(BROKER_SERVICE).execute({
-                service: SERVICE.name,
-                event: {
-                    userId: event.userId,
-                    ...EventGenerator.generatePaymentFailureEvent(order),
-                },
-            });
+            await paymentHandler.declinePayment();
         }
     }
 }
