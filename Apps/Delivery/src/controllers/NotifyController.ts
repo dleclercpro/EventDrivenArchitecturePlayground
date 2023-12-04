@@ -66,7 +66,7 @@ const processEvent = async (event: Event) => {
             };
 
             // Attempt it
-            await new DeliveryManager(delivery).attempt();
+            done = await new DeliveryManager(delivery).attempt();
         }
     }
 }
