@@ -30,6 +30,8 @@ const NotifyController: RequestHandler = async (req, res) => {
         });
 
         // Process expected event
+        // FIXME: if this fails, the controller is going to try to send a 500,
+        // but it already has replied with OK!
         await processEvent(event);
 
     } catch (err: any) {
@@ -52,7 +54,7 @@ const processEvent = async (event: Event) => {
 
         // Try and find worker that does the job until the end
         while (!done) {
-            const worker = await WorkerFinder.find();
+            const worker = await WorkerFinder.find(order);
 
             const now = new Date();
 
@@ -65,6 +67,13 @@ const processEvent = async (event: Event) => {
             };
 
             logger.info(`Attempting delivery...`);
+            await new CallPublish(BROKER_SERVICE).execute({
+                service: SERVICE.name,
+                event: {
+                    userId: event.userId,
+                    ...EventGenerator.generateDeliveryStartedEvent(delivery),
+                },
+            });
 
             // Wait random amount of time for delivery to be brought to customer
             const wait = new TimeDuration(5 * Math.random(), TimeUnit.Seconds);
@@ -74,20 +83,29 @@ const processEvent = async (event: Event) => {
             // Worker has an 90% chance of completing work (e.g. might become sick,
             // and need to cancel their deliveries)
             if (Math.random() < 0.9) {
-                logger.info(`Delivery successful.`);
-
-                // Delivery done
                 delivery.endTime = new Date();
 
+                logger.info(`Delivery successful.`);
                 await new CallPublish(BROKER_SERVICE).execute({
                     service: SERVICE.name,
-                    event: EventGenerator.generateDeliveryCompletedEvent(delivery),
+                    event: {
+                        userId: event.userId,
+                        ...EventGenerator.generateDeliveryCompletedEvent(delivery),
+                    },
                 });
 
                 // Job is now finally done
                 done = true;
+                
             } else {
                 logger.info(`Delivery aborted. Re-assigning job to different worker...`);
+                await new CallPublish(BROKER_SERVICE).execute({
+                    service: SERVICE.name,
+                    event: {
+                        userId: event.userId,
+                        ...EventGenerator.generateDeliveryAbortedEvent(delivery),
+                    },
+                });
             }
         }
     }

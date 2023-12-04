@@ -30,6 +30,9 @@ class AppServer {
     
         // Enable HTTP response compression
         this.app.use(compression());
+
+        // Public static files
+        this.app.use('/', express.static('public'));
     
         // Define server's API endpoints
         this.app.use('/', router);

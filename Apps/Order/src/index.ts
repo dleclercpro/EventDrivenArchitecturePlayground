@@ -30,7 +30,8 @@ const execute = async () => {
 // Shut down gracefully
 const TIMEOUT = new TimeDuration(2, TimeUnit.Seconds);
 const stopServer = async () => {
-    await APP_SERVER.stop();
+    await APP_SERVER.stop(),
+
     process.exit(0);
 };
 

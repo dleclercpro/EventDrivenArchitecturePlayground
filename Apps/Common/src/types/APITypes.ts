@@ -11,7 +11,7 @@ export type CallResponse<Data = void> = {
 };
 
 export type SubscribeRequestData = {
-    event: EventName,
+    eventName: EventName,
     service: ServiceName,
 };
 

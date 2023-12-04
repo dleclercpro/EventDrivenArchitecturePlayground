@@ -1,7 +1,7 @@
 import os from 'os';
 import { Delivery, Event, Order } from '../types';
 import { EventName } from '../constants/events';
-import { EventDeliveryCompleted, EventDeliveryStarted, EventOrderCancelled, EventOrderCompleted, EventOrderCreated, EventPaymentFailure, EventPaymentSuccess } from '../types/EventTypes';
+import { EventDeliveryAborted, EventDeliveryCompleted, EventDeliveryStarted, EventOrderCancelled, EventOrderCompleted, EventOrderCreated, EventPaymentFailure, EventPaymentSuccess, EventWorkerAcceptedJob, EventWorkerSearchCompleted, EventWorkerRefusedJob } from '../types/EventTypes';
 
 class EventGenerator {
     private static instance?: EventGenerator;
@@ -25,6 +25,7 @@ class EventGenerator {
     protected generateEvent<Data>(name: EventName, data: Data): Event<Data> {
         return {
             id: this.generateEventId(name),
+            time: new Date(),
             name,
             data,
         };
@@ -50,8 +51,28 @@ class EventGenerator {
         return this.generateEvent(EventName.PaymentFailure, data) as EventPaymentFailure;
     }
 
+    public generateWorkerSearchStartedEvent(data: Order) {
+        return this.generateEvent(EventName.WorkerSearchStarted, data) as EventWorkerSearchCompleted;
+    }
+
+    public generateWorkerSearchCompletedEvent(data: Order) {
+        return this.generateEvent(EventName.WorkerSearchCompleted, data) as EventWorkerSearchCompleted;
+    }
+
+    public generateWorkerAcceptedJobEvent(data: Order) {
+        return this.generateEvent(EventName.WorkerAcceptedJob, data) as EventWorkerAcceptedJob;
+    }
+
+    public generateWorkerRefusedJobEvent(data: Order) {
+        return this.generateEvent(EventName.WorkerRefusedJob, data) as EventWorkerRefusedJob;
+    }
+
     public generateDeliveryStartedEvent(data: Delivery) {
         return this.generateEvent(EventName.DeliveryStarted, data) as EventDeliveryStarted;
+    }
+
+    public generateDeliveryAbortedEvent(data: Delivery) {
+        return this.generateEvent(EventName.DeliveryAborted, data) as EventDeliveryAborted;
     }
 
     public generateDeliveryCompletedEvent(data: Delivery) {

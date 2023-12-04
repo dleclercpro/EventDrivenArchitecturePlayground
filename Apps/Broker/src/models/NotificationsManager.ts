@@ -24,7 +24,7 @@ class NotificationsManager {
 
         // Push event to all subscribed services
         const responses = await Promise.all(subscribers.map(async (service) => {
-            logger.debug(`Sending event notification to '${service.name}' service: ${event.name}`);
+            logger.trace(`Sending event notification to '${service.name}' service: ${event.name}`);
 
             const response = await new CallNotify(service).execute({
                 event,
@@ -36,7 +36,7 @@ class NotificationsManager {
         // Ensure all services were notified successfully
         responses.forEach(({ service, response }) => {
             if (response.code === HttpStatusCode.OK) {
-                logger.debug(`Successfully notified '${service.name}' service of event: ${event.name}`);
+                logger.trace(`Successfully notified '${service.name}' service of event: ${event.name}`);
             } else {
                 logger.fatal(`Failed to notify '${service.name}' service of event: ${event.name}`);
             }

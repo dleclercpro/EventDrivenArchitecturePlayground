@@ -48,7 +48,10 @@ const processEvent = async (event: Event) => {
 
         await new CallPublish(BROKER_SERVICE).execute({
             service: SERVICE.name,
-            event: EventGenerator.generateOrderCancelledEvent(order),
+            event: {
+                userId: event.userId,
+                ...EventGenerator.generateOrderCancelledEvent(order),
+            },
         });
     }
 
@@ -68,7 +71,10 @@ const processEvent = async (event: Event) => {
 
         await new CallPublish(BROKER_SERVICE).execute({
             service: SERVICE.name,
-            event: EventGenerator.generateOrderCompletedEvent(order),
+            event: {
+                userId: event.userId,
+                ...EventGenerator.generateOrderCompletedEvent(order),
+            },
         });
     }
 }

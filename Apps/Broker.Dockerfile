@@ -49,6 +49,9 @@ RUN npm install --production
 # Copy environment variables file inside service
 COPY ./Broker/.env.production ./.env.production
 
+# Copy public static files
+COPY ./Broker/public ./public
+
 # Expose necessary port to talk with service
 EXPOSE 3000
 
