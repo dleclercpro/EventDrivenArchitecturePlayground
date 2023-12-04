@@ -9,7 +9,7 @@ cd "$dir/Apps"
 # Define constant image details
 user="dleclercpro"
 app="eda-playground"
-release="latest"
+release="v1.2.0"
 
 # Build app images
 docker build -t $user/$app-broker:$release -f Broker.Dockerfile .
