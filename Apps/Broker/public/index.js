@@ -14,6 +14,7 @@ WS.addEventListener('message', (e) => handleMessage(e));
 
 
 const formatTime = (date) => {
+
   // Extract hours, minutes, and seconds
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -43,20 +44,14 @@ const handleError = (event) => {
 const handleMessage = (message) => {
   console.log(`[WebSocket] Message: ${message}`);
 
-  const event = JSON.parse(message.data);
-  const time = new Date(event.time);
-
-  const emptyNotification = document.getElementById('empty-notification');
   const notifications = document.getElementById('notifications');
-
-  if (notifications.contains(emptyNotification)) {
-    notifications.removeChild(emptyNotification);
-  }
-
   const eventElement = document.createElement('p');
   const timeElement = document.createElement('strong');
 
-  timeElement.appendChild(document.createTextNode(`${formatTime(time)}:`));
+  const event = JSON.parse(message.data);
+  const time = formatTime(new Date(event.time));
+
+  timeElement.appendChild(document.createTextNode(`${time}:`));
 
   eventElement.appendChild(timeElement);
   eventElement.appendChild(document.createTextNode(' '));
@@ -68,18 +63,24 @@ const handleMessage = (message) => {
 
 
 const submitOrder = async () => {
+  const notifications = document.getElementById('notifications');
   const products = document.getElementById('products-select');
+
+  // Remove previous notifications
+  while (notifications.firstChild) {
+    notifications.removeChild(notifications.firstChild);
+  }
+
+  // Get product selected by customer
   const productId = products.value;
 
   // Send order to server
+  const order = { userId: USER_ID, productId };
   await fetch(`${URL}/order`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      userId: USER_ID,
-      productId,
-    }),
+    body: JSON.stringify(order),
   });
 
-  console.log(`Order sent: ${productId}`);
+  console.log(`Order sent: [User ID: ${order.userId}, Product ID: ${order.productId}]`);
 }
