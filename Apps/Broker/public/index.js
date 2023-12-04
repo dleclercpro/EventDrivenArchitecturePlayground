@@ -11,6 +11,21 @@ WS.addEventListener('close', (e) => handleCloseConnection(e));
 WS.addEventListener('error', (e) => handleError(e));
 WS.addEventListener('message', (e) => handleMessage(e));
 
+const EVENT_TO_TEXT = {
+  OrderCreated: 'Your order was created.',
+  OrderCancelled: 'Your order was cancelled.',
+  OrderCompleted: 'Your order was successfully completed.',
+  PaymentAccepted: 'Your payment method was accepted.',
+  PaymentDeclined: 'Your payment method was declined.',
+  WorkerSearchStarted: 'Searching for a suitable delivery service...',
+  WorkerSearchCompleted: 'Delivery service found!',
+  WorkerAcceptedJob: 'Delivery service accepted the job.',
+  WorkerDeclinedJob: 'Delivery service declined the job.',
+  DeliveryStarted: 'Your order is on the way!',
+  DeliveryAborted: 'The delivery of your order had to be aborted.',
+  DeliveryCompleted: 'Your order has been delivered!',
+};
+
 
 
 const formatTime = (date) => {
@@ -55,7 +70,7 @@ const handleMessage = (message) => {
 
   eventElement.appendChild(timeElement);
   eventElement.appendChild(document.createTextNode(' '));
-  eventElement.appendChild(document.createTextNode(event.name));
+  eventElement.appendChild(document.createTextNode(EVENT_TO_TEXT[event.name]));
   
   notifications.appendChild(eventElement);
 }
