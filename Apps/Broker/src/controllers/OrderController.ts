@@ -25,7 +25,8 @@ const OrderController: RequestHandler = async (req, res) => {
 
         // Verify data validity
         if (!userId || !productId) {
-            res.sendStatus(HttpStatusCode.BAD_REQUEST);
+            logger.warn(`Invalid parameters: [userId=${userId}, productId=${productId}]`)
+            return res.sendStatus(HttpStatusCode.BAD_REQUEST);
         }
 
         logger.info(`User '${userId}' ordered product: ${productId}...`);
