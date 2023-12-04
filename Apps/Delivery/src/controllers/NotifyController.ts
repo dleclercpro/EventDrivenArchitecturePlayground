@@ -30,6 +30,8 @@ const NotifyController: RequestHandler = async (req, res) => {
         });
 
         // Process expected event
+        // FIXME: if this fails, the controller is going to try to send a 500,
+        // but it already has replied with OK!
         await processEvent(event);
 
     } catch (err: any) {
