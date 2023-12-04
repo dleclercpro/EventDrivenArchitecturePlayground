@@ -13,12 +13,12 @@ class PaymentHandler {
 
     public async approvePayment() {
         logger.trace(`Payment was approved. [Order ID: ${this.order.id}]`);
-        await this.publishEvent(EventGenerator.generatePaymentSuccessEvent(this.order));
+        await this.publishEvent(EventGenerator.generatePaymentAcceptedEvent(this.order));
     }
 
     public async declinePayment() {
         logger.trace(`Payment was declined. [Order ID: ${this.order.id}]`);
-        await this.publishEvent(EventGenerator.generatePaymentFailureEvent(this.order));
+        await this.publishEvent(EventGenerator.generatePaymentDeclinedEvent(this.order));
     }
 
     protected async publishEvent(event: Event) {

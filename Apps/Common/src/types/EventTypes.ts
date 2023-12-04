@@ -20,15 +20,15 @@ export interface EventOrderCompleted extends Event {
     data: Order,
 };
 
-export interface EventPaymentSuccess extends Event {
+export interface EventPaymentAccepted extends Event {
     id: string,
-    name: EventName.PaymentSuccess,
+    name: EventName.PaymentAccepted,
     data: Order,
 };
 
-export interface EventPaymentFailure extends Event {
+export interface EventPaymentDeclined extends Event {
     id: string,
-    name: EventName.PaymentFailure,
+    name: EventName.PaymentDeclined,
     data: Order,
 };
 
@@ -47,9 +47,9 @@ export interface EventWorkerAcceptedJob extends Event {
     name: EventName.WorkerAcceptedJob,
 };
 
-export interface EventWorkerRefusedJob extends Event {
+export interface EventWorkerDeclinedJob extends Event {
     id: string,
-    name: EventName.WorkerRefusedJob,
+    name: EventName.WorkerDeclinedJob,
 };
 
 export interface EventDeliveryStarted extends Event {

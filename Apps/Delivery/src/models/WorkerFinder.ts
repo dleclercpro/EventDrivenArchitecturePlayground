@@ -38,7 +38,7 @@ class WorkerFinder {
                 workerId = undefined;
 
                 logger.info(`Worker refused job.`);
-                await this.publishEvent(EventGenerator.generateWorkerRefusedJobEvent(this.order));
+                await this.publishEvent(EventGenerator.generateWorkerDeclinedJobEvent(this.order));
             }
         }
 

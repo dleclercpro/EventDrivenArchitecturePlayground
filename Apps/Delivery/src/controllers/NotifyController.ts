@@ -6,7 +6,7 @@ import { EventName } from '../../../Common/src/constants/events';
 import WorkerFinder from '../models/WorkerFinder';
 import { Delivery, Event } from '../../../Common/src/types';
 import { SUBSCRIBED_EVENTS } from '../config';
-import { EventPaymentSuccess } from '../../../Common/src/types/EventTypes';
+import { EventPaymentAccepted } from '../../../Common/src/types/EventTypes';
 import DeliveryManager from '../models/DeliveryManager';
 
 
@@ -43,8 +43,8 @@ const NotifyController: RequestHandler = async (req, res) => {
 const processEvent = async (event: Event) => {
     logger.debug(`Notification: ${event.name}`);
 
-    if (event.name === EventName.PaymentSuccess) {
-        const { data: order } = event as EventPaymentSuccess;
+    if (event.name === EventName.PaymentAccepted) {
+        const { data: order } = event as EventPaymentAccepted;
 
         const workerFinder = new WorkerFinder(order);
 

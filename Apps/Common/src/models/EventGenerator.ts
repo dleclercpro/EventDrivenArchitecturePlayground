@@ -1,7 +1,7 @@
 import os from 'os';
 import { Delivery, Event, Order } from '../types';
 import { EventName } from '../constants/events';
-import { EventDeliveryAborted, EventDeliveryCompleted, EventDeliveryStarted, EventOrderCancelled, EventOrderCompleted, EventOrderCreated, EventPaymentFailure, EventPaymentSuccess, EventWorkerAcceptedJob, EventWorkerSearchCompleted, EventWorkerRefusedJob } from '../types/EventTypes';
+import { EventDeliveryAborted, EventDeliveryCompleted, EventDeliveryStarted, EventOrderCancelled, EventOrderCompleted, EventOrderCreated, EventPaymentDeclined, EventPaymentAccepted, EventWorkerAcceptedJob, EventWorkerSearchCompleted, EventWorkerDeclinedJob } from '../types/EventTypes';
 
 class EventGenerator {
     private static instance?: EventGenerator;
@@ -43,12 +43,12 @@ class EventGenerator {
         return this.generateEvent(EventName.OrderCompleted, data) as EventOrderCompleted;
     }
 
-    public generatePaymentSuccessEvent(data: Order) {
-        return this.generateEvent(EventName.PaymentSuccess, data) as EventPaymentSuccess;
+    public generatePaymentAcceptedEvent(data: Order) {
+        return this.generateEvent(EventName.PaymentAccepted, data) as EventPaymentAccepted;
     }
 
-    public generatePaymentFailureEvent(data: Order) {
-        return this.generateEvent(EventName.PaymentFailure, data) as EventPaymentFailure;
+    public generatePaymentDeclinedEvent(data: Order) {
+        return this.generateEvent(EventName.PaymentDeclined, data) as EventPaymentDeclined;
     }
 
     public generateWorkerSearchStartedEvent(data: Order) {
@@ -63,8 +63,8 @@ class EventGenerator {
         return this.generateEvent(EventName.WorkerAcceptedJob, data) as EventWorkerAcceptedJob;
     }
 
-    public generateWorkerRefusedJobEvent(data: Order) {
-        return this.generateEvent(EventName.WorkerRefusedJob, data) as EventWorkerRefusedJob;
+    public generateWorkerDeclinedJobEvent(data: Order) {
+        return this.generateEvent(EventName.WorkerDeclinedJob, data) as EventWorkerDeclinedJob;
     }
 
     public generateDeliveryStartedEvent(data: Delivery) {

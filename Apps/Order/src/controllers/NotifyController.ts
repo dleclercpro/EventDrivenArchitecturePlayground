@@ -4,7 +4,7 @@ import logger from '../logger';
 import { NotifyRequestData } from '../../../Common/src/types/APITypes';
 import { SUBSCRIBED_EVENTS } from '../config';
 import { EventName } from '../../../Common/src/constants/events';
-import { EventDeliveryCompleted, EventPaymentFailure } from '../../../Common/src/types/EventTypes';
+import { EventDeliveryCompleted, EventPaymentDeclined } from '../../../Common/src/types/EventTypes';
 import { Event, Order } from '../../../Common/src/types';
 import { EPOCH_TIME_INIT } from '../../../Common/src/constants';
 import OrderManager from '../models/OrderManager';
@@ -41,8 +41,8 @@ const NotifyController: RequestHandler = async (req, res) => {
 const processEvent = async (event: Event) => {
     logger.debug(`Notification: ${event.name}`);
 
-    if (event.name === EventName.PaymentFailure) {
-        const { data: order } = event as EventPaymentFailure;
+    if (event.name === EventName.PaymentDeclined) {
+        const { data: order } = event as EventPaymentDeclined;
 
         await new OrderManager(order).cancelOrder();
     }
