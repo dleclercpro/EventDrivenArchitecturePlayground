@@ -10,7 +10,7 @@ const PublishController: RequestHandler = async (req, res) => {
     try {
         const { event, service } = req.body as PublishRequestData;
 
-        logger.debug(`Received event publication from '${service}' service: ${event.name}`);
+        logger.trace(`Received event publication from '${service}' service: ${event.name}`);
 
         // Tell publisher the event was well received
         res.json({
@@ -34,7 +34,7 @@ const processEvent = async (event: Event) => {
         const ws = WEB_SOCKET_SERVER.findOpenWebSocketByUserId(event.userId);
 
         if (ws) {
-            logger.debug(`Sending event to client app: ${event.name}`);
+            logger.trace(`Sending event to client app: ${event.name}`);
             ws.send(JSON.stringify(event));
         } else {
             logger.warn(`Could not find user to send event '${event.name}' to!`);
