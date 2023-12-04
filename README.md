@@ -13,15 +13,10 @@ docker compose up
 This should create containers for all services within the app. In order to test the latter, go to the following URL in your browser:
 
 ```
-http://localhost:4000/scenario/1
+http://localhost:4000
 ```
 
-This will launch a cascade of events, which will:
-- Create a dummy order for you
-- Try and cash in your payment
-- Dispatch your order to a worker, until one completes the job and the order is delivered to your door
-
-You can have a look at the logs in your terminal to see this happen in real time. :-)
+This will load an online shop prototype. In this shop, you can select which product you would like to order from a dropdown menu. After clicking on 'Buy', your order is dispatched to the system. The resulting cascade of events is then displayed in the 'Notifications' section of the shop.
 
 ## Microservices and Architecture
 In this system, every individual microservice (or app) has a unique domain of responsibilities. Services communicate with each other via the emission of events to a broker. Here is a list of short descriptions for said services:
@@ -34,18 +29,17 @@ In this system, every individual microservice (or app) has a unique domain of re
 Below is a diagram of the architecture of this app. For now, the broker is responsible of the communication with the browser. There is no frontend, per se, that's part of this prototype.
 
 <p align="center" width="100%">
-  <img alt="Event-Driven Architecture" src="./Diagrams/EventDrivenArchitecture.drawio.svg" width="75%" />
+  <img alt="Event-Driven Architecture" src="./Diagrams/EventDrivenArchitecture.drawio.svg" width="90%" />
 </p>
 
 ## Flow of Events
 Below is a diagram of the event flow implemented in this app. Each square represents the emission of an event. Each diamond represents a process, which takes place in one of the aforementioned services.
 
 <p align="center" width="100%">
-  <img alt="Event Flow" src="./Diagrams/EventFlow.drawio.svg" width="75%" />
+  <img alt="Event Flow" src="./Diagrams/EventFlow.drawio.svg" width="90%" />
 </p>
 
 ## Version Goals
 - v1.0.0: Deploy a containerized set of microservices, which communicate together using an EDA.
 - v1.1.0: Gracefully handle server shutdowns.
 - v1.2.0: Introduce a simple client app, which allows to trigger the flow of events associated with the ordering of a product. Use web sockets to send event notifications to the client app.
-- v1.3.0: Introduce a load balancer container, which redirects requests to the appropriate services.
