@@ -70,7 +70,7 @@ const handleMessage = (message) => {
 
   eventElement.appendChild(timeElement);
   eventElement.appendChild(document.createTextNode(' '));
-  eventElement.appendChild(document.createTextNode(event.name));
+  eventElement.appendChild(document.createTextNode(EVENT_TO_TEXT[event.name]));
   
   notifications.appendChild(eventElement);
 }
