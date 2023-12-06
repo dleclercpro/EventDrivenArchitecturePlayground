@@ -13,7 +13,7 @@ docker compose up
 This should create containers for all services within the app. In order to test the latter, go to the following URL in your browser:
 
 ```
-http://localhost:4000
+http://localhost:8000
 ```
 
 This will load an online shop prototype. In this shop, you can select which product you would like to order from a dropdown menu. After clicking on 'Buy', your order is dispatched to the system. The resulting cascade of events is then displayed in the 'Notifications' section of the shop.

@@ -1,5 +1,5 @@
 const HOST = `localhost`;
-const PORT = 4000;
+const PORT = 8000;
 const URL = `http://${HOST}:${PORT}`;
 const WS_URL = `ws://${HOST}:${PORT}`;
 const USER_ID = 'DUMMY_USER_12345';
