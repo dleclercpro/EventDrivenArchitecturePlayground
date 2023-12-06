@@ -53,7 +53,7 @@ COPY ./Broker/.env.production ./.env.production
 COPY ./Broker/public ./public
 
 # Expose necessary port to talk with service
-EXPOSE 3000
+EXPOSE 8000
 
 # Define command to run when launching the image
 CMD ["npm", "run", "start:prod"]

@@ -50,7 +50,7 @@ RUN npm install --production
 COPY ./Order/.env.production ./.env.production
 
 # Expose necessary port to talk with service
-EXPOSE 3001
+EXPOSE 8001
 
 # Define command to run when launching the image
 CMD ["npm", "run", "start:prod"]
