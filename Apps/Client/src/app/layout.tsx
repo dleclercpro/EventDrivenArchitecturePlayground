@@ -4,7 +4,7 @@ import './fonts';
 
 export const metadata: Metadata = {
   title: 'Dummy Online Shop',
-  description: '...',
+  description: 'This is a prototypal online shop, meant to demonstrate the range of my full stack skills.',
 }
 
 export default function RootLayout({

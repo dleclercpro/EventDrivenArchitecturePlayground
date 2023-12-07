@@ -19,3 +19,11 @@ export const parseBooleanText = (text?: string): boolean => {
 
     return text === 'true';
 }
+
+export const capitalizeFirstCharacter = (text: string): string => {
+    if (text === '') return '';
+
+    const first = text[0];
+
+    return `${first.toUpperCase()}${text.slice(1)}`;
+}
