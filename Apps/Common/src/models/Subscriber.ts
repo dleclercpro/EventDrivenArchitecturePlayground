@@ -30,21 +30,22 @@ abstract class Subscriber {
         return code;
     }
 
-    protected async createSubscription(eventName: EventName, maxRetries: number = 3) {
+    protected async createSubscription(eventName: EventName, maxAttempts: number = 3) {
         let status: HttpStatusCode | -1 = -1;
-        let retries: number = 0;
+        let attempts: number = 0;
 
-        while (status !== HttpStatusCode.OK && retries < maxRetries) {
+        while (status !== HttpStatusCode.OK && attempts < maxAttempts) {
             try {
+                if (attempts) {
+                    // Back off exponentially with each failed attempt,
+                    // with a max waiting time of 30s
+                    const wait = new TimeDuration(Math.min(Math.pow(2, attempts), 30), TimeUnit.Seconds);
+                    await sleep(wait);
+                }
+
                 status = await this.subscribe(eventName);
             } catch (err: any) {
-                retries += 1;
-
-                // Back off exponentially with each failed attempt
-                // Attempt 0: 1s
-                // Attempt 1: 2s
-                // Attempt 2: 4s
-                await sleep(new TimeDuration(Math.pow(2, retries), TimeUnit.Seconds))
+                attempts += 1;
             }
         }
 
