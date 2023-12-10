@@ -63,7 +63,7 @@ class WebSocketServer {
                     reject(err);
                 }
 
-                this.logger.info(`Server shut down gracefully.`);
+                this.logger.info(`[WebSocket] Server shut down gracefully.`);
                 resolve();
             });
         });
