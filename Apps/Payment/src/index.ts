@@ -29,19 +29,19 @@ const execute = async () => {
 
 // Shut down gracefully
 const TIMEOUT = new TimeDuration(2, TimeUnit.Seconds);
+
 const stopAppServer = async () => {
     await APP_SERVER.stop();
     process.exit(0);
 };
 
-process.on('SIGTERM', async () => {
-    logger.trace(`Received SIGTERM signal.`);
+const handleStopSignal = async (signal: string) => {
+    logger.warn(`Received stop signal: ${signal}`);
     await Promise.race([stopAppServer(), killAfterTimeout(TIMEOUT)]);
-});
-process.on('SIGINT', async () => {
-    logger.trace(`Received SIGINT signal.`);
-    await Promise.race([stopAppServer(), killAfterTimeout(TIMEOUT)]);
-});
+}
+
+process.on('SIGTERM', handleStopSignal);
+process.on('SIGINT', handleStopSignal);
 
 
 

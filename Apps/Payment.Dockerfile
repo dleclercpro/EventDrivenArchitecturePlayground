@@ -49,8 +49,14 @@ RUN npm install --production
 # Copy environment variables file inside service
 COPY ./Payment/.env.production ./.env.production
 
+# Set the STOPSIGNAL
+STOPSIGNAL SIGTERM
+
 # Expose necessary port to talk with service
 EXPOSE 8002
 
+# Set environment variables
+ENV ENV=production
+
 # Define command to run when launching the image
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "./src/index.js"]
