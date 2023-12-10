@@ -52,8 +52,14 @@ COPY ./Broker/.env.production ./.env.production
 # Copy public static files
 COPY ./Broker/public ./public
 
+# Set the STOPSIGNAL
+STOPSIGNAL SIGTERM
+
 # Expose necessary port to talk with service
 EXPOSE 8000
 
+# Set environment variables
+ENV ENV=production
+
 # Define command to run when launching the image
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "./src/index.js"]

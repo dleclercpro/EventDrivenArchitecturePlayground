@@ -13,7 +13,6 @@ services:
       - app
     environment:
       NODE_ENV: production
-    stop_grace_period: 1s
 
   order:
     container_name: order-app
@@ -27,7 +26,6 @@ services:
       - broker
     environment:
       NODE_ENV: production
-    stop_grace_period: 1s
 
   payment:
     container_name: payment-app
@@ -41,7 +39,6 @@ services:
       - broker
     environment:
       NODE_ENV: production
-    stop_grace_period: 1s
 
   delivery:
     container_name: delivery-app
@@ -55,7 +52,6 @@ services:
       - broker
     environment:
       NODE_ENV: production
-    stop_grace_period: 1s
 
 networks:
   app:

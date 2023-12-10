@@ -4,9 +4,7 @@
   "author": "David Leclerc",
   "main": "./src/index.ts",
   "scripts": {
-    "start": "npm run start:dev",
-    "start:dev": "cross-env ENV=development nodemon ./src/index.ts",
-    "start:prod": "ENV=production node ./src/index.js",
+    "start": "cross-env ENV=development nodemon ./src/index.ts",
     "build": "npm run delete && npm run compile",
     "compile": "tsc -p ./tsconfig.json",
     "delete": "rimraf ./dist",
