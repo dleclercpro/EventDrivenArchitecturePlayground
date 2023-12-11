@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broker-deployment
+  labels:
+    app: broker-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: broker-app
+  template:
+    metadata:
+      labels:
+        app: broker-app
+    spec:
+      containers:
+      - name: broker-container
+        image: dleclercpro/eda-playground-broker
+        ports:
+        - containerPort: 80
+  strategy:
+    type: RollingUpdate
