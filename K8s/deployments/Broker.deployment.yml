@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: broker-app
-  template:
+  template: # Pod template
     metadata:
       labels:
         app: broker-app
@@ -18,6 +18,6 @@ spec:
       - name: broker-container
         image: dleclercpro/eda-playground-broker
         ports:
-        - containerPort: 80
+        - containerPort: 8000
   strategy:
     type: RollingUpdate

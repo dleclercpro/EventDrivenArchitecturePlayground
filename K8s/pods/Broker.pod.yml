@@ -14,4 +14,4 @@ spec:
           port: 8000
         initialDelaySeconds: 5
         periodSeconds: 60
-  restartPolicy: Never
+  restartPolicy: Always

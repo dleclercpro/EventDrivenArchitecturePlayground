@@ -48,3 +48,8 @@ kubectl delete pod <POD_NAME>
 ```
 kubectl scale deployment <DEPLOYMENT_NAME> --replicas=<NUMBER_OF_REPLICAS>
 ```
+
+### Display information about deployment rollout
+```
+kubectl rollout status deployment/<DEPLOYMENT_NAME>
+```
