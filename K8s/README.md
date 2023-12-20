@@ -19,9 +19,12 @@ A ```workload resource``` is representation of an app's infrastructure in terms 
 A ```kubelet``` is an agent that manages containers as part of pods on a node within a K8s cluster. Every single node within said cluster has a ```kubelet```.
 
 ### Controller
-A ```controller`````` process, a.k.a. control loop, that watches over and acts upon a specific aspect of the cluster state. It does so by tracking the state of at least one resource type, and ensures the latter's state is brought (closer) to the desired state, in case there is any difference between the two.
+A ```controller``` process, a.k.a. control loop, that watches over and acts upon a specific aspect of the cluster state. It does so by tracking the state of at least one resource type, and ensures the latter's state is brought (closer) to the desired state, in case there is any difference between the two.
 
 Example: the built-in ```Job``` controller is designed to run a pod, or many pods, to carry out a task, and then stops. The desired state for a tracked ```Job``` resource is its completion.
+
+## Networking
+Container pods use networking to communicate between each other via loopback (i.e. by addressing ```localhost```).
 
 ## Commands
 ### List pods
@@ -46,10 +49,27 @@ kubectl delete pod <POD_NAME>
 
 ### Scale a deployment
 ```
-kubectl scale deployment <DEPLOYMENT_NAME> --replicas=<NUMBER_OF_REPLICAS>
+kubectl scale deployment/<DEPLOYMENT_NAME> --replicas=<NUMBER_OF_REPLICAS>
+```
+
+### Automatically scale a deployment
+In order for the ```autoscale``` command to work, you need to have horizontal pod scaling enabled in the target cluster.
+
+```
+kubectl autoscale deployment/<DEPLOYMENT_NAME> --min=<MIN_REPLICAS> --max=<MAX_REPLICAS> --cpu-percent=<CPU_USAGE_THRESHOLD>
 ```
 
 ### Display information about deployment rollout
 ```
 kubectl rollout status deployment/<DEPLOYMENT_NAME>
+```
+
+### Display deployment rollout details [of a given revision]
+```
+kubectl rollout history deployment/<DEPLOYMENT_NAME> [--revision=<REVISION_NUMBER>]
+```
+
+### Rollback deployment [to a given revision]
+```
+kubectl rollout undo deployment/<DEPLOYMENT_NAME> [--to-revision=<REVISION_NUMBER>]
 ```
