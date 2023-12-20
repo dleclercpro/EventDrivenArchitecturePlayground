@@ -49,13 +49,14 @@ const processEvent = async (event: Event) => {
 
     if (event.name === EventName.DeliveryCompleted) {
         const { data: delivery } = event as EventDeliveryCompleted;
+        const { userId } = delivery;
 
         const now = new Date();
 
         // FIXME: Fetch order from DB (fake an order for now)
         const order: Order = {
             id: delivery.orderId,
-            userId: 'DUMMY_USER',
+            userId,
             productId: 'DUMMY_PRODUCT',
             startTime: EPOCH_TIME_INIT,
             endTime: now,

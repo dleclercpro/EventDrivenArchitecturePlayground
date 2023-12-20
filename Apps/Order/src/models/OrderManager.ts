@@ -12,13 +12,23 @@ class OrderManager {
     }
 
     public async completeOrder() {
+        const { userId } = this.order;
+        
         logger.trace(`Order was completed. [Order ID: ${this.order.id}]`);
-        await this.publishEvent(EventGenerator.generateOrderCompletedEvent(this.order));
+        await this.publishEvent({
+            ...EventGenerator.generateOrderCompletedEvent(this.order),
+            userId,
+        });
     }
 
     public async cancelOrder() {
+        const { userId } = this.order;
+
         logger.trace(`Order was cancelled. [Order ID: ${this.order.id}]`);
-        await this.publishEvent(EventGenerator.generateOrderCancelledEvent(this.order));
+        await this.publishEvent({
+            ...EventGenerator.generateOrderCancelledEvent(this.order),
+            userId,
+        });
     }
 
     protected async publishEvent(event: Event) {

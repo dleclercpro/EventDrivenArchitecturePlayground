@@ -15,7 +15,13 @@ class DeliveryManager {
 
     public async attempt() {
         logger.info(`Attempting delivery... [Delivery ID: ${this.delivery.id}]`);
-        await this.publishEvent(EventGenerator.generateDeliveryStartedEvent(this.delivery));
+
+        const { userId } = this.delivery;
+        
+        await this.publishEvent({
+            ...EventGenerator.generateDeliveryStartedEvent(this.delivery),
+            userId,
+        });
 
         // Wait random amount of time for delivery to be brought to customer
         const wait = new TimeDuration(5 * Math.random(), TimeUnit.Seconds);
@@ -28,15 +34,21 @@ class DeliveryManager {
             this.delivery.endTime = new Date();
 
             logger.info(`Delivery successful. [Delivery ID: ${this.delivery.id}]`);
-            await this.publishEvent(EventGenerator.generateDeliveryCompletedEvent(this.delivery));
+            await this.publishEvent({
+                ...EventGenerator.generateDeliveryCompletedEvent(this.delivery),
+                userId,
+            });
 
             // Job is now finally done
             return true;
             
         } else {
             logger.info(`Delivery aborted. [Delivery ID: ${this.delivery.id}]`);
-            await this.publishEvent(EventGenerator.generateDeliveryAbortedEvent(this.delivery));
-            
+            await this.publishEvent({
+                ...EventGenerator.generateDeliveryAbortedEvent(this.delivery),
+                userId,
+            });
+
             // Job was aborted
             logger.info(`Re-assigning job to different worker...`);
             return false;
