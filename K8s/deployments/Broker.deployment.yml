@@ -1,23 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
+
+
 metadata:
   name: broker-deployment
   labels:
-    app: broker-app
+    app.kubernetes.io/name: broker
+
+
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: broker-app
-  template: # Pod template
-    metadata:
-      labels:
-        app: broker-app
-    spec:
-      containers:
-      - name: broker-container
-        image: dleclercpro/eda-playground-broker
-        ports:
-        - containerPort: 8000
+      app.kubernetes.io/name: broker
   strategy:
     type: RollingUpdate
+
+  # Pod
+  template:
+    metadata:
+      # name: broker-pod # K8s will use deployment name and a UUID for pod names
+      labels:
+        app.kubernetes.io/name: broker
+
+    spec:
+      containers:
+        - name: broker-container
+          image: dleclercpro/eda-playground-broker:k8s
+          ports:
+            - containerPort: 8000
+              name: broker-port
+      restartPolicy: Always
