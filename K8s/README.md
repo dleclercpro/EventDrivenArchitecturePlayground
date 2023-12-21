@@ -23,6 +23,9 @@ A ```controller``` process, a.k.a. control loop, that watches over and acts upon
 
 Example: the built-in ```Job``` controller is designed to run a pod, or many pods, to carry out a task, and then stops. The desired state for a tracked ```Job``` resource is its completion.
 
+### Service
+A ```service``` is an abstraction of a logical set of pods, which can be used to communicate with said pods on a fixed cluster-specific IP address. A service load balances traffic to each pod which it encompasses.
+
 ## Networking
 Container pods use networking to communicate between each other via loopback (i.e. by addressing ```localhost```).
 
@@ -72,4 +75,9 @@ kubectl rollout history deployment/<DEPLOYMENT_NAME> [--revision=<REVISION_NUMBE
 ### Rollback deployment [to a given revision]
 ```
 kubectl rollout undo deployment/<DEPLOYMENT_NAME> [--to-revision=<REVISION_NUMBER>]
+```
+
+### Forward local machine port to service port
+```
+kubectl port-forward service/<SERVICE_NAME> <LOCAL_MACHINE_PORT>:<SERVICE_PORT>
 ```
