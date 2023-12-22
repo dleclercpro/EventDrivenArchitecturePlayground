@@ -9,7 +9,7 @@ export type Service = {
     uri: string,
 };
 
-export type ServiceHealthCheck = {
+export type ProbeCheck = {
     timestamp: Date,
     status: HttpStatusCode | -1, // HTTP status code
 };
