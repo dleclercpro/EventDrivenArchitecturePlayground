@@ -9,7 +9,7 @@ metadata:
 
 
 spec:
-  replicas: 1
+  replicas: 1 # Replicating broker will necessitate duplication of event listener records
   selector:
     matchLabels:
       app.kubernetes.io/name: broker
