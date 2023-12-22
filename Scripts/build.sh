@@ -4,7 +4,7 @@
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Change the current directory to the apps directory
-cd "$dir/Apps"
+cd "$dir/../Apps"
 
 # Define constant image details
 user="dleclercpro"

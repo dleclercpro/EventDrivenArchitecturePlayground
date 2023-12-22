@@ -1,6 +1,12 @@
-APPS=("Common" "Broker" "Order" "Payment" "Delivery")
+#!/bin/bash
 
-cd "./Apps"
+# Get the directory containing the script
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Change the current directory to the apps directory
+cd "$dir/../Apps"
+
+APPS=("Common" "Broker" "Order" "Payment" "Delivery")
 
 for i in "${!APPS[@]}"; do
     app=${APPS[$i]}

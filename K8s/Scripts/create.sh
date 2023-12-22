@@ -4,8 +4,8 @@
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Get K8s directories
-services="${dir}/Resources/Services"
-deployments="${dir}/Resources/Deployments"
+services="${dir}/../Resources/Services"
+deployments="${dir}/../Resources/Deployments"
 
 # Create service for each deployment
 kubectl apply -f $services/Broker.service.yml
