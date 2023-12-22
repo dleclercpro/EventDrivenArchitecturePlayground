@@ -39,7 +39,7 @@ class WebSocketServer {
                 if (!ws.userId) {
                     ws.userId = message;
 
-                    this.logger.info(`[WebSocket] Stocked socket connection for user: ${ws.userId}`);
+                    this.logger.info(`[WebSocket] Stored socket connection for user: ${ws.userId}`);
                 }
             });
 
