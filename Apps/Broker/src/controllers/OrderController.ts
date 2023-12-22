@@ -16,10 +16,10 @@ const OrderController: RequestHandler = async (req, res) => {
             DELIVERY_SERVICE,
         ]).execute();
 
-        const servicesReady = Object.values(health).every(h => h.result === HttpStatusCode.OK);
+        const areServicesReady = Object.values(health).every(h => h.status === HttpStatusCode.OK);
 
         // Tell client services aren't ready yet
-        if (!servicesReady) {
+        if (!areServicesReady) {
             return res.sendStatus(HttpStatusCode.SERVICE_UNAVAILABLE);
         }
 

@@ -17,39 +17,34 @@ class HealthCheck {
         logger.trace(`Executing health check...`);
 
         // Execute health check on all services
+        // Broker should be fine (it is the one querying the others)
         const results: Record<ServiceName, ServiceHealthCheck> = {
             [ServiceName.Broker]: {
-                timestamp: EPOCH_TIME_INIT,
-                result: -1,
+                timestamp: new Date(),
+                status: HttpStatusCode.OK,
             },
             [ServiceName.Order]: {
                 timestamp: EPOCH_TIME_INIT,
-                result: -1,
+                status: -1,
             },
             [ServiceName.Payment]: {
                 timestamp: EPOCH_TIME_INIT,
-                result: -1,
+                status: -1,
             },
             [ServiceName.Delivery]: {
                 timestamp: EPOCH_TIME_INIT,
-                result: -1,
+                status: -1,
             },
-        };
-
-        // Broker should be fine (it is the one querying the others)
-        results[ServiceName.Broker] = {
-            timestamp: new Date(),
-            result: HttpStatusCode.OK,
         };
 
         await Promise.all(this.services.map(async (service: Service) => {
             logger.trace(`Requesting health check from '${service.name}' service...`);
 
-            const { code } = await new CallHealth(service).execute();
+            const { status } = await new CallHealth(service).execute();
 
             results[service.name] = {
                 timestamp: new Date(),
-                result: code,
+                status,
             };
         }));
         

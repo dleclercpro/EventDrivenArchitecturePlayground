@@ -15,10 +15,7 @@ const HealthController: RequestHandler = async (req, res) => {
             logger.warn(`Health check: ${status}`);
         }
 
-        // Success
-        return res.json({
-            code: status,
-        });
+        return res.sendStatus(status);
 
     } catch (err: any) {
         logger.error(err);
