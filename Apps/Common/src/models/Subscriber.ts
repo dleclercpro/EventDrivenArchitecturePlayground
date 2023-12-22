@@ -5,15 +5,18 @@ import { HttpStatusCode } from '../types/HTTPTypes';
 import { sleep } from '../utils/time';
 import TimeDuration from './units/TimeDuration';
 import { TimeUnit } from '../types';
+import { Logger } from 'pino';
 
 abstract class Subscriber {
     protected abstract broker: Service;
     protected abstract service: Service;
     protected abstract events: EventName[];
 
+    protected logger: Logger;
     protected done: boolean;
 
-    public constructor() {
+    public constructor(logger: Logger) {
+        this.logger = logger;
         this.done = false;
     }
 
@@ -31,6 +34,8 @@ abstract class Subscriber {
     }
 
     protected async createSubscription(eventName: EventName, maxAttempts: number = 3) {
+        const { logger } = this;
+
         let status: HttpStatusCode | -1 = -1;
         let attempts: number = 0;
 
@@ -40,10 +45,14 @@ abstract class Subscriber {
                     // Back off exponentially with each failed attempt,
                     // with a max waiting time of 30s
                     const wait = new TimeDuration(Math.min(Math.pow(2, attempts), 30), TimeUnit.Seconds);
+                    
+                    logger.trace(`Wait before next attempt... (${wait.format()})`);
                     await sleep(wait);
                 }
 
+                logger.debug(`Trying to subscribe to '${eventName}' event... [${attempts + 1}/${maxAttempts}]`);
                 status = await this.subscribe(eventName);
+
             } catch (err: any) {
                 attempts += 1;
             }
