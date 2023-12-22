@@ -12,7 +12,7 @@ import { TimeUnit } from '../../Common/src/types';
 
 
 export const APP_SERVER = new AppServer(SERVICE, logger);
-export const SUBSCRIBER = new ServiceSubscriber();
+export const SUBSCRIBER = new ServiceSubscriber(logger);
 
 
 

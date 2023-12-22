@@ -49,8 +49,10 @@ class AppServer {
     public async start() {
         if (!this.server) throw new Error('MISSING_SERVER');
 
+        const { name, port } = this.service;
+
         this.server.listen(this.service.port, async () => {
-            this.logger.debug(`'${this.service.name}' app server listening at: ${this.service.uri}`);
+            this.logger.info(`'${name}' app server listening on port: ${port}`);
         });
     }
 
