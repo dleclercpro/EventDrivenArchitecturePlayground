@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+
+
+metadata:
+  name: order-deployment
+  labels:
+    app.kubernetes.io/name: order
+
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: order
+  strategy:
+    type: RollingUpdate
+
+  # Pod
+  template:
+    metadata:
+      # name: order-pod # K8s will use deployment name and a UUID for pod names
+      labels:
+        app.kubernetes.io/name: order
+
+    spec:
+      containers:
+        - name: order-container
+          image: dleclercpro/eda-playground-order:k8s
+          imagePullPolicy: Never # To avoid pulling image from repo
+          ports:
+            - containerPort: 8001
+              name: order-port
+      restartPolicy: Always

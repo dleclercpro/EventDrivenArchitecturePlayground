@@ -9,7 +9,7 @@ metadata:
 
 
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: broker
@@ -27,6 +27,7 @@ spec:
       containers:
         - name: broker-container
           image: dleclercpro/eda-playground-broker:k8s
+          imagePullPolicy: Never # To avoid pulling image from repo
           ports:
             - containerPort: 8000
               name: broker-port
