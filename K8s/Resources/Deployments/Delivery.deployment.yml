@@ -27,8 +27,20 @@ spec:
       containers:
         - name: delivery-container
           image: dleclercpro/eda-playground-delivery:k8s
-          imagePullPolicy: Never # To avoid pulling image from repo
+          imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 8003
               name: delivery-port
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8003
+            initialDelaySeconds: 10
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 60
       restartPolicy: Always

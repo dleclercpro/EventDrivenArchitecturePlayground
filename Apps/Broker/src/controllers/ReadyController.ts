@@ -2,11 +2,11 @@ import { RequestHandler } from 'express';
 import { HttpStatusCode } from '../../../Common/src/types/HTTPTypes';
 import logger from '../logger';
 
-const HealthController: RequestHandler = async (req, res) => {
+const ReadyController: RequestHandler = async (req, res) => {
     try {
         const status = HttpStatusCode.OK;
         
-        logger.trace(`Health check: ${status}`);
+        logger.trace(`Readiness check: ${status}`);
         return res.sendStatus(status);
 
     } catch (err: any) {
@@ -17,4 +17,4 @@ const HealthController: RequestHandler = async (req, res) => {
     }
 }
 
-export default HealthController;
+export default ReadyController;
