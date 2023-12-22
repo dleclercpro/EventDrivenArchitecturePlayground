@@ -1,10 +1,6 @@
-const HOST = `localhost`;
-const PORT = 8000;
-const URL = `http://${HOST}:${PORT}`;
-const WS_URL = `ws://${HOST}:${PORT}`;
 const USER_ID = 'DUMMY_USER_12345';
 
-const WS = new WebSocket(WS_URL);
+const WS = new WebSocket('/');
 
 WS.addEventListener('open', (e) => handleOpenConnection(e));
 WS.addEventListener('close', (e) => handleCloseConnection(e));
@@ -91,7 +87,7 @@ const submitOrder = async () => {
 
   // Send order to server
   const order = { userId: USER_ID, productId };
-  await fetch(`${URL}/order`, {
+  await fetch(`/order`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(order),
