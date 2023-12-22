@@ -13,11 +13,16 @@ const HealthController: RequestHandler = async (req, res) => {
             DELIVERY_SERVICE,
         ]).execute();
 
-        // Success
-        return res.json({
-            code: HttpStatusCode.OK,
-            data: results,
-        });
+        const statuses = Object.values(results)
+            .map(({ status }) => status);
+
+        // Every dependent service must be healthy for broker service
+        // to be considered healthy itself
+        if (statuses.every(code => code === HttpStatusCode.OK)) {
+            return res.sendStatus(HttpStatusCode.OK);
+        }
+        
+        return res.sendStatus(HttpStatusCode.SERVICE_UNAVAILABLE);
 
     } catch (err: any) {
         logger.error(err);

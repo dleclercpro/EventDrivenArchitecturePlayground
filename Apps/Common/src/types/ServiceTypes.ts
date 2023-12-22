@@ -11,5 +11,5 @@ export type Service = {
 
 export type ServiceHealthCheck = {
     timestamp: Date,
-    result: HttpStatusCode | -1, // HTTP status code
+    status: HttpStatusCode | -1, // HTTP status code
 };

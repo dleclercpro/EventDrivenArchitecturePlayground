@@ -1,12 +1,16 @@
-import { CallMethod } from '../../types/APITypes';
 import { Service } from '../../types/ServiceTypes';
-import Call from './Call';
 
-class CallHealth extends Call {
-    protected method: CallMethod = 'GET';
+class CallHealth {
+    protected url: string;
 
     public constructor(service: Service) {
-        super(`${service.uri}/health`);
+        this.url = `${service.uri}/health`;
+    }
+
+    public async execute() {
+        const res = await fetch(this.url);
+
+        return res;
     }
 }
 
