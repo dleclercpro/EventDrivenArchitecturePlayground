@@ -28,6 +28,10 @@ RUN npm run build
 # --------------- RUN STAGE --------------- #
 FROM node:lts-alpine as run-stage
 
+# Install Bash and cURL
+# RUN apk add --no-cache bash
+# RUN apk add --no-cache curl
+
 # Move to root directory
 WORKDIR /apps
 
