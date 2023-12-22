@@ -3,7 +3,7 @@ kind: Service
 
 
 metadata:
-  name: broker-service
+  name: broker
 
 
 spec:
