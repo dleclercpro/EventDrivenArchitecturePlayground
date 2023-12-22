@@ -81,3 +81,8 @@ kubectl rollout undo deployment/<DEPLOYMENT_NAME> [--to-revision=<REVISION_NUMBE
 ```
 kubectl port-forward service/<SERVICE_NAME> <LOCAL_MACHINE_PORT>:<SERVICE_PORT>
 ```
+
+### Start a bash terminal inside a pod container
+```
+kubectl exec -it <POD_NAME> -- /bin/sh
+```
