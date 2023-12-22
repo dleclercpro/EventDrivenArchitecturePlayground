@@ -33,7 +33,7 @@ abstract class Subscriber {
         return code;
     }
 
-    protected async createSubscription(eventName: EventName, maxAttempts: number = 3) {
+    protected async createSubscription(eventName: EventName, maxAttempts: number = 5) {
         const { logger } = this;
 
         let status: HttpStatusCode | -1 = -1;
@@ -44,6 +44,10 @@ abstract class Subscriber {
                 if (attempts) {
                     // Back off exponentially with each failed attempt,
                     // with a max waiting time of 30s
+                    // After 1 attempt:  2s
+                    // After 2 attempts: 4s
+                    // After 3 attempts: 8s
+                    // After 4 attempts: 16s
                     const wait = new TimeDuration(Math.min(Math.pow(2, attempts), 30), TimeUnit.Seconds);
                     
                     logger.trace(`Wait before next attempt... (${wait.format()})`);
