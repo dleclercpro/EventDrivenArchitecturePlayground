@@ -13,18 +13,18 @@ spec:
     - name: broker-container
       image: dleclercpro/eda-playground-broker:k8s
       ports:
-        - containerPort: 8000
+        - containerPort: 80
           name: broker-port
       livenessProbe:
         httpGet:
           path: /health
-          port: 8000
+          port: 80
         initialDelaySeconds: 10
         periodSeconds: 60
       readinessProbe:
         httpGet:
           path: /ready
-          port: 8000
+          port: 80
         initialDelaySeconds: 10
         periodSeconds: 60
   restartPolicy: Always

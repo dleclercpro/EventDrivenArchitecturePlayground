@@ -11,5 +11,5 @@ spec:
     app.kubernetes.io/name: delivery
   ports:
     - protocol: TCP
-      port: 8003
+      port: 80
       targetPort: delivery-port

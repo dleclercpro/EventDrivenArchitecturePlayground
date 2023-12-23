@@ -29,18 +29,18 @@ spec:
           image: dleclercpro/eda-playground-payment:k8s
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
-            - containerPort: 8002
+            - containerPort: 80
               name: payment-port
           livenessProbe:
             httpGet:
               path: /health
-              port: 8002
+              port: 80
             initialDelaySeconds: 0
             periodSeconds: 120
           readinessProbe:
             httpGet:
               path: /ready
-              port: 8002
+              port: 80
             initialDelaySeconds: 10
             periodSeconds: 30
       restartPolicy: Always

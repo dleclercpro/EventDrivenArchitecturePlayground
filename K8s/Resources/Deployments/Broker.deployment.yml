@@ -29,18 +29,18 @@ spec:
           image: dleclercpro/eda-playground-broker:k8s
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
-            - containerPort: 8000
+            - containerPort: 80
               name: broker-port
           livenessProbe:
             httpGet:
               path: /health
-              port: 8000
+              port: 80
             initialDelaySeconds: 0
             periodSeconds: 120
           readinessProbe:
             httpGet:
               path: /ready
-              port: 8000
+              port: 80
             initialDelaySeconds: 0
             periodSeconds: 30
       restartPolicy: Always

@@ -57,7 +57,7 @@ COPY ./Order/.env.production ./.env.production
 STOPSIGNAL SIGTERM
 
 # Expose necessary port to talk with service
-EXPOSE 8001
+EXPOSE 80
 
 # Set environment variables
 ENV ENV=production

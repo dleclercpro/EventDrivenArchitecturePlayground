@@ -11,5 +11,5 @@ spec:
     app.kubernetes.io/name: broker
   ports:
     - protocol: TCP
-      port: 8000
+      port: 80
       targetPort: broker-port
