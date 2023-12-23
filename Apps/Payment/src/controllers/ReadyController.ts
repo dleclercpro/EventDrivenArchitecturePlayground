@@ -9,7 +9,7 @@ const ReadyController: RequestHandler = async (req, res) => {
 
         // App is not ready until it has subscribed to all events it
         // has interest in
-        if (SUBSCRIBER.isDone()) {
+        if (SUBSCRIBER.isDone() && SUBSCRIBER.isSuccess()) {
             status = HttpStatusCode.OK;
             logger.trace(`Readiness check: ${status}`);
         } else {
