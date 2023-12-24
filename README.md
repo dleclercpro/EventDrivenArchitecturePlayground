@@ -13,7 +13,7 @@ docker compose up
 This should create containers for all services within the app. In order to test the latter, go to the following URL in your browser:
 
 ```
-http://localhost:8000
+http://localhost:8080
 ```
 
 This will load an online shop prototype. In this shop, you can select which product you would like to order from a dropdown menu. After clicking on 'Buy', your order is dispatched to the system. The resulting cascade of events is then displayed in the 'Notifications' section of the shop.
@@ -43,3 +43,4 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 - v1.0.0: Deploy a containerized set of microservices, which communicate together using an EDA.
 - v1.1.0: Gracefully handle server shutdowns.
 - v1.2.0: Introduce a simple client app, which allows to trigger the flow of events associated with the ordering of a product. Use web sockets to send event notifications to the client app.
+- v1.3.0: Introduce container orchestration using K8s (i.e. Kubernetes) in order to allow for horizontal scaling.

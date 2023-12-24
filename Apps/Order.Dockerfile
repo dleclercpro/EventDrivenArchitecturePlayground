@@ -28,6 +28,10 @@ RUN npm run build
 # --------------- RUN STAGE --------------- #
 FROM node:lts-alpine as run-stage
 
+# Install Bash and cURL
+# RUN apk add --no-cache bash
+# RUN apk add --no-cache curl
+
 # Move to root directory
 WORKDIR /apps
 
@@ -53,7 +57,7 @@ COPY ./Order/.env.production ./.env.production
 STOPSIGNAL SIGTERM
 
 # Expose necessary port to talk with service
-EXPOSE 8001
+EXPOSE 80
 
 # Set environment variables
 ENV ENV=production

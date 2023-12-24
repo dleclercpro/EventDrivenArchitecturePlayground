@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+
+
+metadata:
+  name: delivery-deployment
+  labels:
+    app.kubernetes.io/name: delivery
+
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: delivery
+  strategy:
+    type: RollingUpdate
+
+  # Pod
+  template:
+    metadata:
+      # name: delivery-pod # K8s will use deployment name and a UUID for pod names
+      labels:
+        app.kubernetes.io/name: delivery
+
+    spec:
+      containers:
+        - name: delivery-container
+          image: dleclercpro/eda-playground-delivery:k8s
+          imagePullPolicy: IfNotPresent # To avoid pulling image from repo
+          ports:
+            - containerPort: 80
+              name: delivery-port
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 120
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+      restartPolicy: Always

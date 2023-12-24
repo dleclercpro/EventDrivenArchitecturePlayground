@@ -1,20 +1,12 @@
 import { RequestHandler } from 'express';
 import { HttpStatusCode } from '../../../Common/src/types/HTTPTypes';
 import logger from '../logger';
-import { SUBSCRIBER } from '..';
 
 const HealthController: RequestHandler = async (req, res) => {
     try {
-        let status;
-
-        if (SUBSCRIBER.isDone()) {
-            status = HttpStatusCode.OK;
-            logger.trace(`Health check: ${status}`);
-        } else {
-            status = HttpStatusCode.SERVICE_UNAVAILABLE;
-            logger.warn(`Health check: ${status}`);
-        }
-
+        const status = HttpStatusCode.OK;
+        
+        logger.trace(`Health check: ${status}`);
         return res.sendStatus(status);
 
     } catch (err: any) {

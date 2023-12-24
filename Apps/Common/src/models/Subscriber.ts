@@ -14,14 +14,20 @@ abstract class Subscriber {
 
     protected logger: Logger;
     protected done: boolean;
+    protected success: boolean;
 
     public constructor(logger: Logger) {
         this.logger = logger;
         this.done = false;
+        this.success = false;
     }
 
     public isDone() {
         return this.done;
+    }
+
+    public isSuccess() {
+        return this.success;
     }
 
     protected async subscribe(eventName: EventName) {
@@ -30,10 +36,11 @@ abstract class Subscriber {
             eventName: eventName,
         });
 
+        this.logger.debug(`Subscribed to '${eventName}' event.`);
         return code;
     }
 
-    protected async createSubscription(eventName: EventName, maxAttempts: number = 3) {
+    protected async createSubscription(eventName: EventName, maxAttempts: number = 5) {
         const { logger } = this;
 
         let status: HttpStatusCode | -1 = -1;
@@ -44,7 +51,11 @@ abstract class Subscriber {
                 if (attempts) {
                     // Back off exponentially with each failed attempt,
                     // with a max waiting time of 30s
-                    const wait = new TimeDuration(Math.min(Math.pow(2, attempts), 30), TimeUnit.Seconds);
+                    // After 1 attempt:  5s
+                    // After 2 attempts: 10s
+                    // After 3 attempts: 20s
+                    // After 4 attempts: 40s
+                    const wait = new TimeDuration(Math.min(5 * Math.pow(2, attempts - 1), 60), TimeUnit.Seconds);
                     
                     logger.trace(`Wait before next attempt... (${wait.format()})`);
                     await sleep(wait);
@@ -59,11 +70,16 @@ abstract class Subscriber {
         }
 
         if (status !== HttpStatusCode.OK) {
+            logger.fatal(`Could not subscribe to '${eventName}' event.`);
             throw new Error('CANNOT_SUBSCRIBE_EVENT');
         }
     }
 
     public async createSubscriptions() {
+
+        // Reset booleans
+        this.done = false;
+        this.success = false;
 
         // Subscribe to relevant events via broker
         const results = await Promise.all(this.events.map(async (eventName: EventName) => {
@@ -72,9 +88,10 @@ abstract class Subscriber {
                 .catch(() => false);
         }));
 
-        // Subscriber's job is considered done if all subscriptions
-        // were successful
-        this.done = results.every(r => r);
+        // Subscriber's job is considered successful if all subscriptions
+        // were correctly created
+        this.done = true;
+        this.success = results.every(r => r);
     }
 }
 

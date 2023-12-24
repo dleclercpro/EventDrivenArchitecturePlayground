@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+
+metadata:
+  name: delivery
+
+
+spec:
+  selector:
+    app.kubernetes.io/name: delivery
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: delivery-port
