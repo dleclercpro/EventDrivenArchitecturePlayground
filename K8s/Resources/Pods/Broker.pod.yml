@@ -11,7 +11,7 @@ metadata:
 spec:
   containers:
     - name: broker-container
-      image: dleclercpro/eda-playground-broker:k8s
+      image: dleclercpro/eda-playground-broker:latest
       ports:
         - containerPort: 80
           name: broker-port

@@ -9,7 +9,7 @@ cd "$dir/../Apps"
 # Define constant image details
 user="dleclercpro"
 app="eda-playground"
-release="k8s"
+release="latest"
 
 # Push app images to Dockerhub
 docker push $user/$app-broker:$release
