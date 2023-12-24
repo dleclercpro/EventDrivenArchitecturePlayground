@@ -4,8 +4,12 @@
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Get K8s directories
+ingresses="${dir}/../Resources/Ingresses"
 services="${dir}/../Resources/Services"
 deployments="${dir}/../Resources/Deployments"
+
+# Create an Ingress for the entire app
+# kubectl apply -f $ingresses/App.ingress.yml
 
 # Create service for each deployment
 kubectl apply -f $services/Broker.service.yml
