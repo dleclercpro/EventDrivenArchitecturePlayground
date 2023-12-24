@@ -12,13 +12,23 @@ class PaymentHandler {
     }
 
     public async approvePayment() {
+        const { userId } = this.order;
+
         logger.trace(`Payment was approved. [Order ID: ${this.order.id}]`);
-        await this.publishEvent(EventGenerator.generatePaymentAcceptedEvent(this.order));
+        await this.publishEvent({
+            ...EventGenerator.generatePaymentAcceptedEvent(this.order),
+            userId,
+        });
     }
 
     public async declinePayment() {
+        const { userId } = this.order;
+        
         logger.trace(`Payment was declined. [Order ID: ${this.order.id}]`);
-        await this.publishEvent(EventGenerator.generatePaymentDeclinedEvent(this.order));
+        await this.publishEvent({
+            ...EventGenerator.generatePaymentDeclinedEvent(this.order),
+            userId,
+        });
     }
 
     protected async publishEvent(event: Event) {
