@@ -3,7 +3,7 @@ version: '3.8'
 services:
   broker:
     container_name: broker-app
-    image: dleclercpro/eda-playground-broker:v1.3.0
+    image: dleclercpro/eda-playground-broker:monitoring
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
@@ -11,12 +11,12 @@ services:
       - 8080:80
     networks:
       - app
-    environment:
+        environment:
       NODE_ENV: production
 
   order:
     container_name: order-app
-    image: dleclercpro/eda-playground-order:v1.3.0
+    image: dleclercpro/eda-playground-order:monitoring
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
@@ -29,7 +29,7 @@ services:
 
   payment:
     container_name: payment-app
-    image: dleclercpro/eda-playground-payment:v1.3.0
+    image: dleclercpro/eda-playground-payment:monitoring
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
@@ -42,7 +42,7 @@ services:
 
   delivery:
     container_name: delivery-app
-    image: dleclercpro/eda-playground-delivery:v1.3.0
+    image: dleclercpro/eda-playground-delivery:monitoring
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
@@ -53,6 +53,6 @@ services:
     environment:
       NODE_ENV: production
 
-networks:
+  networks:
   app:
     driver: bridge
