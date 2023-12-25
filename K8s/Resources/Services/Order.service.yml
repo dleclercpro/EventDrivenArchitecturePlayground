@@ -3,12 +3,12 @@ kind: Service
 
 
 metadata:
-  name: order
+  name: order # Use this as hostname to communicate with service via HTTP
 
 
 spec:
   selector:
-    app.kubernetes.io/name: order
+    name: order
   ports:
     - protocol: TCP
       port: 80

@@ -5,23 +5,22 @@ kind: Deployment
 metadata:
   name: delivery-deployment
   labels:
-    app.kubernetes.io/name: delivery
+    name: delivery
 
 
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: delivery
+      name: delivery
   strategy:
     type: RollingUpdate
 
   # Pod
   template:
     metadata:
-      # name: delivery-pod # K8s will use deployment name and a UUID for pod names
       labels:
-        app.kubernetes.io/name: delivery
+        name: delivery
 
     spec:
       containers:
