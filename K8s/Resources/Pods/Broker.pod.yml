@@ -11,7 +11,7 @@ metadata:
 spec:
   containers:
     - name: broker-container
-      image: dleclercpro/eda-playground-broker:latest
+      image: dleclercpro/eda-playground-broker:v1.3.0
       ports:
         - containerPort: 80
           name: broker-port

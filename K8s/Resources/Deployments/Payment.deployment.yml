@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: payment-container
-          image: dleclercpro/eda-playground-payment:latest
+          image: dleclercpro/eda-playground-payment:v1.3.0
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 80
