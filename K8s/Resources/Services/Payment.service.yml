@@ -3,12 +3,12 @@ kind: Service
 
 
 metadata:
-  name: payment
+  name: payment # Use this as hostname to communicate with service via HTTP
 
 
 spec:
   selector:
-    app.kubernetes.io/name: payment
+    name: payment
   ports:
     - protocol: TCP
       port: 80
