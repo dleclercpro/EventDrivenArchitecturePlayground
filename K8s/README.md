@@ -24,7 +24,7 @@ A ```Controller``` process, a.k.a. control loop, that watches over and acts upon
 Example: the built-in ```Job``` controller is designed to run a pod, or many pods, to carry out a task, and then stops. The desired state for a tracked ```Job``` resource is its completion.
 
 ### Service
-A ```Service``` is a network abstraction used for <b>internal</b> access to a given set of pods within a cluster. A ```Service`````` uses simple load balancing (e.g. round-robin, client IP) to forward the traffic to each pod which it is responsible for.
+A ```Service``` is a network abstraction used for <b>internal</b> access to a given set of pods within a cluster. A ```Service``` uses simple load balancing (e.g. round-robin, client IP) to forward the traffic to each pod which it is responsible for.
 
 ### Ingress
 An ```Ingress``` is a network abstraction used for <b>external</b> access to services within a cluster. An ```Ingress``` provides more advanced routing and load balancing options than a ```Service```.
