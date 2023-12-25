@@ -11,7 +11,9 @@ services:
       - 8080:80
     networks:
       - app
-        environment:
+    depends_on:
+      - monitor
+    environment:
       NODE_ENV: production
 
   order:
@@ -53,6 +55,25 @@ services:
     environment:
       NODE_ENV: production
 
-  networks:
+  monitor:
+    container_name: monitor-app
+    image: dleclercpro/eda-playground-monitor:monitoring
+    build:
+      context: ./Apps
+      dockerfile: Monitor.Dockerfile
+    ports:
+      - 9090:9090
+    networks:
+      - app
+
+  node-exporter:
+    container_name: node-exporter-app
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    networks:
+      - app
+
+networks:
   app:
     driver: bridge
