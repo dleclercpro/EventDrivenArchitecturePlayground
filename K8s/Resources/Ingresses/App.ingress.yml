@@ -1,4 +1,4 @@
-apiVersion: networking.latest.io/v1
+apiVersion: networking.v1.3.0.io/v1
 kind: Ingress
 
 
