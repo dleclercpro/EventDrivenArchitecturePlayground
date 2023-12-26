@@ -1,23 +1,22 @@
 version: '3.8'
 
+
 services:
   broker:
-    container_name: broker-app
+    container_name: broker
     image: dleclercpro/eda-playground-broker:monitoring
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
     ports:
-      - 8080:80
+      - 8000:80
     networks:
       - app
-    depends_on:
-      - monitor
     environment:
       NODE_ENV: production
 
   order:
-    container_name: order-app
+    container_name: order
     image: dleclercpro/eda-playground-order:monitoring
     build:
       context: ./Apps
@@ -30,7 +29,7 @@ services:
       NODE_ENV: production
 
   payment:
-    container_name: payment-app
+    container_name: payment
     image: dleclercpro/eda-playground-payment:monitoring
     build:
       context: ./Apps
@@ -43,7 +42,7 @@ services:
       NODE_ENV: production
 
   delivery:
-    container_name: delivery-app
+    container_name: delivery
     image: dleclercpro/eda-playground-delivery:monitoring
     build:
       context: ./Apps
@@ -55,8 +54,8 @@ services:
     environment:
       NODE_ENV: production
 
-  monitor:
-    container_name: monitor-app
+  prometheus:
+    container_name: prometheus
     image: dleclercpro/eda-playground-monitor:monitoring
     build:
       context: ./Apps
@@ -65,14 +64,47 @@ services:
       - 9090:9090
     networks:
       - app
+    depends_on:
+      - node-exporter
+      - container-advisor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - app
+    depends_on:
+      - prometheus
 
   node-exporter:
-    container_name: node-exporter-app
+    container_name: node-exporter
     image: prom/node-exporter
     ports:
       - 9100:9100
     networks:
       - app
+
+  container-advisor:
+    container_name: container-advisor
+    image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
+    platform: linux/aarch64 # M1/M2 Mac
+    privileged: true # Stops OOM warning
+    ports:
+      - 8080:8080
+    networks:
+      - app
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    volumes:
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+
 
 networks:
   app:
