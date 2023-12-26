@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+
+metadata:
+  namespace: monitoring
+  name: grafana-deployment
+  labels:
+    name: grafana
+
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: grafana
+  
+  # Pod
+  template:
+    metadata:
+      labels:
+        name: grafana
+
+    spec:
+      containers:
+      - name: grafana-container
+        image: dleclercpro/eda-playground-grafana:monitoring
+        ports:
+        - containerPort: 3000
+          name: grafana-port

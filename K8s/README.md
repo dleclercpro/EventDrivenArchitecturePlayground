@@ -12,6 +12,7 @@ A ```Workload Resource``` is representation of an app's infrastructure in terms 
 
 - ```Deployment```: stateless application where every pod is interchangeable
 - ```StatefulSet```: stateful application, where pods are unique and cannot be interchanged
+- ```DaemonSet```: a guarantee that each node runs a copy of a specific ```Pod``` (e.g. for node monitoring purposes)
 - ```Job```: task that needs to be executed once
 - ```CronJob```: task that needs to be executed on a periodic basis
 

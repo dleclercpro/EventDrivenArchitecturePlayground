@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+
+
+metadata:
+  namespace: monitoring
+  name: node-exporter
+
+
+spec:
+  type: NodePort
+  selector:
+    name: node-exporter
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9100

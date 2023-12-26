@@ -16,3 +16,5 @@ docker push $user/$app-broker:$release
 docker push $user/$app-order:$release
 docker push $user/$app-payment:$release
 docker push $user/$app-delivery:$release
+docker push $user/$app-prometheus:$release
+docker push $user/$app-grafana:$release

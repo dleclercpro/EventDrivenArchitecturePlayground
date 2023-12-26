@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+
+metadata:
+  namespace: monitoring
+  name: prometheus-deployment
+  labels:
+    name: prometheus
+
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: prometheus
+  
+  # Pod
+  template:
+    metadata:
+      labels:
+        name: prometheus
+
+    spec:
+      containers:
+      - name: prometheus-container
+        image: dleclercpro/eda-playground-prometheus:monitoring
+        ports:
+        - containerPort: 9090
+          name: prometheus-port
