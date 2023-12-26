@@ -56,10 +56,10 @@ services:
 
   prometheus:
     container_name: prometheus
-    image: dleclercpro/eda-playground-monitor:monitoring
+    image: dleclercpro/eda-playground-prometheus:monitoring
     build:
       context: ./Apps
-      dockerfile: Monitor.Dockerfile
+      dockerfile: Prometheus.Dockerfile
     ports:
       - 9090:9090
     networks:
@@ -70,7 +70,10 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: dleclercpro/eda-playground-grafana:monitoring
+    build:
+      context: ./Apps
+      dockerfile: Grafana.Dockerfile
     ports:
       - 3000:3000
     networks:
