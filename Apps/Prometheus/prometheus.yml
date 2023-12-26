@@ -25,6 +25,6 @@ scrape_configs:
     static_configs:
       - targets: ['node-exporter:9100']
 
-  - job_name: container-advisor
+  - job_name: cadvisor
     static_configs:
-      - targets: ['container-advisor:8080']
+      - targets: ['cadvisor:8080']

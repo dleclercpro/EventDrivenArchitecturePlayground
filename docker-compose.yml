@@ -66,7 +66,7 @@ services:
       - app
     depends_on:
       - node-exporter
-      - container-advisor
+      - cadvisor
 
   grafana:
     container_name: grafana
@@ -89,8 +89,8 @@ services:
     networks:
       - app
 
-  container-advisor:
-    container_name: container-advisor
+  cadvisor:
+    container_name: cadvisor
     image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
     platform: linux/aarch64 # M1/M2 Mac
     privileged: true # Stops OOM warning
