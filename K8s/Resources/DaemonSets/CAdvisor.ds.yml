@@ -19,8 +19,16 @@ spec:
         name: cadvisor
     
     spec:
+      hostNetwork: true # Enable cAdvisor to access container network namespaces on host
       containers:
-      - name: cadvisor
-        image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
-        ports:
-        - containerPort: 8080
+        - name: cadvisor
+          image: gcr.io/cadvisor/cadvisor:v0.47.1
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
