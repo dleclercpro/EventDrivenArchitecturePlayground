@@ -4,6 +4,7 @@ import ReadyController from '../controllers/ReadyController';
 import NotifyController from '../controllers/NotifyController';
 import CreateOrderController from '../controllers/CreateOrderController';
 import DeleteOrderController from '../controllers/DeleteOrderController';
+import MetricsController from '../controllers/MetricsController';
 
 
 
@@ -15,6 +16,7 @@ const router = Router();
 // Probes
 router.get('/health', HealthController);
 router.get('/ready', ReadyController);
+router.get('/metrics', MetricsController);
 
 // API
 router.post(`/notify`, NotifyController);
