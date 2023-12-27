@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Delete app deployments
-kubectl delete deployment broker-deployment
-kubectl delete deployment order-deployment
-kubectl delete deployment payment-deployment
-kubectl delete deployment delivery-deployment
+kubectl delete deployment broker
+kubectl delete deployment order
+kubectl delete deployment payment
+kubectl delete deployment delivery
 
 # Delete monitoring deployments
-kubectl delete deployment -n monitoring prometheus-deployment
-kubectl delete deployment -n monitoring grafana-deployment
+kubectl delete deployment -n monitoring prometheus
+kubectl delete deployment -n monitoring grafana
 
 # Delete monitoring daemon sets
 kubectl delete daemonset -n monitoring cadvisor
