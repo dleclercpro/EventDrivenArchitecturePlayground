@@ -10,7 +10,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: payment
+      app: payment
   strategy:
     type: RollingUpdate
 
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        name: payment
+        app: payment
 
     spec:
       containers:

@@ -10,7 +10,7 @@ spec:
   replicas: 1 # Replicating broker will necessitate duplication of event listener records
   selector:
     matchLabels:
-      name: broker
+      app: broker
   strategy:
     type: RollingUpdate
 
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        name: broker
+        app: broker
 
     spec:
       containers:

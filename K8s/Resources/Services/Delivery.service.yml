@@ -6,7 +6,7 @@ metadata:
 
 spec:
   selector:
-    name: delivery
+    app: delivery
   ports:
     - protocol: TCP
       port: 80

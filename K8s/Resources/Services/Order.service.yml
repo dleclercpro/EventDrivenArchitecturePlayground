@@ -6,7 +6,7 @@ metadata:
 
 spec:
   selector:
-    name: order
+    app: order
   ports:
     - protocol: TCP
       port: 80

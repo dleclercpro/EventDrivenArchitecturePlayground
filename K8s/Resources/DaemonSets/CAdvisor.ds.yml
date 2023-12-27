@@ -8,13 +8,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: cadvisor
+      app: cadvisor
   
   # Pod
   template:
     metadata:
       labels:
-        name: cadvisor
+        app: cadvisor
     
     spec:
       hostNetwork: true # Enable cAdvisor to access container network namespaces on host

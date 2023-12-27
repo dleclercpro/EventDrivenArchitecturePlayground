@@ -11,13 +11,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: grafana
+      app: grafana
   
   # Pod
   template:
     metadata:
       labels:
-        name: grafana
+        app: grafana
 
     spec:
       containers:

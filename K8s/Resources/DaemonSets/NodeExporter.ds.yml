@@ -8,13 +8,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      name: node-exporter
+      app: node-exporter
   
   # Pod
   template:
     metadata:
       labels:
-        name: node-exporter
+        app: node-exporter
     
     spec:
       containers:
