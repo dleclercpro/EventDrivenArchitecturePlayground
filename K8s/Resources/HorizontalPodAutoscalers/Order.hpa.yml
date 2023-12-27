@@ -8,7 +8,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: order-deployment
+    name: order
   
   minReplicas: 1
   maxReplicas: 5

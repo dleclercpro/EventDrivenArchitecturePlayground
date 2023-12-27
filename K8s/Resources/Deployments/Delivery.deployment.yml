@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: delivery-deployment
-  labels:
-    name: delivery
+  name: delivery
 
 
 spec:
