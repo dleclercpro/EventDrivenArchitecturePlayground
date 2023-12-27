@@ -19,7 +19,7 @@ spec:
 
     spec:
       containers:
-      - name: grafana-container
+      - name: grafana
         image: dleclercpro/eda-playground-grafana:monitoring
         ports:
         - containerPort: 3000

@@ -20,7 +20,7 @@ spec:
 
     spec:
       containers:
-        - name: delivery-container
+        - name: delivery
           image: dleclercpro/eda-playground-delivery:monitoring
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:

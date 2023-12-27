@@ -20,7 +20,7 @@ spec:
 
     spec:
       containers:
-        - name: order-container
+        - name: order
           image: dleclercpro/eda-playground-order:monitoring
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
