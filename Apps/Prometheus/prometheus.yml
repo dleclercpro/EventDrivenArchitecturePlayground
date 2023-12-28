@@ -4,10 +4,12 @@ global:
   evaluation_interval: 15s # Re-load rules using this interval
 
 
+
 # Rules to be considered
 rule_files:
   # - 'first_rules.yml'
   # - 'second_rules.yml'
+
 
 
 # Resources to be monitored
@@ -16,14 +18,39 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
+
   - job_name: grafana
     static_configs:
       - targets: ['grafana:3000']
   
+
   - job_name: node-exporter
     static_configs:
       - targets: ['node-exporter:9100']
 
+
   - job_name: cadvisor
     static_configs:
       - targets: ['cadvisor:8080']
+
+
+  - job_name: 'kubernetes-pods'
+
+    # Service discovery configuration for pods
+    kubernetes_sd_configs:
+      - role: pod
+
+    relabel_configs:
+      # Only consider pods with the given annotation
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      # Add app to discovered target's labels
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        target_label: pod
+      # Add container name to discovered target's labels
+      - source_labels: [__meta_kubernetes_pod_container_name]
+        target_label: container
+      # Add pod's namespace to discovered target's labels
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: namespace

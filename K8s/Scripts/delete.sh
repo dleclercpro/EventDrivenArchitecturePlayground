@@ -26,6 +26,12 @@ kubectl delete service -n monitoring grafana
 kubectl delete service -n monitoring cadvisor
 kubectl delete service -n monitoring node-exporter
 
+# Delete cluster role bindings
+kubectl delete clusterrolebinding prometheus
+
+# Delete cluster roles
+kubectl delete clusterrole prometheus
+
 # Delete namespaces
 # kubectl delete namespace app
 # kubectl delete namespace monitoring
