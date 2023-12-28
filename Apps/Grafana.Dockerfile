@@ -2,8 +2,8 @@
 FROM grafana/grafana
 
 # Copy configuration file over to image
-ADD ./Grafana/grafana.ini /etc/grafana/grafana.ini
-ADD ./Grafana/datasources.yml /etc/grafana/provisioning/datasources/datasources.yml
+COPY ./Grafana/grafana.ini /etc/grafana/
+COPY ./Grafana/datasources.yml /etc/grafana/provisioning/datasources/
 
 # Expose necessary port to talk with service
 EXPOSE 3000
