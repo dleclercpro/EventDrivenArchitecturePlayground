@@ -40,8 +40,18 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 </p>
 
 ## Version Goals
-- v1.0.0: Deploy a containerized set of microservices, which communicate together using an EDA.
-- v1.1.0: Gracefully handle server shutdowns.
-- v1.2.0: Introduce a simple client app, which allows to trigger the flow of events associated with the ordering of a product. Use web sockets to send event notifications to the client app.
-- v1.3.0: Introduce container orchestration using K8s (i.e. Kubernetes) in order to allow for horizontal scaling.
-- v.1.4.0: Introduce monitoring of container metrics using cAdvisor, Prometheus and Grafana.
+### v1.0.0
+- Deploy a containerized set of microservices, which communicate together using an EDA.
+
+### v1.1.0
+- Gracefully handle server shutdowns.
+
+### v1.2.0
+- Introduce a simple client app, which allows to trigger the flow of events associated with the ordering of a product.
+- Use web sockets to send event notifications to the client app.
+
+### v1.3.0
+- Introduce container orchestration using Kubernetes.
+
+### v.1.4.0
+- Introduce monitoring of container metrics using cAdvisor, Prometheus and Grafana.
