@@ -8,6 +8,11 @@ spec:
   selector:
     app: payment
   ports:
-    - protocol: TCP
+    - name: app
+      protocol: TCP
       port: 80
-      targetPort: payment-port
+      targetPort: 80
+    - name: cadvisor
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -8,6 +8,11 @@ spec:
   selector:
     app: broker
   ports:
-    - protocol: TCP
+    - name: app
+      protocol: TCP
       port: 80
-      targetPort: broker-port
+      targetPort: 80
+    - name: cadvisor
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
