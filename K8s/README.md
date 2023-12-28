@@ -1,6 +1,12 @@
 # Kubernetes Basics
 
 ## Concepts
+### Annotation
+```Annotations``` are arbitrary non-identifying metadata that can be attached to K8s objects.
+
+### ConfigMap
+A ```ConfigMap``` is an object used to store non-confidential, non-encrypted data as key-value pairs, and can be used by a ```Pod``` as environment variables, command-line arguments, or a configuration file.
+
 ### Pod
 A ```Pod``` represents a set of (isolated) running containers on a node, which share a common network and storage space.
 
