@@ -42,6 +42,7 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 ## Version Goals
 ### v1.0.0
 - Deploy a containerized set of microservices, which communicate together using an EDA.
+- Use Docker Compose for container orchestration.
 
 ### v1.1.0
 - Gracefully handle server shutdowns.
