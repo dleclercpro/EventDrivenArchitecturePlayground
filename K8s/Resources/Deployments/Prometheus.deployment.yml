@@ -19,7 +19,7 @@ spec:
 
     spec:
       containers:
-        - name: prometheus
+        - name: app
           image: dleclercpro/eda-playground-prometheus:monitoring
           ports:
             - containerPort: 9090
