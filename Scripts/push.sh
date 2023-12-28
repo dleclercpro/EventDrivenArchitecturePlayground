@@ -9,10 +9,12 @@ cd "$dir/../Apps"
 # Define constant image details
 user="dleclercpro"
 app="eda-playground"
-release="v1.3.0"
+release="latest"
 
 # Push app images to Dockerhub
 docker push $user/$app-broker:$release
 docker push $user/$app-order:$release
 docker push $user/$app-payment:$release
 docker push $user/$app-delivery:$release
+docker push $user/$app-prometheus:$release
+docker push $user/$app-grafana:$release

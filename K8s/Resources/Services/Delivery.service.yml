@@ -1,15 +1,19 @@
 apiVersion: v1
 kind: Service
-
-
 metadata:
   name: delivery # Use this as hostname to communicate with service via HTTP
 
 
 spec:
   selector:
-    name: delivery
+    app: delivery
   ports:
-    - protocol: TCP
+    - name: app
+      protocol: TCP
       port: 80
-      targetPort: delivery-port
+      targetPort: 80
+    # Sidecar: container metrics exposure
+    - name: cadvisor
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

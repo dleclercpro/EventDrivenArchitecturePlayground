@@ -1,22 +1,23 @@
 version: '3.8'
 
+
 services:
   broker:
-    container_name: broker-app
-    image: dleclercpro/eda-playground-broker:v1.3.0
+    container_name: broker
+    image: dleclercpro/eda-playground-broker:latest
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
     ports:
-      - 8080:80
+      - 8000:80
     networks:
       - app
     environment:
       NODE_ENV: production
 
   order:
-    container_name: order-app
-    image: dleclercpro/eda-playground-order:v1.3.0
+    container_name: order
+    image: dleclercpro/eda-playground-order:latest
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
@@ -28,8 +29,8 @@ services:
       NODE_ENV: production
 
   payment:
-    container_name: payment-app
-    image: dleclercpro/eda-playground-payment:v1.3.0
+    container_name: payment
+    image: dleclercpro/eda-playground-payment:latest
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
@@ -41,8 +42,8 @@ services:
       NODE_ENV: production
 
   delivery:
-    container_name: delivery-app
-    image: dleclercpro/eda-playground-delivery:v1.3.0
+    container_name: delivery
+    image: dleclercpro/eda-playground-delivery:latest
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
@@ -52,6 +53,61 @@ services:
       - broker
     environment:
       NODE_ENV: production
+
+  prometheus:
+    container_name: prometheus
+    image: dleclercpro/eda-playground-prometheus:latest
+    build:
+      context: ./Apps
+      dockerfile: Prometheus.Dockerfile
+    ports:
+      - 9090:9090
+    networks:
+      - app
+    depends_on:
+      - node-exporter
+      - cadvisor
+
+  grafana:
+    container_name: grafana
+    image: dleclercpro/eda-playground-grafana:latest
+    build:
+      context: ./Apps
+      dockerfile: Grafana.Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - app
+    depends_on:
+      - prometheus
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    networks:
+      - app
+
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
+    platform: linux/aarch64 # M1/M2 Mac
+    privileged: true # Stops OOM warning
+    ports:
+      - 8080:8080
+    networks:
+      - app
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    volumes:
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+
 
 networks:
   app:

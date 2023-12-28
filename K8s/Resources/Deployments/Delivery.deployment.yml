@@ -1,18 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
-
-
 metadata:
-  name: delivery-deployment
-  labels:
-    name: delivery
+  name: delivery
 
 
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      name: delivery
+      app: delivery
   strategy:
     type: RollingUpdate
 
@@ -20,16 +16,18 @@ spec:
   template:
     metadata:
       labels:
-        name: delivery
+        app: delivery
+      annotations:
+        prometheus.io/scrape: 'true'
+
 
     spec:
       containers:
-        - name: delivery-container
-          image: dleclercpro/eda-playground-delivery:v1.3.0
+        - name: app
+          image: dleclercpro/eda-playground-delivery:latest
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 80
-              name: delivery-port
           livenessProbe:
             httpGet:
               path: /health
@@ -42,4 +40,17 @@ spec:
               port: 80
             initialDelaySeconds: 10
             periodSeconds: 30
+        
+        - name: cadvisor
+          image: gcr.io/cadvisor/cadvisor:v0.47.1
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+      
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
       restartPolicy: Always

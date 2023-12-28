@@ -5,6 +5,7 @@ import UnsubscribeController from '../controllers/UnsubscribeController';
 import PublishController from '../controllers/PublishController';
 import OrderController from '../controllers/OrderController';
 import ReadyController from '../controllers/ReadyController';
+import MetricsController from '../controllers/MetricsController';
 
 
 
@@ -21,6 +22,7 @@ router.use('/', express.static('public'));
 // Probes
 router.get('/health', HealthController);
 router.get('/ready', ReadyController);
+router.get('/metrics', MetricsController);
 
 // API
 router.put(`/subscribe`, SubscribeController);

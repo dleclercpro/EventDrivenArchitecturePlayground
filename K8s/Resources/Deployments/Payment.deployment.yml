@@ -1,18 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
-
-
 metadata:
-  name: payment-deployment
-  labels:
-    name: payment
+  name: payment
 
 
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      name: payment
+      app: payment
   strategy:
     type: RollingUpdate
 
@@ -20,16 +16,17 @@ spec:
   template:
     metadata:
       labels:
-        name: payment
+        app: payment
+      annotations:
+        prometheus.io/scrape: 'true'
 
     spec:
       containers:
-        - name: payment-container
-          image: dleclercpro/eda-playground-payment:v1.3.0
+        - name: app
+          image: dleclercpro/eda-playground-payment:latest
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 80
-              name: payment-port
           livenessProbe:
             httpGet:
               path: /health
@@ -42,4 +39,17 @@ spec:
               port: 80
             initialDelaySeconds: 10
             periodSeconds: 30
+        
+        - name: cadvisor
+          image: gcr.io/cadvisor/cadvisor:v0.47.1
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+      
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
       restartPolicy: Always
