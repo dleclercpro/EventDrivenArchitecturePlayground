@@ -5,9 +5,11 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Get K8s resources root directory
 resources="${dir}/../Resources"
+grafanaResources="${dir}/../../Apps/Grafana"
 
 # List directories by K8s resource type
 namespaces="${resources}/Namespaces"
+configMaps="${resources}/ConfigMaps"
 clusterRoles="${resources}/ClusterRoles"
 clusterRoleBindings="${resources}/ClusterRoleBindings"
 daemonSets="${resources}/DaemonSets"
@@ -15,9 +17,24 @@ ingresses="${resources}/Ingresses"
 services="${resources}/Services"
 deployments="${resources}/Deployments"
 
+# Data
+GRAFANA_DASHBOARD="${grafanaResources}/dashboard.json"
+
+
+
 # Create namespaces
-kubectl apply -f $namespaces/App.ns.yml
-kubectl apply -f $namespaces/Monitoring.ns.yml
+kubectl apply -f $namespaces/App.namespace.yml
+kubectl apply -f $namespaces/Monitoring.namespace.yml
+
+# Create static config maps
+kubectl apply -f $configMaps/DataSources.configmap.yml
+kubectl apply -f $configMaps/DashboardProviders.configmap.yml
+
+# Generate dynamic config maps
+(
+    kubectl create configmap grafana-dashboard -n monitoring --from-file=dashboard.json="$GRAFANA_DASHBOARD" --dry-run=client -o yaml |
+    kubectl apply -f -
+)
 
 # Create cluster roles
 kubectl apply -f $clusterRoles/Prometheus.role.yml
@@ -40,8 +57,8 @@ kubectl apply -f $services/Payment.service.yml
 kubectl apply -f $services/Delivery.service.yml
 
 # Create monitoring daemon sets
-kubectl apply -f $daemonSets/NodeExporter.ds.yml
-kubectl apply -f $daemonSets/CAdvisor.ds.yml
+kubectl apply -f $daemonSets/NodeExporter.daemonset.yml
+kubectl apply -f $daemonSets/CAdvisor.daemonset.yml
 
 # Creating monitoring deployments
 kubectl apply -f $deployments/Prometheus.deployment.yml

@@ -32,6 +32,11 @@ kubectl delete clusterrolebinding prometheus
 # Delete cluster roles
 kubectl delete clusterrole prometheus
 
+# Delete config maps
+kubectl delete configmap -n monitoring grafana-dashboard
+kubectl delete configmap -n monitoring grafana-dashboard-providers
+kubectl delete configmap -n monitoring grafana-datasources
+
 # Delete namespaces
 # kubectl delete namespace app
 # kubectl delete namespace monitoring

@@ -23,3 +23,21 @@ spec:
           image: dleclercpro/eda-playground-grafana:monitoring
           ports:
             - containerPort: 3000
+          volumeMounts:
+            - name: datasources
+              mountPath: /etc/grafana/provisioning/datasources # Data sources provisioning directory
+            - name: dashboard-providers
+              mountPath: /etc/grafana/provisioning/dashboards # Dashboard providers provisioning directory
+            - name: dashboard
+              mountPath: /var/lib/grafana/dashboards # Dashboard provisioning directory
+
+      volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboard-providers
+          configMap:
+            name: grafana-dashboard-providers
+        - name: dashboard
+          configMap:
+            name: grafana-dashboard
