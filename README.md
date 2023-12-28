@@ -54,5 +54,8 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 ### v1.3.0
 - Introduce container orchestration using Kubernetes.
 
-### v.1.4.0
+### v1.4.0
 - Introduce monitoring of container metrics using cAdvisor, Prometheus and Grafana.
+
+### v1.5.0
+- Introduce horizontal pod scaling in the K8s cluster and stress test it.
