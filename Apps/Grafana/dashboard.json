@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -124,7 +124,7 @@
           "refId": "Broker CPU"
         }
       ],
-      "title": "Broker CPU",
+      "title": "CPU Usage [Broker]",
       "transparent": true,
       "type": "timeseries"
     },
@@ -228,7 +228,7 @@
           "refId": "Order CPU"
         }
       ],
-      "title": "Order CPU",
+      "title": "CPU Usage [Order]",
       "transparent": true,
       "type": "timeseries"
     },
@@ -330,7 +330,7 @@
           "refId": "Order CPU"
         }
       ],
-      "title": "Payment CPU",
+      "title": "CPU Usage [Payment]",
       "transparent": true,
       "type": "timeseries"
     },
@@ -432,7 +432,7 @@
           "refId": "Order CPU"
         }
       ],
-      "title": "Delivery CPU",
+      "title": "CPU Usage [Delivery]",
       "transparent": true,
       "type": "timeseries"
     }
@@ -451,6 +451,6 @@
   "timezone": "",
   "title": "EDA-Playground",
   "uid": "db0082b6-6b5d-43c0-a324-ebf0443a7bc3",
-  "version": 4,
+  "version": 2,
   "weekStart": ""
 }
