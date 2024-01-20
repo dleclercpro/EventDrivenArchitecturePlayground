@@ -1,12 +1,4 @@
 const USER_ID = 'DUMMY_USER_12345';
-
-const WS = new WebSocket('/');
-
-WS.addEventListener('open', (e) => handleOpenConnection(e));
-WS.addEventListener('close', (e) => handleCloseConnection(e));
-WS.addEventListener('error', (e) => handleError(e));
-WS.addEventListener('message', (e) => handleMessage(e));
-
 const EVENT_TO_TEXT = {
   OrderCreated: 'Your order was created.',
   OrderCancelled: 'Your order was cancelled.',
@@ -24,6 +16,21 @@ const EVENT_TO_TEXT = {
 
 
 
+// Dynamically construct WebSocket URL based on the current location
+const WS_PROTOCOL = window.location.protocol === `https:` ? `wss:` : `ws:`;
+const WS_HOST = window.location.host;
+const WS_PATH = `/`;
+const WS_URL = `${WS_PROTOCOL}//${WS_HOST}${WS_PATH}`;
+
+const WS = new WebSocket(WS_URL);
+
+WS.addEventListener('open', (e) => handleOpenConnection(e));
+WS.addEventListener('close', (e) => handleCloseConnection(e));
+WS.addEventListener('error', (e) => handleError(e));
+WS.addEventListener('message', (e) => handleMessage(e));
+
+
+
 const formatTime = (date) => {
 
   // Extract hours, minutes, and seconds
@@ -38,7 +45,7 @@ const formatTime = (date) => {
 
 
 const handleOpenConnection = (event) => {
-  console.log(`[WebSocket] Connection opened.`);
+  console.log(`[WebSocket] Connection opened on: ${WS_URL}`);
 
   // Send user ID to server
   WS.send(USER_ID);
