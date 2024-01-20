@@ -9,7 +9,7 @@ services:
       context: ./Apps
       dockerfile: Broker.Dockerfile
     ports:
-      - 8000:80
+      - 80:80
     networks:
       - app
     environment:
