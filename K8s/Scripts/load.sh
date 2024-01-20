@@ -1,7 +1,7 @@
 # Define constant image details
 user="dleclercpro"
 app="eda-playground"
-release="v1.4.0"
+release="v1.4.1"
 
 # Upload local images to Minikube image registry
 minikube image load $user/$app-broker:$release
