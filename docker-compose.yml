@@ -2,14 +2,28 @@ version: '3.8'
 
 
 services:
+  eda-playground-nginx:
+    container_name: eda-playground-nginx
+    image: dleclercpro/ssl-reverse-proxy:latest
+    restart: always
+    ports:
+      - 443:443 # HTTPS
+      - 80:80   # HTTP
+    networks:
+      - custom
+    volumes:
+      - letsencrypt:/etc/letsencrypt # Keep SSL certificates
+    depends_on:
+      - eda-playground-broker
+    env_file:
+      - .env
+
   eda-playground-broker:
     container_name: eda-playground-broker
     image: dleclercpro/eda-playground-broker:latest
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
-    ports:
-      - 80:80
     networks:
       - custom
     environment:
@@ -60,8 +74,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Prometheus.Dockerfile
-    ports:
-      - 9090:9090
     networks:
       - custom
     depends_on:
@@ -74,8 +86,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Grafana.Dockerfile
-    ports:
-      - 3000:3000
     networks:
       - custom
     depends_on:
@@ -84,8 +94,6 @@ services:
   eda-playground-node-exporter:
     container_name: eda-playground-node-exporter
     image: prom/node-exporter
-    ports:
-      - 9100:9100
     networks:
       - custom
 
@@ -94,8 +102,6 @@ services:
     image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
     platform: linux/aarch64 # M1/M2 Mac
     privileged: true # Stops OOM warning
-    ports:
-      - 8080:8080
     networks:
       - custom
     devices:
@@ -107,6 +113,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/machine-id:/etc/machine-id:ro
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+
+
+volumes:
+  letsencrypt:
 
 
 networks:
