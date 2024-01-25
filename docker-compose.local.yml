@@ -10,8 +10,6 @@ services:
       dockerfile: Broker.Dockerfile
     ports:
       - 8000:80
-    networks:
-      - custom
     environment:
       NODE_ENV: production
 
@@ -21,8 +19,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
-    networks:
-      - custom
     depends_on:
       - eda-playground-broker
     environment:
@@ -34,8 +30,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
-    networks:
-      - custom
     depends_on:
       - eda-playground-broker
     environment:
@@ -47,8 +41,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
-    networks:
-      - custom
     depends_on:
       - eda-playground-broker
     environment:
@@ -62,8 +54,6 @@ services:
       dockerfile: Prometheus.Dockerfile
     ports:
       - 9090:9090
-    networks:
-      - custom
     depends_on:
       - eda-playground-node-exporter
       - eda-playground-cadvisor
@@ -76,8 +66,6 @@ services:
       dockerfile: Grafana.Dockerfile
     ports:
       - 3000:3000
-    networks:
-      - custom
     depends_on:
       - eda-playground-prometheus
 
@@ -86,8 +74,6 @@ services:
     image: prom/node-exporter
     ports:
       - 9100:9100
-    networks:
-      - custom
 
   eda-playground-cadvisor:
     container_name: eda-playground-cadvisor
@@ -96,8 +82,6 @@ services:
     privileged: true # Stops OOM warning
     ports:
       - 8080:8080
-    networks:
-      - custom
     devices:
       - /dev/kmsg:/dev/kmsg
     volumes:
@@ -107,9 +91,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/machine-id:/etc/machine-id:ro
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
-
-
-networks:
-  # Custom network to communicate with external services/containers
-  custom:
-    external: true
