@@ -38,7 +38,7 @@ const processEvent = async (event: Event) => {
             logger.trace(`Sending event '${event.name}' to user: ${event.userId}`);
             ws.send(JSON.stringify(event));
         } else {
-            logger.warn(`Could not find open WS connection to send event '${event.name}' to! [User ID: ${event.userId}]`);
+            logger.warn(`Could not find open WS connection to send event '${event.name}' to... [User ID: ${event.userId}]`);
         }
     } else {
         logger.trace(`No need to notify any user of event.`);

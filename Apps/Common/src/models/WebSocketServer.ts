@@ -82,6 +82,8 @@ class WebSocketServer {
         return Array.from(this.server.clients)
             .find((client) => {
                 const ws = client as CustomWebSocket;
+                this.logger.trace(`Found WS client for user: ${ws.userId}`);
+
                 return (
                     ws.userId === userId &&
                     ws.readyState === WebSocket.OPEN
