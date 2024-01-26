@@ -1,32 +1,91 @@
-html, body {
-    font-family: 'Roboto';
-    font-size: 14px;
-}
-
-div#content {
-    display: flex;
-}
-
-div#content > section {
-    width: 100%;
-}
-
-.title {
-    font-size: 32px;
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Set a background color for the entire page */
+  body {
+    background-color: #f2f2f2;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Center the title and add some spacing */
+  .title {
+    text-align: center;
+    font-size: 36px;
+    margin: 20px 0;
     text-decoration: underline;
-}
-
-.section-title {
-    font-size: 22px;
-}
-
-select {
-    min-width: 240px;
-    min-height: 30px;
-}
-
-button {
-    min-width: 120px;
-    min-height: 30px;
-    font-weight: 700;
-}
+  }
+  
+  /* Style the content container */
+  #content {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+  
+  /* Style each section */
+  section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 48%; /* Adjust the width as needed */
+  }
+  
+  /* Style the section title */
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style the product select dropdown */
+  #products-select {
+    min-width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  /* Style the order button */
+  #order-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Add hover effect to the order button */
+  #order-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style the notifications container */
+  #notifications {
+    margin-top: 20px;
+  }
+  
+  /* Style individual notifications */
+  #notifications p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  /* Style the empty notification */
+  #empty-notification {
+    font-weight: bold;
+    color: #888;
+  }
+  
