@@ -58,4 +58,7 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 - Introduce monitoring of container metrics using cAdvisor, Prometheus and Grafana.
 
 ### v1.5.0
+- Introduce deployment using Docker Compose as part of a common external network.
+
+### v1.6.0
 - Introduce horizontal pod scaling in the K8s cluster and stress test it.
