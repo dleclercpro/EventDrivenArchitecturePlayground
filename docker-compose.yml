@@ -4,7 +4,7 @@ version: '3.8'
 services:
   eda-playground-nginx:
     container_name: eda-playground-nginx
-    image: dleclercpro/ssl-reverse-proxy:latest
+    image: dleclercpro/ssl-reverse-proxy:wss
     restart: always
     ports:
       - 443:443 # HTTPS
