@@ -20,7 +20,7 @@ services:
 
   eda-playground-broker:
     container_name: eda-playground-broker
-    image: dleclercpro/eda-playground-broker:latest
+    image: dleclercpro/eda-playground-broker:1.5.0
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
@@ -31,7 +31,7 @@ services:
 
   eda-playground-order:
     container_name: eda-playground-order
-    image: dleclercpro/eda-playground-order:latest
+    image: dleclercpro/eda-playground-order:1.5.0
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
@@ -44,7 +44,7 @@ services:
 
   eda-playground-payment:
     container_name: eda-playground-payment
-    image: dleclercpro/eda-playground-payment:latest
+    image: dleclercpro/eda-playground-payment:1.5.0
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
@@ -57,7 +57,7 @@ services:
 
   eda-playground-delivery:
     container_name: eda-playground-delivery
-    image: dleclercpro/eda-playground-delivery:latest
+    image: dleclercpro/eda-playground-delivery:1.5.0
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
@@ -70,7 +70,7 @@ services:
 
   eda-playground-prometheus:
     container_name: eda-playground-prometheus
-    image: dleclercpro/eda-playground-prometheus:latest
+    image: dleclercpro/eda-playground-prometheus:1.5.0
     build:
       context: ./Apps
       dockerfile: Prometheus.Dockerfile
@@ -82,7 +82,7 @@ services:
 
   eda-playground-grafana:
     container_name: eda-playground-grafana
-    image: dleclercpro/eda-playground-grafana:latest
+    image: dleclercpro/eda-playground-grafana:1.5.0
     build:
       context: ./Apps
       dockerfile: Grafana.Dockerfile

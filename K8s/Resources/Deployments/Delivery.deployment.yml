@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/eda-playground-delivery:latest
+          image: dleclercpro/eda-playground-delivery:1.5.0
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 80

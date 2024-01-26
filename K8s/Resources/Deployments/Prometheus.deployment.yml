@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/eda-playground-prometheus:latest
+          image: dleclercpro/eda-playground-prometheus:1.5.0
           ports:
             - containerPort: 9090
