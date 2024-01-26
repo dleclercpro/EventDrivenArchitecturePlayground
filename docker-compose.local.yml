@@ -2,30 +2,14 @@ version: '3.8'
 
 
 services:
-  eda-playground-nginx:
-    container_name: eda-playground-nginx
-    image: dleclercpro/ssl-reverse-proxy:wss
-    restart: always
-    ports:
-      - 443:443 # HTTPS
-      - 80:80   # HTTP
-    networks:
-      - custom
-    volumes:
-      - letsencrypt:/etc/letsencrypt # Keep SSL certificates
-    depends_on:
-      - eda-playground-broker
-    env_file:
-      - .env
-
   eda-playground-broker:
     container_name: eda-playground-broker
     image: dleclercpro/eda-playground-broker:latest
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
-    networks:
-      - custom
+    ports:
+      - 8000:80
     environment:
       NODE_ENV: production
 
@@ -35,8 +19,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
-    networks:
-      - custom
     depends_on:
       - eda-playground-broker
     environment:
@@ -48,8 +30,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
-    networks:
-      - custom
     depends_on:
       - eda-playground-broker
     environment:
@@ -61,8 +41,6 @@ services:
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
-    networks:
-      - custom
     depends_on:
       - eda-playground-broker
     environment:
@@ -74,8 +52,8 @@ services:
     build:
       context: ./Apps
       dockerfile: Prometheus.Dockerfile
-    networks:
-      - custom
+    ports:
+      - 9090:9090
     depends_on:
       - eda-playground-node-exporter
       - eda-playground-cadvisor
@@ -86,24 +64,24 @@ services:
     build:
       context: ./Apps
       dockerfile: Grafana.Dockerfile
-    networks:
-      - custom
+    ports:
+      - 3000:3000
     depends_on:
       - eda-playground-prometheus
 
   eda-playground-node-exporter:
     container_name: eda-playground-node-exporter
     image: prom/node-exporter
-    networks:
-      - custom
+    ports:
+      - 9100:9100
 
   eda-playground-cadvisor:
     container_name: eda-playground-cadvisor
     image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
     platform: linux/aarch64 # M1/M2 Mac
     privileged: true # Stops OOM warning
-    networks:
-      - custom
+    ports:
+      - 8080:8080
     devices:
       - /dev/kmsg:/dev/kmsg
     volumes:
@@ -113,13 +91,3 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/machine-id:/etc/machine-id:ro
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
-
-
-volumes:
-  letsencrypt:
-
-
-networks:
-  # Custom network to communicate with external services/containers
-  custom:
-    external: true

@@ -39,16 +39,23 @@ class WebSocketServer {
                 if (!ws.userId) {
                     ws.userId = message;
 
+                    // Store WS connection
+                    this.server?.clients.add(ws);
+
                     this.logger.info(`[WebSocket] Stored socket connection for user: ${ws.userId}`);
                 }
             });
 
             ws.on('close', () => {
                 this.logger.info(`[WebSocket] Client disconnected.`);
+
+                this.server?.clients.delete(ws);
             });
 
             ws.on('error', (err) => {
                 this.logger.error(`[WebSocket] Client experienced an error: ${err}`);
+
+                this.server?.clients.delete(ws);
             });
         });
     }
@@ -75,6 +82,8 @@ class WebSocketServer {
         return Array.from(this.server.clients)
             .find((client) => {
                 const ws = client as CustomWebSocket;
+                this.logger.trace(`Found WS client for user: ${ws.userId}`);
+
                 return (
                     ws.userId === userId &&
                     ws.readyState === WebSocket.OPEN
