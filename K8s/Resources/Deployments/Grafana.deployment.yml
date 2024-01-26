@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/eda-playground-grafana:latest
+          image: dleclercpro/eda-playground-grafana:pretty-frontend
           ports:
             - containerPort: 3000
           volumeMounts:

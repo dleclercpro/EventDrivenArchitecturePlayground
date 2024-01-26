@@ -1,6 +1,6 @@
 {
   "name": "event-driven-architecture-playground--delivery",
-  "version": "latest",
+  "version": "pretty-frontend",
   "author": "David Leclerc",
   "main": "./src/index.ts",
   "scripts": {
