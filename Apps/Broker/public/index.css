@@ -1,91 +1,141 @@
 /* Reset some default browser styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Set a background color for the entire page */
-  body {
-    background-color: #f2f2f2;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-  }
-  
-  /* Center the title and add some spacing */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set a background color for the entire page */
+body {
+  background-color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  min-width: 400px; /* Minimum width of 400px */
+  margin: 0 auto; /* Center the content horizontally */
+}
+
+/* Center the title and add some spacing */
+.title {
+  text-align: center;
+  font-size: 36px;
+  margin: 20px 0;
+  text-decoration: underline;
+}
+
+/* Style the content container */
+#content {
+  display: flex;
+  flex-direction: column; /* Stack sections on small screens */
+  margin: 20px;
+}
+
+/* Style each section */
+section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Style the section title */
+.section-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Style the product select dropdown */
+#products-select {
+  min-width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Style the order button */
+#order-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Add hover effect to the order button */
+#order-button:hover {
+  background-color: #0056b3;
+}
+
+/* Style the notifications container */
+#notifications {
+  margin-top: 20px;
+}
+
+/* Style notifications and apply the fade-in animation */
+#notifications .notification {
+  font-size: 16px;
+  margin-bottom: 5px;
+  animation: fade-in 0.5s ease forwards; /* Use 'forwards' to keep the final state */
+  opacity: 0; /* Start with opacity set to 0 */
+  margin-bottom: 10px; /* Add spacing between notifications */
+}
+
+/* Style the empty notification */
+#empty-notification {
+  font-weight: bold;
+  color: #888;
+}
+
+
+
+/* Media query for screens smaller than 1024px */
+@media screen and (max-width: 1024px) {
+  /* Center align title and reduce font size */
   .title {
     text-align: center;
-    font-size: 36px;
-    margin: 20px 0;
-    text-decoration: underline;
+    font-size: 28px;
   }
-  
-  /* Style the content container */
-  #content {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-  }
-  
-  /* Style each section */
-  section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 48%; /* Adjust the width as needed */
-  }
-  
-  /* Style the section title */
-  .section-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  /* Style the product select dropdown */
+
+  /* Set product select width to 100% */
   #products-select {
-    min-width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-  }
-  
-  /* Style the order button */
-  #order-button {
-    display: block;
     width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 18px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
   }
-  
-  /* Add hover effect to the order button */
-  #order-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Style the notifications container */
-  #notifications {
-    margin-top: 20px;
-  }
-  
-  /* Style individual notifications */
-  #notifications p {
+
+  /* Adjust button width and font size */
+  #order-button {
+    width: 100%;
     font-size: 16px;
-    margin-bottom: 5px;
   }
-  
-  /* Style the empty notification */
-  #empty-notification {
-    font-weight: bold;
-    color: #888;
+}
+
+/* Media query for screens between 1024px */
+@media screen and (min-width: 1025px) {
+  /* Display sections side by side */
+  #content {
+    flex-direction: row;
+    justify-content: space-between;
   }
-  
+
+  /* Set the width of each section */
+  section {
+    width: calc(50% - 5px);
+  }
+}
+
+/* Add animation keyframes for fade-in */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

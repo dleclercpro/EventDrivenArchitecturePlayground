@@ -63,19 +63,24 @@ const handleMessage = (message) => {
   console.log(`[WebSocket] Message: ${message}`);
 
   const notifications = document.getElementById('notifications');
-  const eventElement = document.createElement('p');
-  const timeElement = document.createElement('strong');
+  const notificationEl = document.createElement('p');
+  notificationEl.classList.add('notification');
+
+  const timeEl = document.createElement('strong');
+  timeEl.classList.add('time');
 
   const event = JSON.parse(message.data);
   const time = formatTime(new Date(event.time));
 
-  timeElement.appendChild(document.createTextNode(`${time}:`));
+  timeEl.appendChild(document.createTextNode(`${time}:`));
 
-  eventElement.appendChild(timeElement);
-  eventElement.appendChild(document.createTextNode(' '));
-  eventElement.appendChild(document.createTextNode(EVENT_TO_TEXT[event.name]));
+  notificationEl.appendChild(timeEl);
+  notificationEl.appendChild(document.createTextNode(' '));
+  notificationEl.appendChild(document.createTextNode(EVENT_TO_TEXT[event.name]));
+
+  notificationEl.classList.add('fade-in'); // Add class for styling and animation
   
-  notifications.appendChild(eventElement);
+  notifications.appendChild(notificationEl);
 }
 
 
