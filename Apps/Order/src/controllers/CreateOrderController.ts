@@ -12,13 +12,13 @@ import { EventOrderCreated } from '../../../Common/src/types/EventTypes';
 
 const CreateOrderController: RequestHandler = async (req, res) => {
     try {
-        const { userId, productId } = req.body as CreateOrderRequestData;
+        const { userId, products } = req.body as CreateOrderRequestData;
 
-        logger.info(`Order is being created. [UserID=${userId}, ProductID=${productId}]`);
+        logger.info(`Order is being created. [UserID=${userId}]`);
 
         // Generate fake order
         const now = new Date();
-        const orderId = `${userId}-${productId}-${now.getTime()}-${crypto.randomUUID()}`;
+        const orderId = `${userId}-${now.getTime()}-${crypto.randomUUID()}`;
 
         // Fake DB communication latency
         await sleep(new TimeDuration(500, TimeUnit.Milliseconds));
@@ -29,7 +29,7 @@ const CreateOrderController: RequestHandler = async (req, res) => {
             ...EventGenerator.generateOrderCreatedEvent({
                 id: orderId,
                 userId,
-                productId,
+                products,
                 startTime: now,
             }),
         };

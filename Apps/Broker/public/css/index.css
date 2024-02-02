@@ -1,0 +1,291 @@
+/* Reset some default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set a background color for the entire page */
+body {
+  background-color: #f2f2f2;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  min-width: 400px; /* Minimum width of 400px */
+  margin: 0 auto; /* Center the content horizontally */
+  padding: 0 10px;
+}
+
+/* Center the title and add some spacing */
+.title {
+  text-align: center;
+  font-size: 36px;
+  margin: 10px 0;
+  text-decoration: underline;
+}
+
+.text {
+  margin-bottom: 10px;
+}
+
+/* Style the content container */
+#content {
+  display: flex;
+  flex-direction: column; /* Stack sections on small screens */
+}
+
+/* Style each section */
+section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+section > div:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+/* Style the section title */
+.section-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.section-text {
+  margin-bottom: 5px;
+}
+
+/* Style the order button */
+#order-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px 10px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Add hover effect to the order button */
+#order-button:hover {
+  background-color: #0056b3;
+}
+
+/* Inactive order button */
+#order-button.is-inactive {
+  cursor: default;
+  background-color: grey;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Inactive order button */
+#order-button.is-inactive:hover {
+  background-color: grey;
+}
+
+#order-button-loader {
+  display: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
+body.is-processing #order-button-loader {
+  display: block;
+}
+
+
+
+#products-grid {
+  display: grid;
+  grid-gap: 5px; /* Space between grid items */
+  max-height: 662px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#products-grid > .product {
+  position: relative;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#products-grid > .product:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+#products-grid > .product:active {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#products-grid > .product > img {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+}
+
+#products-grid > .product > .counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(25%, -25%);
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 5;
+  user-select: none;
+  border: 1px solid grey;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+#products-grid > .product:hover > img {
+  opacity: 0.8;
+}
+
+#products-grid > .product:active > img {
+  opacity: 0.6;
+}
+
+body.is-processing #products-grid > .product > img {
+  transition: none;
+}
+
+body.is-processing #products-grid > .product > img {
+  opacity: 0.2;
+}
+
+body.is-processing #products-grid > .product:hover {
+  box-shadow: none;
+  cursor: default;
+}
+
+
+
+/* Style the notifications container */
+#notifications {
+  margin-top: 20px;
+}
+
+/* Style notifications and apply the fade-in animation */
+#notifications .notification {
+  font-size: 16px;
+  margin-bottom: 5px;
+  animation: fade-in 0.5s ease forwards; /* Use 'forwards' to keep the final state */
+  opacity: 0; /* Start with opacity set to 0 */
+  margin-bottom: 10px; /* Add spacing between notifications */
+}
+
+/* Style the empty notification */
+#empty-notification {
+  font-weight: bold;
+  color: #888;
+}
+
+
+
+/* Media query for screens smaller than 620px */
+@media screen and (max-width: 480px) {
+  /* Center align title and reduce font size */
+  .title {
+    text-align: center;
+    font-size: 28px;
+  }
+
+  /* Adjust button width and font size */
+  #order-button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  #products-grid {
+    grid-template-columns: repeat(1, 1fr); /* Three columns of equal width */
+  }
+}
+
+/* Media query for screens smaller than 1024px */
+@media screen and (min-width: 481px) and (max-width: 840px) {
+  /* Center align title and reduce font size */
+  .title {
+    text-align: center;
+    font-size: 28px;
+  }
+
+  /* Adjust button width and font size */
+  #order-button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  #products-grid {
+    grid-template-columns: repeat(2, 1fr); /* Three columns of equal width */
+  }
+}
+
+/* Media query for screens smaller than 1024px */
+@media screen and (min-width: 841px) and (max-width: 1024px) {
+  /* Center align title and reduce font size */
+  .title {
+    text-align: center;
+    font-size: 28px;
+  }
+
+  /* Adjust button width and font size */
+  #order-button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  #products-grid {
+    grid-template-columns: repeat(3, 1fr); /* Three columns of equal width */
+  }
+}
+
+/* Media query for screens between 1024px */
+@media screen and (min-width: 1025px) {
+  body {
+    padding: 0 20px;
+  }
+
+  /* Display sections side by side */
+  #content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .title {
+    text-align: left;
+    margin: 20px 0;
+  }
+
+  /* Set the width of each section */
+  section {
+    width: calc(50% - 5px);
+  }
+
+  #products-grid {
+    grid-template-columns: repeat(3, 1fr); /* Three columns of equal width */
+  }
+}
+
+/* Add animation keyframes for fade-in */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

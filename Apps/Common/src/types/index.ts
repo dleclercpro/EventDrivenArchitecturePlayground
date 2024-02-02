@@ -51,7 +51,7 @@ export type User = {
 export type Order = {
     id: string,
     userId: string,
-    productId: string,
+    products: Record<string, number>,
     startTime: Date,
     endTime?: Date,
 }

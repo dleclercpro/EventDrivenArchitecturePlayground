@@ -7,11 +7,11 @@ import { DELIVERY_SERVICE, ORDER_SERVICE, PAYMENT_SERVICE } from '../config/serv
 
 const OrderController: RequestHandler = async (req, res) => {
     try {
-        const { userId, productId } = req.body;
+        const { userId, products } = req.body;
 
         // Verify data validity
-        if (!userId || !productId) {
-            logger.warn(`Invalid parameters: [userId=${userId}, productId=${productId}]`)
+        if (!userId || !products) {
+            logger.warn(`Invalid parameters!`)
             return res.sendStatus(HttpStatusCode.BAD_REQUEST);
         }
 
@@ -28,11 +28,12 @@ const OrderController: RequestHandler = async (req, res) => {
             return res.sendStatus(HttpStatusCode.SERVICE_UNAVAILABLE);
         }
 
-        logger.info(`User '${userId}' ordered product '${productId}'.`);
+        logger.info(`User '${userId}' ordered products:`);
+        logger.info(products);
 
         const { code, data } = await new CallCreateOrder().execute({
             userId,
-            productId,
+            products,
         });
 
         // Success

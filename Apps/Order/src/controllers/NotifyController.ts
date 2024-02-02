@@ -57,7 +57,7 @@ const processEvent = async (event: Event) => {
         const order: Order = {
             id: delivery.orderId,
             userId,
-            productId: 'DUMMY_PRODUCT',
+            products: { 'DUMMY_PRODUCT': 1 },
             startTime: EPOCH_TIME_INIT,
             endTime: now,
         };

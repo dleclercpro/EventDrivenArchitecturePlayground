@@ -3,33 +3,82 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dummy eShop</title>
+    <title>Sweet Giggles</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    <link href="/index.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
   </head>
 
   <body>
-    <h1 class="title">Dummy eShop</h1>
+    <h1 class="title">Sweet Giggles</h1>
+    <p class="text">
+      "Sweet Giggles" is a whimsical online shop offering a delightful twist on classic candies, specially crafted for adult tastes. 
+      Dive into a world of refined flavors and playful treats, where every bite promises a fusion of sophistication and fun. Perfect 
+      for those who love to indulge their sweet tooth with a touch of grown-up elegance!
+    </p>
 
     <div id="content">
       <section>
-        <h2 class="section-title">Order</h2>
+        <div>
+          <h2 class="section-title">Order</h2>
 
-        <p>Here is our selection of products:</p>
-  
-        <select id="products-select" name="products">
-          <option value="1">Product 1</option>
-          <option value="2">Product 2</option>
-          <option value="3">Product 3</option>
-          <option value="4">Product 4</option>
-          <option value="5">Product 5</option>
-        </select>
-    
-        <button id="order-button" onclick="submitOrder()">Buy</button>
+          <p class="section-text">Here is our selection of products:</p>
+        </div>
+
+        <div id="products-grid">
+          <div class="product" id="product-1-Ruby-Radiance" data-name="Ruby Radiance">
+            <img src="/img/1-Ruby-Radiance.png" alt="1 Ruby Radiance" />
+          </div>
+          <div class="product" id="product-2-Chocolate-Swirl" data-name="Chocolate Swirl">
+            <img src="/img/2-Chocolate-Swirl.png" alt="2 Chocolate Swirl" />
+          </div>
+          <div class="product" id="product-3-Gummy-Rainbow" data-name="Gummy Rainbow">
+            <img src="/img/3-Gummy-Rainbow.png" alt="3 Gummy Rainbow" />
+          </div>
+          <div class="product" id="product-4-Peppermint-Perfection" data-name="Peppermint Perfection">
+            <img src="/img/4-Peppermint-Perfection.png" alt="4 Peppermint Perfection" />
+          </div>
+          <div class="product" id="product-5-Jelly-Bean-Jubilee" data-name="Jelly Bean Jubilee">
+            <img src="/img/5-Jelly-Bean-Jubilee.png" alt="5 Jelly Bean Jubilee" />
+          </div>
+          <div class="product" id="product-6-Licorice-Lasso" data-name="Licorice Lasso">
+            <img src="/img/6-Licorice-Lasso.png" alt="6 Licorice Lasso" />
+          </div>
+          <div class="product" id="product-7-Sugar-Spark" data-name="Sugar Spark">
+            <img src="/img/7-Sugar-Spark.png" alt="7 Sugar Spark" />
+          </div>
+          <div class="product" id="product-8-Lollipop-Lane" data-name="Lollipop Lane">
+            <img src="/img/8-Lollipop-Lane.png" alt="8 Lollipop Lane" />
+          </div>
+          <div class="product" id="product-9-Caramel-Cube" data-name="Caramel Cube">
+            <img src="/img/9-Caramel-Cube.png" alt="9 Caramel Cube" />
+          </div>
+          <div class="product" id="product-10-Fruit-Frenzy" data-name="Fruit Frenzy">
+            <img src="/img/10-Fruit-Frenzy.png" alt="10 Fruit Frenzy" />
+          </div>
+          <div class="product" id="product-11-Almond-Bliss" data-name="Almond Bliss">
+            <img src="/img/11-Almond-Bliss.png" alt="11 Almond Bliss" />
+          </div>
+          <div class="product" id="product-12-Sour-Sparkle" data-name="Sour Sparkle">
+            <img src="/img/12-Sour-Sparkle.png" alt="12 Sour Sparkle" />
+          </div>
+          <div class="product" id="product-13-Marshmallow-Dream" data-name="Marshmallow Dream">
+            <img src="/img/13-Marshmallow-Dream.png" alt="13 Marshmallow Dream" />
+          </div>
+          <div class="product" id="product-14-Toffee-Treasure" data-name="Toffee Treasure">
+            <img src="/img/14-Toffee-Treasure.png" alt="14 Toffee Treasure" />
+          </div>
+          <div class="product" id="product-15-Nougat-Nirvana" data-name="Nougat Nirvana">
+            <img src="/img/15-Nougat-Nirvana.png" alt="15 Nougat Nirvana" />
+          </div>
+        </div>        
+
+        <div>
+          <button id="order-button" class="is-inactive">Buy <img id="order-button-loader" src="/img/Loading-Icon.gif" alt="Loading Icon"/></button>
+        </div>
       </section>
   
       <section>
@@ -41,6 +90,10 @@
       </section>
     </div>
 
-    <script src="/index.js"></script>
+    <script type="module" src="/js/constants.js"></script>
+    <script type="module" src="/js/utils.js"></script>
+    <script type="module" src="/js/calls.js"></script>
+    <script type="module" src="/js/products.js"></script>
+    <script type="module" src="/js/index.js"></script>
   </body>
 </html>

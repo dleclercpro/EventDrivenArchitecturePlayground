@@ -28,7 +28,7 @@ export type NotifyRequestData = {
 
 export type CreateOrderRequestData = {
     userId: string,
-    productId: string,
+    products: Record<string, number>,
 }
 
 export type DeleteOrderRequestData = {
