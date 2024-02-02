@@ -1,5 +1,14 @@
-import { BODY, ORDER_BUTTON } from './constants.js';
-import { isProcessing } from './utils.js';
+import { USER_ID, BODY, PRODUCTS, ORDER_BUTTON } from './constants.js';
+import { formatTime } from './utils.js';
+import { sendOrder } from './calls.js';
+
+
+
+export const isProcessing = () => {
+    return BODY.classList.contains('is-processing');
+}
+
+
 
 export const createCounter = (value) => {
     const counter = document.createElement('p');
@@ -100,4 +109,71 @@ export const blockStore = () => {
     ORDER_BUTTON.classList.add('is-inactive');
 
     resetProductCounters();
+}
+
+
+
+export const addNotification = (time, message) => {
+    const notifications = document.getElementById('notifications');
+    const notificationEl = document.createElement('p');
+    notificationEl.classList.add('notification');
+
+    const timeEl = document.createElement('strong');
+    timeEl.classList.add('time');
+
+    timeEl.appendChild(document.createTextNode(`${time}:`));
+
+    notificationEl.appendChild(timeEl);
+    notificationEl.appendChild(document.createTextNode(' '));
+    notificationEl.appendChild(document.createTextNode(message));
+
+    notificationEl.classList.add('fade-in'); // Add class for styling and animation
+
+    notifications.appendChild(notificationEl);
+}
+
+
+
+export const handleClickOnOrderButton = async () => {
+    if (ORDER_BUTTON.classList.contains('is-inactive')) {
+        return;
+    }
+
+    // Block UI while order is being processed
+    blockStore();
+
+    // Remove previous notifications
+    const notifications = document.getElementById('notifications');
+    while (notifications.firstChild) {
+        notifications.firstChild.remove();
+    }
+
+    // Build order using product counters
+    const selectedProducts = Array.from(PRODUCTS).reduce((prev, current) => {
+        const counter = current.querySelector('.counter');
+
+        if (counter) {
+            const count = Number(counter.textContent);
+            return { ...prev, [current.dataset.name]: count };
+        }
+
+        return prev;
+    }, {});
+
+    // Show order to user
+    addNotification(formatTime(new Date()), `You have ordered:`);
+    Object.entries(selectedProducts).forEach(([product, count]) => {
+        addNotification(formatTime(new Date()), `${count}X ${product}`);
+    });
+
+    // Send order to server
+    await sendOrder({ userId: USER_ID, products: selectedProducts });
+}
+
+
+
+export const initializeStore = async () => {
+    initializeProducts();
+
+    ORDER_BUTTON.addEventListener('click', handleClickOnOrderButton);
 }

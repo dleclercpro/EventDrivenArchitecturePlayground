@@ -21,3 +21,4 @@ export const WS_URL = `${WS_PROTOCOL}//${WS_HOST}${WS_PATH}`;
 
 export const BODY = document.querySelector('body');
 export const ORDER_BUTTON = document.getElementById('order-button');
+export const PRODUCTS = document.getElementsByClassName('product');

@@ -1,6 +1,6 @@
 import { EVENT_TO_TEXT } from './constants.js';
-import { resetStore } from './products.js';
-import { formatTime, addNotification } from './utils.js';
+import { resetStore, addNotification } from './ui.js';
+import { formatTime } from './utils.js';
 
 export const createWebSocketConnection = (url, userId) => {
     const ws = new WebSocket(url);
