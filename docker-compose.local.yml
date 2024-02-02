@@ -2,9 +2,9 @@ version: '3.8'
 
 
 services:
-  eda-playground-broker:
-    container_name: eda-playground-broker
-    image: dleclercpro/eda-playground-broker:pretty-frontend
+  sweets-broker:
+    container_name: sweets-broker
+    image: dleclercpro/sweets-broker:latest
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
@@ -15,70 +15,70 @@ services:
     environment:
       NODE_ENV: production
 
-  eda-playground-order:
-    container_name: eda-playground-order
-    image: dleclercpro/eda-playground-order:pretty-frontend
+  sweets-order:
+    container_name: sweets-order
+    image: dleclercpro/sweets-order:latest
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
     depends_on:
-      - eda-playground-broker
+      - sweets-broker
     environment:
       NODE_ENV: production
 
-  eda-playground-payment:
-    container_name: eda-playground-payment
-    image: dleclercpro/eda-playground-payment:pretty-frontend
+  sweets-payment:
+    container_name: sweets-payment
+    image: dleclercpro/sweets-payment:latest
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
     depends_on:
-      - eda-playground-broker
+      - sweets-broker
     environment:
       NODE_ENV: production
 
-  eda-playground-delivery:
-    container_name: eda-playground-delivery
-    image: dleclercpro/eda-playground-delivery:pretty-frontend
+  sweets-delivery:
+    container_name: sweets-delivery
+    image: dleclercpro/sweets-delivery:latest
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
     depends_on:
-      - eda-playground-broker
+      - sweets-broker
     environment:
       NODE_ENV: production
 
-  eda-playground-prometheus:
-    container_name: eda-playground-prometheus
-    image: dleclercpro/eda-playground-prometheus:pretty-frontend
+  sweets-prometheus:
+    container_name: sweets-prometheus
+    image: dleclercpro/sweets-prometheus:latest
     build:
       context: ./Apps
       dockerfile: Prometheus.Dockerfile
     ports:
       - 9090:9090
     depends_on:
-      - eda-playground-node-exporter
-      - eda-playground-cadvisor
+      - sweets-node-exporter
+      - sweets-cadvisor
 
-  eda-playground-grafana:
-    container_name: eda-playground-grafana
-    image: dleclercpro/eda-playground-grafana:pretty-frontend
+  sweets-grafana:
+    container_name: sweets-grafana
+    image: dleclercpro/sweets-grafana:latest
     build:
       context: ./Apps
       dockerfile: Grafana.Dockerfile
     ports:
       - 3000:3000
     depends_on:
-      - eda-playground-prometheus
+      - sweets-prometheus
 
-  eda-playground-node-exporter:
-    container_name: eda-playground-node-exporter
+  sweets-node-exporter:
+    container_name: sweets-node-exporter
     image: prom/node-exporter
     ports:
       - 9100:9100
 
-  eda-playground-cadvisor:
-    container_name: eda-playground-cadvisor
+  sweets-cadvisor:
+    container_name: sweets-cadvisor
     image: gcr.io/cadvisor/cadvisor:v0.47.1 # M1/M2 Mac
     platform: linux/aarch64 # M1/M2 Mac
     privileged: true # Stops OOM warning

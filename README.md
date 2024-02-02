@@ -1,4 +1,4 @@
-# EventDrivenArchitecturePlayground
+# SweetGiggles
 
 ## Description
 This is a small suite of Node applications, meant to be deployed as independent services within an event-driven architecture (EDA). The use case behind this architecture is the implementation of the backend of a simple online shop.
