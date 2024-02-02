@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/sweets-payment:latest
+          image: dleclercpro/sweets-payment:v2.1.0
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 80

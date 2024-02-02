@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/sweets-prometheus:latest
+          image: dleclercpro/sweets-prometheus:v2.1.0
           ports:
             - containerPort: 9090

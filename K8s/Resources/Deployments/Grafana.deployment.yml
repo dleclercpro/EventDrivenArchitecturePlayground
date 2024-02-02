@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/sweets-grafana:latest
+          image: dleclercpro/sweets-grafana:v2.1.0
           ports:
             - containerPort: 3000
           volumeMounts:

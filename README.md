@@ -60,5 +60,11 @@ Below is a diagram of the event flow implemented in this app. Each square repres
 ### v1.5.0
 - Introduce deployment using Docker Compose as part of a common external network.
 
-### v1.6.0
+### v2.0.0
+- Rework the frontend for a better UX.
+
+### v2.1.0
+- Rename application from 'EDA-Playground' to 'SweetGiggles': the dummy shop is going to be a an online candy store.
+
+### v2.2.0
 - Introduce horizontal pod scaling in the K8s cluster and stress test it.

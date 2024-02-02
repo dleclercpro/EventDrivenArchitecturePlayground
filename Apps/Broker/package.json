@@ -1,6 +1,6 @@
 {
   "name": "event-driven-architecture-playground--broker",
-  "version": "latest",
+  "version": "v2.1.0",
   "author": "David Leclerc",
   "main": "./src/index.ts",
   "scripts": {

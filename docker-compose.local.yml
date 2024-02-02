@@ -4,7 +4,7 @@ version: '3.8'
 services:
   sweets-broker:
     container_name: sweets-broker
-    image: dleclercpro/sweets-broker:latest
+    image: dleclercpro/sweets-broker:v2.1.0
     build:
       context: ./Apps
       dockerfile: Broker.Dockerfile
@@ -17,7 +17,7 @@ services:
 
   sweets-order:
     container_name: sweets-order
-    image: dleclercpro/sweets-order:latest
+    image: dleclercpro/sweets-order:v2.1.0
     build:
       context: ./Apps
       dockerfile: Order.Dockerfile
@@ -28,7 +28,7 @@ services:
 
   sweets-payment:
     container_name: sweets-payment
-    image: dleclercpro/sweets-payment:latest
+    image: dleclercpro/sweets-payment:v2.1.0
     build:
       context: ./Apps
       dockerfile: Payment.Dockerfile
@@ -39,7 +39,7 @@ services:
 
   sweets-delivery:
     container_name: sweets-delivery
-    image: dleclercpro/sweets-delivery:latest
+    image: dleclercpro/sweets-delivery:v2.1.0
     build:
       context: ./Apps
       dockerfile: Delivery.Dockerfile
@@ -50,7 +50,7 @@ services:
 
   sweets-prometheus:
     container_name: sweets-prometheus
-    image: dleclercpro/sweets-prometheus:latest
+    image: dleclercpro/sweets-prometheus:v2.1.0
     build:
       context: ./Apps
       dockerfile: Prometheus.Dockerfile
@@ -62,7 +62,7 @@ services:
 
   sweets-grafana:
     container_name: sweets-grafana
-    image: dleclercpro/sweets-grafana:latest
+    image: dleclercpro/sweets-grafana:v2.1.0
     build:
       context: ./Apps
       dockerfile: Grafana.Dockerfile

@@ -1,7 +1,7 @@
 # Define constant image details
 user="dleclercpro"
 app="sweets"
-release="latest"
+release="v2.1.0"
 
 # Upload local images to Minikube image registry
 minikube image load $user/$app-broker:$release
