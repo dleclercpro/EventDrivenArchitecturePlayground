@@ -9,17 +9,20 @@
   box-sizing: border-box;
 }
 
-/* Set a background color for the entire page */
 body {
   background-color: #ffe5e9; /* Soft pink background */
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  min-width: 400px; /* Minimum width of 400px */
+  min-width: 320px; /* Minimum width of 400px */
   margin: 0 auto; /* Center the content horizontally */
   padding: 0 10px;
 }
 
-/* Center the title and add some spacing */
+
+
+
+
+
 .title {
   text-align: center;
   font-size: 36px;
@@ -32,13 +35,11 @@ body {
   margin-bottom: 10px;
 }
 
-/* Style the content container */
 #content {
   display: flex;
   flex-direction: column; /* Stack sections on small screens */
 }
 
-/* Style each section */
 section {
   background-color: #fff;
   padding: 20px;
@@ -51,7 +52,6 @@ section > div:not(:last-child) {
   margin-bottom: 10px;
 }
 
-/* Style the section title */
 .section-title {
   font-size: 24px;
   margin-bottom: 10px;
@@ -62,7 +62,6 @@ section > div:not(:last-child) {
   margin-bottom: 5px;
 }
 
-/* Style the order button */
 #order-button {
   display: flex;
   justify-content: center;
@@ -78,12 +77,10 @@ section > div:not(:last-child) {
   transition: background-color 0.3s ease;
 }
 
-/* Add hover effect to the order button */
 #order-button:hover {
   background-color: #e60000; /* Darker red on hover */
 }
 
-/* Inactive order button */
 #order-button.is-inactive {
   cursor: default;
   background-color: grey;
@@ -92,7 +89,6 @@ section > div:not(:last-child) {
   border-radius: 5px;
 }
 
-/* Inactive order button */
 #order-button.is-inactive:hover {
   background-color: grey;
 }
@@ -182,12 +178,10 @@ body.is-processing #products-grid > .product:hover {
 
 
 
-/* Style the notifications container */
 #notifications {
   margin-top: 20px;
 }
 
-/* Style notifications and apply the fade-in animation */
 #notifications .notification {
   font-size: 16px;
   margin-bottom: 5px;
@@ -196,7 +190,6 @@ body.is-processing #products-grid > .product:hover {
   margin-bottom: 10px; /* Add spacing between notifications */
 }
 
-/* Style the empty notification */
 #empty-notification {
   font-weight: bold;
   color: #888;
@@ -204,34 +197,39 @@ body.is-processing #products-grid > .product:hover {
 
 
 
-/* Media query for screens smaller than 620px */
+
+
+
 @media screen and (max-width: 480px) {
-  /* Center align title and reduce font size */
   .title {
     text-align: center;
     font-size: 28px;
   }
 
-  /* Adjust button width and font size */
   #order-button {
     width: 100%;
     font-size: 16px;
   }
-
-  #products-grid {
-    grid-template-columns: repeat(1, 1fr); /* Three columns of equal width */
-  }
 }
 
-/* Media query for screens smaller than 1024px */
-@media screen and (min-width: 481px) and (max-width: 840px) {
-  /* Center align title and reduce font size */
+@media screen and (min-width: 481px) and (max-width: 620px) {
   .title {
     text-align: center;
     font-size: 28px;
   }
 
-  /* Adjust button width and font size */
+  #order-button {
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 621px) and (max-width: 840px) {
+  .title {
+    text-align: center;
+    font-size: 28px;
+  }
+
   #order-button {
     width: 100%;
     font-size: 16px;
@@ -242,15 +240,12 @@ body.is-processing #products-grid > .product:hover {
   }
 }
 
-/* Media query for screens smaller than 1024px */
 @media screen and (min-width: 841px) and (max-width: 1024px) {
-  /* Center align title and reduce font size */
   .title {
     text-align: center;
     font-size: 28px;
   }
 
-  /* Adjust button width and font size */
   #order-button {
     width: 100%;
     font-size: 16px;
@@ -261,7 +256,6 @@ body.is-processing #products-grid > .product:hover {
   }
 }
 
-/* Media query for screens between 1024px */
 @media screen and (min-width: 1025px) {
   body {
     padding: 0 20px;
@@ -288,7 +282,15 @@ body.is-processing #products-grid > .product:hover {
   }
 }
 
-/* Add animation keyframes for fade-in */
+@media screen and (min-width: 1281px) {
+
+  #products-grid {
+    grid-template-columns: repeat(4, 1fr); /* Three columns of equal width */
+  }
+}
+
+
+
 @keyframes fade-in {
     from {
         opacity: 0;
