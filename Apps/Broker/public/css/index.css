@@ -73,7 +73,8 @@ section > div:not(:last-child) {
   width: 100%;
   padding: 20px 10px;
   font-size: 18px;
-  background-color: #ff4d4d; /* Red button */
+  font-weight: bold;
+  background-color: #000000; /* Black button */
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -82,19 +83,18 @@ section > div:not(:last-child) {
 }
 
 #order-button:hover {
-  background-color: #e60000; /* Darker red on hover */
+  background-color: #333333; /* Darker grey on hover for active button */
 }
 
 #order-button.is-inactive {
-  cursor: default;
-  background-color: grey;
-  color: #fff;
-  border: none;
+  cursor: not-allowed; /* Indicates the button is not clickable */
+  background-color: #cccccc; /* Grey for inactive button */
+  color: #666666; /* Darker grey for text to indicate inactivity */
   border-radius: 5px;
 }
 
 #order-button.is-inactive:hover {
-  background-color: grey;
+  background-color: #cccccc; /* Remains grey on hover when inactive */
 }
 
 #order-button-loader {
@@ -145,18 +145,20 @@ body.is-processing #order-button-loader {
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(25%, -25%);
+  transform: translate(-25%, 25%);
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #000;
+  color: #fff; /* White text for better readability */
   z-index: 5;
   user-select: none;
-  border: 1px solid grey;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
 #products-grid > .product:hover > img {
@@ -197,6 +199,13 @@ body.is-processing #products-grid > .product:hover {
 #empty-notification {
   font-weight: bold;
   color: #888;
+}
+
+
+
+img.lazy-load {
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 

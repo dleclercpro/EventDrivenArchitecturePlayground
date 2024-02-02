@@ -20,5 +20,6 @@ export const WS_PATH = `/`;
 export const WS_URL = `${WS_PROTOCOL}//${WS_HOST}${WS_PATH}`;
 
 export const BODY = document.querySelector('body');
-export const ORDER_BUTTON = document.getElementById('order-button');
 export const PRODUCTS = document.getElementsByClassName('product');
+export const ORDER_BUTTON = document.getElementById('order-button');
+export const ORDER_BUTTON_TEXT = document.getElementById('order-button-text');

@@ -1,6 +1,10 @@
-import { USER_ID, BODY, PRODUCTS, ORDER_BUTTON } from './constants.js';
+import { USER_ID, BODY, PRODUCTS, ORDER_BUTTON, ORDER_BUTTON_TEXT } from './constants.js';
 import { formatTime } from './utils.js';
 import { sendOrder } from './calls.js';
+
+
+
+let ORDER_SIZE = 0;
 
 
 
@@ -11,11 +15,25 @@ export const isProcessing = () => {
 
 
 export const createCounter = (value) => {
-    const counter = document.createElement('p');
-    counter.textContent = value;
+    const counter = document.createElement('div');
     counter.classList.add('counter');
+
+    const counterText = document.createElement('p');
+    counterText.textContent = value;
+
+    counter.appendChild(counterText);
   
     return counter;
+}
+
+
+
+export const updateOrderButtonText = () => {
+    if (ORDER_SIZE === 0) {
+        ORDER_BUTTON_TEXT.textContent = `Buy`;
+    } else {
+        ORDER_BUTTON_TEXT.textContent = `Buy (${ORDER_SIZE})`;
+    }
 }
   
   
@@ -34,6 +52,9 @@ export const addProductToOrder = (el) => {
     
     const counters = el.querySelectorAll('.counter');
     
+    ORDER_SIZE += 1;
+    updateOrderButtonText();
+
     if (counters.length === 0) {
       el.appendChild(createCounter(1));
       return;
@@ -55,6 +76,9 @@ export const removeProductFromOrder = (el) => {
     const counter = counters[0];
     const count = Number(counter.textContent);
   
+    ORDER_SIZE = Math.max(0, ORDER_SIZE - 1);
+    updateOrderButtonText();
+
     if (count === 1) {
       counter.remove();
       return;
@@ -99,7 +123,9 @@ export const resetProductCounters = () => {
 
 export const resetStore = () => {
     BODY.classList.remove('is-processing');
-    ORDER_BUTTON.classList.remove('is-inactive');
+
+    ORDER_SIZE = 0;
+    updateOrderButtonText();
 }
 
 
@@ -157,9 +183,12 @@ export const computeOrder = () => {
 
 
 export const showOrder = (order) => {
-    addNotification(formatTime(new Date()), `You have ordered:`);
+    const text = ORDER_SIZE === 1 ? `You have ordered 1 product:` : `You have ordered ${ORDER_SIZE} products:`;
+
+    addNotification(formatTime(new Date()), text);
+
     Object.entries(order).forEach(([product, count]) => {
-        addNotification(formatTime(new Date()), `${count}X ${product}`);
+        addNotification(formatTime(new Date()), `${count}x ${product}`);
     });
 }
 
@@ -167,6 +196,7 @@ export const showOrder = (order) => {
 
 export const initializeStore = async () => {
     initializeProducts();
+    lazyLoadImages();
 
     ORDER_BUTTON.addEventListener('click', async () => {
         if (ORDER_BUTTON.classList.contains('is-inactive')) {
@@ -182,5 +212,47 @@ export const initializeStore = async () => {
         showOrder(order);
     
         await sendOrder({ userId: USER_ID, products: order });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const lazyLoadImages = () => {
+    const lazyImages = document.querySelectorAll('img.lazy-load');
+
+    if ('IntersectionObserver' in window) {
+        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    let lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove('lazy-load');
+                    lazyImageObserver.unobserve(lazyImage);
+                }
+            });
+        });
+    
+        lazyImages.forEach(function(lazyImage) {
+            lazyImageObserver.observe(lazyImage);
+        });
+
+        return;
+    }
+    
+    // Fallback for browsers without IntersectionObserver support
+    console.warn(`No support for the IntersectionObserver!`);
+    lazyImages.forEach(function(lazyImage) {
+        lazyImage.src = lazyImage.dataset.src;
     });
 }
