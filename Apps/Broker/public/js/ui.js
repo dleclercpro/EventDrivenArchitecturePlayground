@@ -107,8 +107,6 @@ export const resetStore = () => {
 export const blockStore = () => {
     BODY.classList.add('is-processing');
     ORDER_BUTTON.classList.add('is-inactive');
-
-    resetProductCounters();
 }
 
 
@@ -134,22 +132,17 @@ export const addNotification = (time, message) => {
 
 
 
-export const handleClickOnOrderButton = async () => {
-    if (ORDER_BUTTON.classList.contains('is-inactive')) {
-        return;
-    }
-
-    // Block UI while order is being processed
-    blockStore();
-
-    // Remove previous notifications
+export const cleanNotifications = () => {
     const notifications = document.getElementById('notifications');
     while (notifications.firstChild) {
         notifications.firstChild.remove();
     }
+}
 
-    // Build order using product counters
-    const selectedProducts = Array.from(PRODUCTS).reduce((prev, current) => {
+
+
+export const computeOrder = () => {
+    return Array.from(PRODUCTS).reduce((prev, current) => {
         const counter = current.querySelector('.counter');
 
         if (counter) {
@@ -159,15 +152,15 @@ export const handleClickOnOrderButton = async () => {
 
         return prev;
     }, {});
+}
 
-    // Show order to user
+
+
+export const showOrder = (order) => {
     addNotification(formatTime(new Date()), `You have ordered:`);
-    Object.entries(selectedProducts).forEach(([product, count]) => {
+    Object.entries(order).forEach(([product, count]) => {
         addNotification(formatTime(new Date()), `${count}X ${product}`);
     });
-
-    // Send order to server
-    await sendOrder({ userId: USER_ID, products: selectedProducts });
 }
 
 
@@ -175,5 +168,19 @@ export const handleClickOnOrderButton = async () => {
 export const initializeStore = async () => {
     initializeProducts();
 
-    ORDER_BUTTON.addEventListener('click', handleClickOnOrderButton);
+    ORDER_BUTTON.addEventListener('click', async () => {
+        if (ORDER_BUTTON.classList.contains('is-inactive')) {
+            return;
+        }
+    
+        blockStore();
+        cleanNotifications();
+    
+        const order = computeOrder();
+    
+        resetProductCounters();
+        showOrder(order);
+    
+        await sendOrder({ userId: USER_ID, products: order });
+    });
 }
