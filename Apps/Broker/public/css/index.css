@@ -15,7 +15,7 @@ body {
   font-size: 16px;
   min-width: 320px; /* Minimum width of 400px */
   margin: 0 auto; /* Center the content horizontally */
-  padding: 0 10px;
+  padding: 10px;
 }
 
 
@@ -26,13 +26,17 @@ body {
 .title {
   text-align: center;
   font-size: 36px;
-  margin: 10px 0;
+  margin-bottom: 10px;
   text-decoration: underline;
   font-family: 'Pacifico', cursive; /* Playful font for title */
 }
 
 .text {
   margin-bottom: 10px;
+}
+
+.copyright {
+  text-align: center;
 }
 
 #content {
@@ -45,7 +49,7 @@ section {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 section > div:not(:last-child) {
@@ -257,9 +261,6 @@ body.is-processing #products-grid > .product:hover {
 }
 
 @media screen and (min-width: 1025px) {
-  body {
-    padding: 0 20px;
-  }
 
   /* Display sections side by side */
   #content {
@@ -270,6 +271,10 @@ body.is-processing #products-grid > .product:hover {
   .title {
     text-align: left;
     margin: 20px 0;
+  }
+
+  .copyright {
+    text-align: right;
   }
 
   /* Set the width of each section */
