@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: dleclercpro/eda-playground-broker:pretty-frontend
+          image: dleclercpro/eda-playground-broker:v2.0.0
           imagePullPolicy: IfNotPresent # To avoid pulling image from repo
           ports:
             - containerPort: 80

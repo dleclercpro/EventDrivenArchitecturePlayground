@@ -9,7 +9,7 @@ cd "$dir/../Apps"
 # Define constant image details
 user="dleclercpro"
 app="eda-playground"
-release="pretty-frontend"
+release="v2.0.0"
 
 # Build app images
 docker buildx build --platform linux/amd64,linux/arm64 -t $user/$app-broker:$release -f Broker.Dockerfile . --push
