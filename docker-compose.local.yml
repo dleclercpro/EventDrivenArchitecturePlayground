@@ -10,6 +10,8 @@ services:
       dockerfile: Broker.Dockerfile
     ports:
       - 8000:80
+    volumes:
+      - ./Apps/Broker/public:/apps/Broker/public # Client app for now
     environment:
       NODE_ENV: production
 
