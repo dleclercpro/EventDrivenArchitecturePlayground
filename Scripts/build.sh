@@ -9,7 +9,7 @@ cd "$dir/../Apps"
 # Define constant image details
 user="dleclercpro"
 app="sweets"
-release="latest"
+release="load-testing"
 
 # Build app images
 docker buildx build --platform linux/amd64,linux/arm64 -t $user/$app-broker:$release -f Broker.Dockerfile . --push

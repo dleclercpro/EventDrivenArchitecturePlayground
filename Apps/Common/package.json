@@ -1,6 +1,6 @@
 {
   "name": "event-driven-architecture-playground--common",
-  "version": "latest",
+  "version": "load-testing",
   "author": "David Leclerc",
   "main": "./src/index.ts",
   "scripts": {
