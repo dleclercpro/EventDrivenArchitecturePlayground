@@ -1,0 +1,19 @@
+config:
+  target: 'http://localhost:8000'
+  phases:
+    - duration: 60 # test duration in seconds
+      arrivalRate: 10 # number of new virtual users per second
+  defaults:
+    headers:
+      Content-Type: 'application/json' # Set the content type to application/json
+
+scenarios:
+  - flow:
+      - post:
+          url: '/order'
+          json:
+            userId: 'TEST_USER'
+            products:
+              Product1: 1
+              Product2: 2
+              Product3: 3

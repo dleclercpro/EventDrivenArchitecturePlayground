@@ -4,10 +4,11 @@ import logger from '../logger';
 import CallCreateOrder from '../models/calls/CallCreateOrder';
 import ReadinessCheck from '../models/ReadinessCheck';
 import { DELIVERY_SERVICE, ORDER_SERVICE, PAYMENT_SERVICE } from '../config/services';
+import { CreateOrderRequestData } from '../../../Common/src/types/APITypes';
 
 const OrderController: RequestHandler = async (req, res) => {
     try {
-        const { userId, products } = req.body;
+        const { userId, products } = req.body as CreateOrderRequestData;
 
         // Verify data validity
         if (!userId || !products) {
