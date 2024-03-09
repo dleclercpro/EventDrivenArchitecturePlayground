@@ -4,7 +4,7 @@ version: '3.8'
 services:
   sweets-nginx:
     container_name: sweets-nginx
-    image: dleclercpro/ssl-reverse-proxy:wss
+    image: dleclercpro/reverse-proxy:latest
     restart: always
     ports:
       - 443:443 # HTTPS
