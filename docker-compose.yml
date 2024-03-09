@@ -13,6 +13,7 @@ services:
       - custom
     volumes:
       - letsencrypt:/etc/letsencrypt # Keep SSL certificates
+      - dhparams:/usr/dhparams       # Keep DH params file
     depends_on:
       - sweets-broker
     env_file:
@@ -119,6 +120,7 @@ services:
 
 volumes:
   letsencrypt:
+  dhparams:
 
 
 networks:
